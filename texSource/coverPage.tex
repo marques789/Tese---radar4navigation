@@ -1,0 +1,117 @@
+%
+% Cover page (use only one of the first two \TitlePage)
+%
+
+% First alternative, with a figure
+\TitlePage
+  %\GRID  % for debugging ONLY
+  \HEADER{\BAR\FIG{\includegraphics[height=60mm]{imgs/uaLogoNew}}} % the \FIG{} is optional
+         {\ThesisYear}
+  \TITLE{Francisco \newline Marques dos \newline Santos}
+        {Indoor navigation using the TurtleBot platform \newline Navegação em ambientes interiores utilizando a plataforma TurtleBot}
+        
+\EndTitlePage
+\titlepage\ \endtitlepage % empty page
+
+
+%
+% Initial thesis pages
+%
+
+\TitlePage
+  \HEADER{}{\ThesisYear}
+  \TITLE{Francisco \newline Marques dos \newline Santos}
+        {Indoor navigation using the TurtleBot platform \newline Navegação em ambientes interiores utilizando a plataforma TurtleBot}
+  \vspace*{15mm}
+  \TEXT{}
+       {%Disserta\c c\~ao apresentada \`a Universidade de Aveiro para cumprimento dos requisitos
+        %necess\'arios \`a obten\c c\~ao do grau de Mestre em Engenharia Electr\'onica e Telecomunica\c 
+        %c\~oes, realizada sob a orienta\c c\~ao cient\'\i fica do Professor Doutor Andr\'e Z\'uquete, Professor Auxiliar do 
+        %Departamento de Electr\'onica, Telecomunica\c c\~oes e Inform\'atica da Universidade de Aveiro, e do Doutor Miguel Lu\'is, Investigador Auxiliar do Instituto de Telecomunica\c c\~oes de Aveiro.
+        }
+        \vspace*{85mm}
+  %\TEXT{}
+       %{"God Placed the Best Things in Life on the Other Side of Fear." \newline - Will Smith}
+\EndTitlePage
+\titlepage\ \endtitlepage % empty page
+
+\TitlePage
+  \vspace*{55mm}
+  \TEXT{\textbf{o j\'uri~/~the jury\newline}}
+       {}
+  \TEXT{presidente~/~president}
+       {\textbf{Professor Doutor Ant\'onio Lu\'is Jesus Teixeira}\newline {\small
+        Professor Associado c/ Agrega\c c\~ao do 
+        Departamento de Electr\'onica, Telecomunica\c c\~oes e Inform\'atica da Universidade de Aveiro}}
+  \vspace*{5mm}
+  \TEXT{vogais~/~examiners committee}
+       {\textbf{Professor Doutor Rui Pedro de Magalh\~aes Claro Prior}\newline {\small
+        Professor Auxiliar do 
+        Departamento de Ci\^encia de Computadores da Faculdade de Ci\^encias da Universidade do Porto}}
+  \vspace*{5mm}
+  \TEXT{}
+       {\textbf{Professor Doutor Andr\'e Ventura da Cruz Marnoto Z\'uquete}\newline {\small
+        Professor Auxiliar do Departamento de Electr\'onica, Telecomunica\c c\~oes e Inform\'atica da Universidade de Aveiro (Orientador)}}
+\EndTitlePage
+\titlepage\ \endtitlepage % empty page
+
+\TitlePage
+  \vspace*{55mm}
+  \TEXT{\textbf{agradecimentos}}
+       {%Em primeiro lugar agradeço à minha família, aos meus país, Adelino e Leonor Gomes, e à minha irmã, Mariline Gomes, por todo o apoio, motivação e presença constante em todos os momentos da minha vida. Sem eles não seria possível alcançar muitos dos objetivos que tive na minha vida. Gostaria também de agradecer à minha namorada, Ana Borges, por todo o tempo, paciência, apoio e carinho que me dedicou ao longo deste percurso académico. É, sem dúvida, uma das pessoas que mais influência tem naquilo que sou hoje e naquilo que consegui conquistar na minha vida.
+       }
+  \TEXT{}
+       {%Gostaria também de agradecer aos meus colegas que tive a sorte de conhecer durante o meu percurso acadêmico nestes últimos anos. Amizades que se criaram que certamente se levarão para o resto da vida.
+       }
+
+  \TEXT{}
+       {%Agradeço também ao nosso grupo de investigação por todo o conhecimento, entreajuda e apoio que demonstraram ao longo deste trabalho desenvolvido. Gostaria de fazer um agradecimento especial ao João Pereira, João Ribeiro, João Rocha e ao Rui Lopes pela disponibilidade e ajuda demonstrada e por todo o ambiente de trabalho que foi possível ter junto deles. 
+       }
+  \TEXT{}
+       {%Gostaria também de agradecer ao professor André Zúquete e ao Dr. Miguel Luís pela orientação, pelo espírito crítico e pela ajuda prestada durante o desenvolvimento desta dissertação. Um especial agradecimento também à professora Susana Sargento por me ter dado a oportunidade de integrar este ambicioso grupo de investigação, por me ter proporcionado a possibilidade de trabalhar fora da minha zona de conforto contribuindo assim muito para o meu conhecimento científico e que sempre esteve presente durante todo o percurso deste trabalho desenvolvido, tendo sem dúvida uma importância muito grande naquilo que é este trabalho e o que representa para mim.
+       }
+   \TEXT{}     
+       {%Por fim, agradeço à Fundação para a Ciência e Tecnologia pelo suporte financeiro através de fundos nacionais no âmbito do projeto, S2MovingCity CMUP-ERI/TIC/0010/2014.
+        }
+\EndTitlePage
+\titlepage\ \endtitlepage % empty page
+
+\TitlePage
+  \vspace*{55mm}
+  \TEXT{\textbf{Resumo}}
+       {%O interesse crescente em Redes Veiculares está a encorajar a sua implementação em novos ambientes, permitindo o desenvolvimento de aplicações de segurança e de entretenimento. Os veículos podem-se ligar a outros veículos ou à infraestrutura, tendo assim uma ligação à Internet. O equipamento de comunicação colocado nos veículos poderá ter múltiplas interfaces de rede de tecnologias diferentes, como por exemplo, IEEE 802.11p/WAVE, IEEE 802.11a/g/n (Wi-Fi) e celular. Esta diversidade permite a exploração e utilização de mecanismos de Multihoming e de Network Coding, os quais podem ser usados para oferecer maior largura de banda e maior fiabilidade a este tipo de aplicações, reduzindo as perdas de pacotes na presença de um sinal sem fios de fraca qualidade, melhorando assim a qualidade de serviço.
+       }
+       \TEXT{} 
+       {%Esta dissertação tem como objetivo melhorar a qualidade de comunicação de uma rede veicular que suporta Multihoming, assim como melhorar os seus mecanismos de Network Coding e do protocolo de mobilidade. Mais especificamente, foram feitas alterações a nível do processo de handover entre redes, para ajudar a infraestrutura a reagir mais rapidamente às condições de comunicação de um nó móvel na rede. Numa perspetiva diferente, foi desenvolvido um mecanismo que permite a aplicação de Network Coding através de diferentes tecnologias em Multihoming, o qual faz uso das diferentes tecnologias simultaneamente para codificar e recuperar os pacotes.
+       }
+       \TEXT{}     
+       {%Ambos os mecanismos foram avaliados em cenários de laboratório com sistemas reais. Os resultados obtidos relativos ao envio das mensagens de controlo mostram que esta nova abordagem é capaz de fornecer uma comunicação com maior fiabilidade, reduzindo as perdas de pacotes no caso de uma desconexão abrupta, e quando na presença de outras tecnologias e ligações. Quanto à proposta de muti-tecnologia para o Network Coding, os testes experimentais avaliaram o seu impacto na taxa de entrega de pacotes efetiva e no atraso de transmissão. Os resultados comparativos evidenciam que, apesar de ter um pequeno impacto no atraso dos pacotes em comparação com a abordagem que considera o Network Coding em cada tecnologia de forma independente, a abordagem de multi-tecnologia apresenta uma melhor taxa de entrega.
+       }
+ 
+       
+\EndTitlePage
+\titlepage\ \endtitlepage % empty page
+
+\TitlePage
+  \vspace*{55mm}
+  \TEXT{\textbf{Abstract}}
+       {%The growing interest in \ac{VANETs} is encouraging its deployment in new environments, allowing the development of safety and entertainment applications. Vehicles can connect to other vehicles or to the infrastructure, providing an Internet connection. The communication equipment placed inside the vehicles may have multiple network interfaces of diverse technologies, such as IEEE 802.11p/WAVE, IEEE 802.11a/g/n (Wi-Fi) and cellular. This diversity enables the exploration of \ac{MH} and \ac{NC} mechanisms which can be used to provide higher bandwidth and reliability to these services, reducing packet losses due to poor wireless signal quality, therefore improving the final Quality-of-Service (QoS).
+       }
+       \TEXT{}     
+       {%In order to improve the communication quality in a multihoming vehicular network, some improvements can be made on the mobility protocol and also at the Network Coding approach that is used. To do so, the objective of 
+       %his dissertation enhances the communication quality of a \ac{MH} vehicular network by improving its mobility protocol and the \ac{NC} mechanisms. Specifically, changes were performed to ensure the reliability of control mobility messages to help the infrastructure to react faster to the wireless communication conditions of a mobile node.
+       %from the mobility protocol developed in our research group allowing a more reliable implementation reducing the packet losses by making use of the best connection possible to send the disconnect message, alongside this, some minor aspects were improved at the mobility protocol. Another objective represent a major improvement on the Network coding implementation that is currently used in our \ac{VANET}, were the encoding process is performed at the start of our network, making use of all the available technologies to reach the end-user, resulting in a multi-technology approach for network coding. 
+       %On a different perspective, it has been provided a mechanism to enable \ac{NC} through different technologies being used in \ac{MH}, and making use of all technologies simultaneously to code and recover the packets. %this improvement should also improve the available througput when \ac{NC} is applied.
+       %Another proposed architecture in this work is the integration of a multi-technology approach for the network coding directly with the mobility protocol resulting in an major improvement for the available throughput.
+        }
+        \TEXT{}     
+       {%The tests executed in this dissertation to evaluate the improvement and stability impact on the mobility protocol, originated by the new disconnect mechanism proposed for the mobility protocol, were performed with some laboratory scenarios.
+       %Both approaches were evaluated with real systems in a laboratory scenario. 
+       %The comparative results with the previous implementation shows a direct improvement on the reliability reducing the packet losses presented in case of an abrupt disconnection when in presence of other available connections. For the multi-technology architecture proposed for the network coding, some tests using different coding configurations (generation and buffer sizes) were performed, and they were evaluated by analyzing its impact on the packet loss recovery ratio and the delay. The comparative results show that the multi-technology approach has a better delivery ratio when compared to the single-technology, despite the small impact on the packet delay, and the multi-technology approach integrated with the mobility protocol show that it is possible to achieve a better throughput without a negative trade-off on the delivery ratio or the presented delay.
+       %The obtained results on the reliability of the control messages show that the new approach is able to provide higher communication reliability, reducing the packet losses presented in case of an abrupt disconnection, and when in presence of other connections. For the multi-technology architecture proposed for the \ac{NC}, the experimental tests evaluated its impact on the effective delivery ratio and the delay. The comparative results show that the multi-technology approach integrated with \ac{MH} has a better delivery ratio when compared to the single-technology, despite the small impact on the packet delay.
+        }
+       % \TEXT{}     
+       %{The tests for the multi-technology architecture proposed for the network coding will be evaluated using different %coding configurations (generation and buffer sizes) and by analyzing its impact on the packet loss recovery ratio. %The comparative results show that the multi-technology approach has a better delivery ratio when compared to the %single-technology, despite the small impact on the packet delay, and the multi-technology approach integrated with %the mobility protocol show that it is possible to achieve a better throughput without a negative trade-off on the %delivery ratio or the presented delay.
+    %    }
+\EndTitlePage
+\titlepage\ \endtitlepage % empty page

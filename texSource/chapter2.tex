@@ -1,0 +1,144 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{State of the Art} \label{ch:Concepts}
+
+\section{Introduction}
+
+This chapter introduces the main concepts and topics involved in this dissertation's work. Firstly, there is a brief discussion about drones and their usages in today's landscape. \cite{uavhist} \ac{UAV}s
+\begin{description}
+    \item[Agriculture] Estimate harvest volumes using digital images collected by \ac{UAV}s\cite{harvest}. Crop monitorization, analyses and protection\cite{crop}\cite{analyses}.  
+\end{description}
+
+\section{Drones} 
+
+
+
+\begin{table}[ht]
+	\center
+	\caption{Types of \ac{UAV}s and corresponding features (adapted from \cite{UAVtable}).}
+	\label{tab:dronetypes}
+	\begin{adjustbox}{width={\textwidth}}
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{} & \textbf{Pros} & \textbf{Cons} & \textbf{Typical Uses} \\ \hline
+    \textbf{Multi-Rotor}      & \begin{tabular}[c]{@{}l@{}}$\bullet$ Accessibility \\ $\bullet$ Ease of use \\$\bullet$ \ac{VTOL}\\ and hover flight \\$\bullet$ Good camera control \\$\bullet$ Can operate in a confined area \end{tabular} & \begin{tabular}[c]{@{}l@{}}$\bullet$ Short flight times  \\ $\bullet$ Small payload capacity  \end{tabular}   & \begin{tabular}[c]{@{}l@{}}$\bullet$ Aerial photography and video \\ $\bullet$ Aerial inspection \end{tabular}  \\ \hline
+    \textbf{Fixed-Wing}      & \begin{tabular}[c]{@{}l@{}}$\bullet$ Long endurance \\ $\bullet$ Large area of coverage \\$\bullet$ Fast flight speed \end{tabular} & \begin{tabular}[c]{@{}l@{}}$\bullet$ Requires take-off and landing area  \\ $\bullet$ No \ac{VTOL}/hover \\ $\bullet$ Harder to fly, more training required \\ $\bullet$ Expensive  \end{tabular}   & \begin{tabular}[c]{@{}l@{}}$\bullet$ Aerial mapping \\ $\bullet$ Pipeline and Power line inspection \end{tabular}  \\ \hline
+    \textbf{Single-Rotor}      & \begin{tabular}[c]{@{}l@{}}$\bullet$ VTOL and hover flight \\ $\bullet$ Long endurance \\$\bullet$ Heavier payload capability \end{tabular} & \begin{tabular}[c]{@{}l@{}}$\bullet$ Less reliable  \\ $\bullet$ No \ac{VTOL}/hover \\ $\bullet$ Harder to fly, more training required \\ $\bullet$ Expensive  \end{tabular}   & \begin{tabular}[c]{@{}l@{}}$\bullet$ Aerial LIDAR laser scanning \\ $\bullet$ Pipeline and Power line inspection \end{tabular}  \\ \hline
+\end{tabular}
+\end{adjustbox}
+\label{tab:tabelauav}
+\end{table}
+     
+
+\section{Image Processing }  
+
+
+Figure \ref{fig:history} shows a brief overview of the most significant advances in the field of computer vision over the last few decades.  
+
+
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/history}}
+\caption{A timeline overview of some of the most active topics of research in computer
+vision (from \cite{livro}).}
+\label{fig:history}
+\end{figure}
+
+
+\subsection{Background}
+
+
+One of the most sought-after goals in the field of computer vision is the analysis of a given image and recognizing and labelling all of the objects present in said input image. 
+
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/yoloDog}}
+\caption{Example of Object Detection (from \cite{yoloDog}).}
+\label{fig:yoloDog}
+\end{figure}
+
+
+
+
+
+
+\subsection{ImageNet challenge}
+
+
+
+
+\subsection{Deep Neural Networks}
+
+
+ The output $\mathbf{y}$ is obtained by applying an activation function to the weighted sum between inputs and their associated weights, and is expressed in Equation \ref{eq:eqneuron}:  
+
+\begin{equation}\label{eq:eqneuron}
+    y = f(\xi) = f(\sum_{i=1}^{n} x_i.w_i + \theta)
+\end{equation}
+
+
+\subsubsection{Convolutional Neural Networks}
+
+
+\begin{equation}\label{eqn:1}
+f[m,n] \circledast g[m,n] = \sum_{i=-{\infty}}^{\infty} \sum_{j=-{\infty}}^{\infty} f[i,j] . g[m-i,n-j]
+\end{equation}
+
+
+\begin{figure}[h] 
+\centerline{\includegraphics [width=1 \textwidth]{imgs/chapter2/exemploskernel}}
+\caption{Examples of 2D image filters (adapted from \cite{masterkernel}).}
+\label{fig:exemploskernel}
+\end{figure}
+
+
+
+
+
+\begin{description}
+
+ \item[Input Layer] Composed of the raw pixel data from the image (usually a 3 dimension matrix corresponding to the three color channels R,G,B).
+ 
+\end{description}
+
+
+A simple overview of a \ac{CNN} is shown in Figure \ref{fig:sampleCNN}.
+
+
+\begin{figure}[h] 
+\centerline{\includegraphics [width=1 \textwidth]{imgs/chapter2/samplecnn}}
+\caption{ Example of a Convolutional Neural Network  (from \cite{tese}).}
+\label{fig:sampleCNN}
+\end{figure}
+
+The Network receives an input image (3 dimensional vector: width, height, channels). This input is then transformed through a set of hidden layers, changing the shape and size of the original data to obtain an output vector consisting of each class scored according to the level of certainty that said class is present in the input image.  
+
+
+%\begin{figure}[H] 
+%\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/Krizhevsky}}
+%\caption{ Example of a Convolutional Neural Network Architecture (from %\cite{Krizhevsky}).}
+%\label{fig:Example_object_det}
+%\end{figure}
+
+
+Each layer has an input volume and outputs a certain volume to the next layer. The size of each output volume is dependent on the layers' hyperparameters:
+
+
+\begin{description}
+
+ \item[Depth] This first parameter corresponds to the number of filters present in layer. These filters have different goals, each producing different feature maps. They can be used to detect edges, gradients, downsample the input... 
+
+
+ 
+\end{description}
+
+
+\subsection{Examples of Convolutional Networks}
+
+$ f: {\rm I\!R}^{N} \rightarrow \{-1,+1\}$, 
+
+\section{Evaluation of Object Detection Algorithms}
+
+\begin{description}
+
+ \item[\ac{TP}] True positives represent the instances where the predicted class is equal to the actual class present in the image.
+
+\end{description}
+
