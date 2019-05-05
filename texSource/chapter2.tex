@@ -1,7 +1,82 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{State of the Art} \label{ch:Concepts}
+\chapter{Background} \label{ch:Concepts}
 
 \section{Introduction}
+\section {FMCW radars}
+In order to retrieve the best data for our application we first need to understand how the radar works. The following sections will try explain how the radar calculates the range, velocity and angle of an object.
+\subsection{range Detection}
+An FMCW radar transmits a signal called a “chirp”. A chirp is a sinusoid whose frequency  increases linearly with time.
+%% put A t and f t plot
+A chirp is characterized by a start frequency (fc), bandwidth(B) and duration (Tc). The slope (S) of the chirp is the rate at witch the frequency of the chirp increases and is given by:
+\begin{equation}
+    S=\frac{B}{T_c}
+\end{equation}
+%%PUT SOME TEXT
+Object detection follows this steps:
+\begin{enumerate}
+    \item The chirp is transmitted by the TX antenna
+    \item The chirp is reflected off an object and the reflected chirp is received at the RX antenna
+    \item The RX signal and TX signal are ‘mixed’ and the resulting signal is called an ‘IF signal’
+\end{enumerate}
+
+
+%%PUT IMAGE
+%%%When the transmitted chirp encounters an object it will reflect back to the radar and will be captured by the RX antenna.
+The RX signal is a sum of delayed versions of the TX signal. This means that the resulting IF signal will be a combination of sinusoids. Each of this correspond to a reflection of an object. For object $i$ the corresponding frequency $f_i$ is equal to:
+\begin{equation}
+    f_i=S\tau_i
+\end{equation}
+Where $\tau_i$ is equal to the round trip delay of the wave and is equal to:
+\begin{equation}
+    \tau_i=\frac{2d_i}{c}
+\end{equation}
+Where $d_i$ corresponds to the distance of the object to the radar and $c$ the speed of light.
+%% PUT image
+Putting this together the distance of object $i$ is given by:
+\begin{equation}
+    d_i=\frac{f_ic}{2S}
+\end{equation}
+\subsection{range resolution}
+\subsection{velocity Detection}
+\subsection{angle Detection}
+
+ %A cluster is just a subset of points of the cloud that are close together. This takes into account if a point has alot of close neighbours. If it has than it is considered a cluster.  
+- New Technology
+- New possibilities
+\section {ROS}
+Robot Operating System (ROS) is an open-source, meta-operating system that provides libraries and tools to help developers create robotic applications. This includes hardware abstraction, device drivers, tools for introspection, message-passing and more.
+\subsection{ROS architecture}
+%MORE STUFF
+The ROS structure is composed by:
+\begin{itemize}
+\item \textbf{Nodes} - Processes that perform computation.
+\item \textbf{Messages} - ROS predefined data type used to communicate between nodes. 
+\item \textbf{Topics} - Nodes can send messages by publishing to a topic or receive them by subscribing to a topic. 
+\item \textbf{Master} - Provides registration of names (helps nodes find each other).
+% V
+\item \textbf{rosout} - ROS equivalent of stdout 
+\item \textbf{roscore} - Master+rosout+parameter server. 
+%X
+\end{itemize}
+
+%%REVER ISTO
+
+Figure \ref{fig:ros_concepts} shows an overview of the general architecture of ROS.
+
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/rosgraph.png}}
+\caption{Examples of 2D image filters (from \cite{baranov2014}).}
+\label{fig:exemploskernel}
+\end{figure}
+\section {Navigation}
+\subsection{Mapping}
+gmapping, slam, eurico
+\subsection{Localization}
+AMCL
+\subsection{Path Planning}
+dijaktra A*
+
+
 
 This chapter introduces the main concepts and topics involved in this dissertation's work. Firstly, there is a brief discussion about drones and their usages in today's landscape. \cite{uavhist} \ac{UAV}s
 \begin{description}
