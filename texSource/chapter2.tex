@@ -3,8 +3,9 @@
 
 \section{Introduction}
 In this chapter we will discuss some important concepts relevant to this dissertation. This include the components needed to achieve autonomous navigation, the working principles of the sensors used to perceive the environment and a quick overview of the \ac{ROS} platform.
-\section{Autonomous Robots}
-
+\section{Autonomous Mobile Robot Sensors}
+The most typical type of sensors used for perception in the current state of the art are laser range finders, sonar and 
+%GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
 \section {Autonomous Navigation}
 There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{baranov2014}. To combat this problems various algorithms have been developed over the years. In the sections bellow we will discuss the main ones used in this dissertation.
@@ -22,7 +23,7 @@ The \ac{AMCL} algorithm  is the standard choice in this case. It takes into acco
 Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find an optimal path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. In our case we will use the well known dijaktra algorithm.
 \subsection{Motion Control}
 After the optimal plan is computed the final step is to compute the best velocity command that will be sent to the base.  In order to do this we will use a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. For each trajectory it is calculated a determined cost given by a cost function. For each cost th
-\section {FMCW radars}
+\section {FMCW radars working principle}
 In order to retrieve the best data for our application we first need to understand how the radar works. The following sections will try explain how the radar calculates the range, velocity and angle of an object.
 \subsection{range Detection}
 An FMCW radar transmits a signal called a “chirp”. A chirp is a sinusoid whose frequency  increases linearly with time.
@@ -81,12 +82,12 @@ The ROS structure is composed by:
 
 %%REVER ISTO
 
-Figure \ref{fig:ros_concepts} shows an overview of the general architecture of ROS.
+Figure \ref{fig:rosgraph} shows an overview of the general architecture of ROS.
 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/rosgraph.png}}
-\caption{Examples of 2D image filters (from \cite{baranov2014}).}
-\label{fig:exemploskernel}
+\caption{ROS architecture overview \cite{rosbasics}}
+\label{fig:rosgraph}
 \end{figure}
 
 

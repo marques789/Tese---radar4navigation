@@ -1,8 +1,20 @@
-\chapter{Object Detection Performance}
+\chapter{Experimenton and Results}
 
 \section{Introduction}
+With the setup configuration described in the previous section we can now start to experiment with the robotic platform to do certain navigation tasks. In this part we propose 2 experiments that show that the radar can be an alternative or support to the lidar as an obstacle detector for indoor navigation.
 
+\section {Test 1}
+In this first test we want to prove that that there are certain obstacles which the lidar has difficulty detecting. The failure of detecting or partially detecting an obstacle will usually lead to collision due to the absence or late replanning of the robots navigation system.
 
-\subsection{Image Dataset Used}\label{ch:dataset}
+One of this objects is the an office chair here at IRIS lab. The radar as shown to  be better at detecting the low height chair wheels which may be a typical obstacle to avoid in indoor environments. To demonstrate this it was devised a test in which the robot comes in collision course with said chair under the same conditions with different sensor data. 
+\subsection{Setup}
+The robot start position goal and chair position were setup as shown in figure 1 and 2. The experiment was done using the typical lidar, then only using the radar, and then the fusion of both. This was repeated 5 times for each case and the navigation data was saved in a rosbagfile.
+FALTA FIGURAS!!!
+\subsection{Results}
 
+\section {Test 2}
+In this following test we wanted to demonstrate two things: (1) the radar detects and avoids persons that obstruct its pre planned path, and (2) if is able to clear previously obstructed spaces (by the person in this case). 
+\subsection{Setup}
+The robot starting position and goal were set the same as the last test, however in this case a person a single person was instructed to actively obstruct the robot's forward movement until the robot reaches its first goal. After reaching it the person is removed and the robot is then instantaneously given a second goal which in this case is the starting position.
+\subsection{Results}
 \section{Summary}

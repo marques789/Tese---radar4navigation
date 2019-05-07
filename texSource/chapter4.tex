@@ -1,13 +1,27 @@
-\chapter{Integration and Implementation}
+\chapter{Hardware and Software}
 
 \section{Introduction}
 
+\section{Hardware}
+Has said before the robotic platform used in this work is the turtlebot2. The out of the box platform was modified in order to include a processing unit, a lidar and a \ac{FMCW} radar as sensors. The modified version is displayed in figure X.  The chosen \ac{FMCW} radar board is the Texas Instruments mmwave AWR1642BOOST.
 
+FIGURE X
+\section{AWR1642BOOST}
 
+The radar board chosen for this work is TI's AWR1642BOOST (Fig.\ref{fig:awr}). It will be used as an obstacle detector.\\
+\textbf{SPECS?}
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter4/awr1642.jpg}}
+\caption{Texas Instruments AWR1642BOOST evaluation board}
+\label{fig:awr}
+\end{figure}
 
-\section{AWR1642}
 \section{Lidar}
+
 \section{Turtlebot2}
+\section{Software}
+The software used in this project is divided in three stages. First one is the interface between the radar board TLV data and the ROS message format. Then a filtering operation to remove false detections. 
+\subsection{Interface Between Radar and ROS?}
 
 
 \section{Summary}   
