@@ -1,5 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Background} \label{ch:Concepts}
+\chapter{State of the Art} \label{ch:Concepts}
 
 \section{Introduction}
 In this chapter we will discuss some important concepts relevant to this dissertation. This include the components needed to achieve autonomous navigation, the working principles of the sensors used to perceive the environment and a quick overview of the \ac{ROS} platform.
@@ -61,6 +61,7 @@ However there are some concerns about this type of technology. CEO of Tesla, Elo
 \subsubsection{advantages vs disadvantages}
 
 \subsection{FMCW Radar}
+
 \subsubsection{History}
 \subsubsection{Applications}
 \subsubsection{advantages vs disadvantages}
@@ -87,9 +88,9 @@ After the optimal plan is computed the final step is to compute the best velocit
 \section {\ac{FMCW} radars working principle}
 In order to retrieve the best data for our application we first need to understand how the radar works. The following sections will try explain how the radar calculates the range, velocity and angle of an object.
 \subsection{range Detection}
-An FMCW radar transmits a signal called a “chirp”. A chirp is a sinusoid whose frequency  increases linearly with time.
+An \ac{FMCW} radar transmits a signal called a “chirp”. A chirp is a sinusoid whose frequency  increases linearly with time.
 %% put A t and f t plot
-A chirp is characterized by a start frequency (fc), bandwidth(B) and duration (Tc). The slope (S) of the chirp is the rate at which the frequency of the chirp increases and is given by:
+A chirp is characterized by a start frequency (fc), bandwidth (B) and duration (Tc). The slope (S) of the chirp is the rate at which the frequency of the chirp increases and is given by:
 \begin{equation}
     S=\frac{B}{T_c}
 \end{equation}
@@ -104,7 +105,7 @@ Object detection follows this steps:
 
 %%PUT IMAGE
 %%%When the transmitted chirp encounters an object it will reflect back to the radar and will be captured by the RX antenna.
-The RX signal is a sum of delayed versions of the TX signal. This means that the resulting IF signal will be a combination of sinusoids. Each of this correspond to a reflection of an object. For object $i$ the corresponding frequency $f_i$ is equal to:
+The RX signal is a sum of delayed versions of the TX signal. This means that the resulting \ac{IF} signal will be a combination of sinusoids. Each of this correspond to a reflection of an object. For object $i$ the corresponding frequency $f_i$ is equal to:
 \begin{equation}
     f_i=S\tau_i
 \end{equation}
@@ -114,12 +115,18 @@ Where $\tau_i$ is equal to the round trip delay of the wave and is equal to:
 \end{equation}
 Where $d_i$ corresponds to the distance of the object to the radar and $c$ the speed of light.
 %% PUT image
-Putting this together the distance of object $i$ is given by:
+Putting this together the distance to the object $i$ is given by:
 \begin{equation}
     d_i=\frac{f_ic}{2S}
 \end{equation}
-\subsection{range resolution}
+
+ So to determine the range of all objects detected we only need to find the according frequency components in the \ac{IF} signal. To do this the analog signal is first sent to an \ac{ADC} and with the resulting digital output the \ac{FFT} is computed by a \ac{DSP}. Each peak in the \ac{FFT} that meets a certain \ac{SNR} threshold corresponds to a different range detection. 
+ 
+ However since the \ac{ADC} has a limited sampling rate, the valid range of frequencies in the \ac{FFT} is also limited, this means there is a maximum amount of range the radar can detect.
+The range resolution is also finite since the \ac{FFT} has a limited amount of samples. In short, the higher the bandwidth of the chirp the better resolution we get.
+ 
 \subsection{velocity Detection}
+This type of radar also provides an estimate on the radial velocity for each detected range. To do this we need more than one chirp. A set of N chirps is called a frame. The radar constantly sends this frames,each one corresponding to an observation. Since the time between frames is so low the corresponding range-\ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of velocities  for each range detection. In the end we get a matrix that relates radial velocity and range 
 \subsection{angle Detection}
 
  %A cluster is just a subset of points of the cloud that are close together. This takes into account if a point has alot of close neighbours. If it has than it is considered a cluster.  
