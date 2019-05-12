@@ -3,13 +3,69 @@
 
 \section{Introduction}
 In this chapter we will discuss some important concepts relevant to this dissertation. This include the components needed to achieve autonomous navigation, the working principles of the sensors used to perceive the environment and a quick overview of the \ac{ROS} platform.
-\section{Robot Indoor Navigation history}
+\section{Robot Indoor Navigation state of the art}
+Robot autonomous navigation in indoor environments is becoming more and more present each day. They perform a multitude of tasks such as cleaning, transportation and more. There are a wide variety of robots that were able to perform complex navigation tasks. Here are some of them:
+\subsection{PR2}
+In  \cite{marder2010office}  the PR2 robot was able navigate autonomously for 26.2 miles in an office like environment. During the task, the robot was able to avoid  shelves, tables, chairs and people as well as go
+through narrow spaces. The sensor source used in this case was the Hokuyo UTM-30LX Scanning Laser Rangefinder and the navigation system developed is now known as the \ac{ROS} navigation stack. However it was noted that low long obstacles were not correctly detected.
+
+\subsection{Roomba}
+Roomba is a successful  example of this, this   commercial robot is one case of a successful cleaning robot that has some major 
+
 \section{Autonomous Mobile Robot Sensors}
 
-In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This type of 
+In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This information comes from its sensor sources
+The most typical type of sensors used for perception in the current state of the art are laser range finders, sonar and the a rgb-d camera. However the new emerging \ac{FMCW} radar technology with high frequency and bandwidth 77-81 GHz are now being suitable as sensors for robotic applications.
+\subsection{What is being used}
+
+\subsection{LiDAR}
+\ac{LiDAR} has been a staple in sensing technology in recent history. It has almost an  unlimited  number of applications \cite{lidar100uses} due to its generation of dense data. Some of the most standing out ones are in autonomous vehicles and robotics. 
+\subsubsection{Introduction}
+
+ One of the most standing out ones is the use in autonomous vehicles (Fig. \ref{fig:lidarcar}). The insanely accurate depth information combined with a 360 degrees of visibility provided by \ac{LiDAR} enables the development of advanced navigation systems that are able to perform self-driving.
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/lidarcar.png}}
+\caption{Example of \ac{LiDAR} technology being used for road perception \cite{lidarcar}}
+\label{fig:lidarcar}
+\end{figure}
+
+In \cite{lidarperception}  it was implemented a perception system for ground vehicles based on \ac{LiDAR} using segmentation, clustering and tracking techniques. However, it was noted that it was hard to distinguish between closely  separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
 
 
-The most typical type of sensors used for perception in the current state of the art are laser range finders, sonar and the a rgb-d camera.
+In \cite{car2dlidar} a low cost solution for object detection, classification and ranging is  proposed by the use of an inexpensive 2D pulsed light \ac{LiDAR}. The system was able to provide reliable detection of 1 meter wide obstacles at distances less than 10 meters with a 360 degree field of view.   
+
+
+However there are some concerns about this type of technology. CEO of Tesla, Elon Musk has been very critical of it. Recently, at Tesla’s first Autonomy Day event  he said \textit{"Anyone relying on \ac{LiDAR} is doomed. Doomed!"} \cite{elon}. He believes that cameras, radar and ultrasonic sensors are the future for car visions systems. 
+
+\ac{LiDAR} is also the main sensory component for robotics. Various robots rely on this type of sensors for autonomy and navigation. Fig. \ref{fig:robotslidar} show some examples of robots that use \ac{LiDAR} as a sensor source.
+\begin{figure}[h] 
+    \begin{minipage}[b]{.49\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/robot1.jpg}
+        %\caption{Fixed-wing drone (from \cite{parking}).}
+        \subcaption{ROSbot - Autonomous Robot with Laser scanner RPLiDAR A2 \cite{robot1}}
+    \end{minipage}
+    \begin{minipage}[b]{.49\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/robot2.jpg}
+        \subcaption{Knightscope autonomous security robot with a Velodyne \ac{LiDAR} Puck \cite{robot2}}
+        %\caption{Single-rotor drone (from \cite{tumor}).}
+    \end{minipage}
+    \caption{Different robots using \ac{LiDAR}}
+    \label{fig:robotslidar}
+\end{figure}
+
+
+
+\subsubsection{How it works}
+
+\subsubsection{Applications}
+\subsubsection{advantages vs disadvantages}
+
+\subsection{FMCW Radar}
+\subsubsection{History}
+\subsubsection{Applications}
+\subsubsection{advantages vs disadvantages}
+
+
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
 \section {Autonomous Navigation}
@@ -28,12 +84,12 @@ The \ac{AMCL} algorithm  is the standard choice in this case. It takes into acco
 Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find an optimal path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. In our case we will use the well known dijaktra algorithm.
 \subsection{Motion Control}
 After the optimal plan is computed the final step is to compute the best velocity command that will be sent to the base.  In order to do this we will use a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. For each trajectory it is calculated a determined cost given by a cost function. For each cost th
-\section {FMCW radars working principle}
+\section {\ac{FMCW} radars working principle}
 In order to retrieve the best data for our application we first need to understand how the radar works. The following sections will try explain how the radar calculates the range, velocity and angle of an object.
 \subsection{range Detection}
 An FMCW radar transmits a signal called a “chirp”. A chirp is a sinusoid whose frequency  increases linearly with time.
 %% put A t and f t plot
-A chirp is characterized by a start frequency (fc), bandwidth(B) and duration (Tc). The slope (S) of the chirp is the rate at witch the frequency of the chirp increases and is given by:
+A chirp is characterized by a start frequency (fc), bandwidth(B) and duration (Tc). The slope (S) of the chirp is the rate at which the frequency of the chirp increases and is given by:
 \begin{equation}
     S=\frac{B}{T_c}
 \end{equation}
