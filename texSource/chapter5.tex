@@ -33,6 +33,24 @@ The robot collided with the chair in all 5 experiments. Figure \ref{fig:scan_res
 \end{figure}
 \subsubsection{Radar}
 In the radar's case the chair is detected almost immediately, this lead to the global plan and the motion controller to be able to adjust in a very comfortable way in all 5 experiments. Figure X shows some instances of the first experiment. Although the detected space that the chair is occupying has some mismatch, the early detection makes up for it. However since the radar data is inconsistent throughout its frames this may lead to the robot planning a mismatch on paths computed and ultimately lead to some oscillation. ( This can be reduced by using an observation buffer in the radar data. This buffer merges all radar data within a given window of time. However this approach leads to poor performance in very cluttered environments).
+\begin{figure}[h] 
+    \begin{minipage}[t]{.32\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter5/radar1.png}
+        %\caption{Fixed-wing drone (from \cite{parking}).}
+        \subcaption{First computed path is a straight line to the goal without not taking into account the obstacle}
+    \end{minipage}
+    \begin{minipage}[t]{.32\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter5/radar2.png}
+        \subcaption{Replanning is done way before collision can occur}
+        %\caption{Single-rotor drone (from \cite{tumor}).}
+    \end{minipage}
+     \begin{minipage}[t]{.32\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter5/radar3.png}
+        \subcaption{\ac{RADAR} not detecting the chair but it is still marked on the local and global costmap}
+    \end{minipage}
+    \caption{Navigation results displayed in rviz using the \ac{RADAR} as a sensor source}
+    \label{fig:scan_results_chair}
+\end{figure}
 \subsubsection{Radar and Scan}
 Using both sensors showed similar results to the ones shown with only using the radar, the robot was able to avoid the chair all 5 times. 
 \section {Experiment 2}
@@ -45,3 +63,5 @@ As expected the robot was able to detect and avoid the person in all 5 cases. Ho
 \subsection{Radar}
 The radar was also able to detect the obstructing person and managed to plan around it in all cases. Since the radar cloud is less dense clearing marked obstacles was slower than in the \ac{LRF} case. However this did not impact the overall performance of the navigation task in a significant way.
 \section{Summary}
+From this tests we conclude that the \ac{FMCW} radar may be faster at detecting certain indoor obstacles such as chairs which may be crucial when navigating. The radar was also able to perform 
+obstacle avoidance of dynamic obstacles(in this case a person that continuously obstructed its path at 5 different times in the same environment which may suggest the use of \ac{RADAR} as an alternate sensory unit over the \ac{LiDAR}.
