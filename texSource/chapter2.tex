@@ -14,15 +14,14 @@ Roomba is a successful  example of this, this   commercial robot is one case of 
 
 \section{Autonomous Mobile Robot Sensors}
 
-In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This information comes from its sensor sources
+In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This information comes from its sensor sources.
 The most typical type of sensors used for perception in the current state of the art are laser range finders, sonar and the a rgb-d camera. However the new emerging \ac{FMCW} radar technology with high frequency and bandwidth 77-81 GHz are now beginning to be suitable as sensors for robotic applications.
-\subsection{What is being used}
 
 \subsection{LiDAR}
 \ac{LiDAR} has been a staple in sensing technology in recent history. It has almost an  unlimited  number of applications \cite{lidar100uses} due to its generation of dense data. Some of the most standing out ones are in autonomous vehicles and robotics. 
 \subsubsection{Introduction}
 
- One of the most standing out ones is the use in autonomous vehicles (Fig. \ref{fig:lidarcar}). The insanely accurate depth information combined with a 360 degrees of visibility provided by \ac{LiDAR} enables the development of advanced navigation systems that are able to perform self-driving.
+ One of the most standing out ones is the use in autonomous vehicles (Fig. \ref{fig:lidarcar}). The insanely accurate depth information combined with a high field of view provided by \ac{LiDAR} enables the development of advanced navigation systems that are able to perform self-driving.
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/lidarcar.png}}
 \caption{Example of \ac{LiDAR} technology being used for road perception \cite{lidarcar}}
@@ -31,8 +30,7 @@ The most typical type of sensors used for perception in the current state of the
 
 In \cite{lidarperception}  it was implemented a perception system for ground vehicles based on \ac{LiDAR} using segmentation, clustering and tracking techniques. However, it was noted that it was hard to distinguish between closely  separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
 
-
-In \cite{car2dlidar} a low cost solution for object detection, classification and ranging is  proposed by the use of an inexpensive 2D pulsed light \ac{LiDAR}. The system was able to provide reliable detection of 1 meter wide obstacles at distances less than 10 meters with a 360 degree field of view.   
+In \cite{car2dlidar} a low cost solution for object detection, classification and ranging is  proposed by the use of an inexpensive 2D pulsed light \ac{LiDAR}. The system was able to provide reliable detection of 1 meter wide obstacles at distances less than 10 meters.
 
 
 However there are some concerns about this type of technology. CEO of Tesla, Elon Musk has been very critical of it. Recently, at Tesla’s first Autonomy Day event  he said \textit{"Anyone relying on \ac{LiDAR} is doomed. Doomed!"} \cite{elon}. He believes that cameras, radar and ultrasonic sensors are the future for car visions systems. 
@@ -126,9 +124,9 @@ Putting this together the distance to the object $i$ is given by:
 The range resolution is also finite since the \ac{FFT} has a limited amount of samples. In short, the higher the bandwidth of the chirp the better resolution we get.
  
 \subsection{velocity Detection}
-This type of radar also provides an estimate on the radial velocity for each detected range. To do this we need more than one chirp. A set of N chirps is called a frame. The radar constantly sends this frames,each one corresponding to an observation. Since the time between frames is so low the corresponding range-\ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of velocities  for each range detection. In the end we get a matrix that relates radial velocity and range 
+This type of radar also provides an estimate on the radial velocity for each detected range. To do this we need more than one chirp. A set of N chirps is called a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is so low the corresponding range-\ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of velocities  for each range detection. In the end we get a matrix that relates radial velocity and range.
 \subsection{angle Detection}
-
+For this type of de
  %A cluster is just a subset of points of the cloud that are close together. This takes into account if a point has alot of close neighbours. If it has than it is considered a cluster.  
 - New Technology
 - New possibilities
