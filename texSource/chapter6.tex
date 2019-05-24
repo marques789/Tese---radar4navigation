@@ -5,7 +5,7 @@ In this section we will explore the implementation of a new plugin in the ROS na
 
 \section{Layered Costmaps}
 As said before the global and local costmaps used in \ac{ROS} Navigation Stack are both layered costmaps.
-This means that they are composed by independent components with each one affecting the resulting layered costmap in specific environmental contexts. For example the classic \textit{static layer} takes information from a published map topic and based on the position of the robot marks some  pre-determined obstacles.  Figure \ref{fig::layers} show some examples of different layers for different contexts.
+This means that they are composed by independent components with each one affecting the resulting layered costmap in specific environmental contexts. For example the classic \textit{static layer} takes information from a published map topic and based on the position of the robot marks some  pre-determined obstacles.  Figure \ref{fig::layers} show some different layers for different contexts.
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter6/layers.png}}
 \caption{A stack of costmap layers, showcasing the different contextual

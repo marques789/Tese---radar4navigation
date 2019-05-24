@@ -1,74 +1,68 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{State of the Art} \label{ch:Concepts}
+\chapter{Background} \label{ch:Concepts}
 
 \section{Introduction}
-In this chapter we will discuss some important concepts relevant to this dissertation. This include the components needed to achieve autonomous navigation, the working principles of the sensors used to perceive the environment and a quick overview of the \ac{ROS} platform.
-\section{Robot Indoor Navigation state of the art}
-Robot autonomous navigation in indoor environments is becoming more and more present each day. They perform a multitude of tasks such as cleaning, transportation and more. There are a wide variety of robots that were able to perform complex navigation tasks. Here are some of them:
-\subsection{PR2}
-In  \cite{marder2010office}  the PR2 robot was able navigate autonomously for 26.2 miles in an office like environment. During the task, the robot was able to avoid  shelves, tables, chairs and people as well as go
-through narrow spaces. The sensor source used in this case was the Hokuyo UTM-30LX Scanning Laser Rangefinder and the navigation system developed is now known as the \ac{ROS} navigation stack. However it was noted that low long obstacles were not correctly detected.
+In this chapter we will discuss some important concepts relevant to this dissertation. This include an overview of both \ac{LiDAR} and \ac{FMCW} radar technologies, the components needed to achieve autonomous navigation,  and a quick overview of the \ac{ROS} platform.
 
-\subsection{Roomba}
-Roomba is a successful  example of this, this   commercial robot is one case of a successful cleaning robot that has some major 
-
-\section{Autonomous Mobile Robot Sensors}
+\section{\ac{LiDAR} vs \ac{RADAR}}
 
 In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This information comes from its sensor sources.
-The most typical type of sensors used for perception in the current state of the art are laser range finders, sonar and the a rgb-d camera. However the new emerging \ac{FMCW} radar technology with high frequency and bandwidth 77-81 GHz are now beginning to be suitable as sensors for robotic applications.
+The most typical type of sensors used for perception are usually laser range finders (\ac{LiDAR}), sonar and the a rgb-d camera. However the new emerging \ac{mmWave} \ac{FMCW} radar technology with high frequency and bandwidth 77-81 GHz is now beginning to be suitable for use in robotic applications. In the following  sections we will give a brief overview of current work being done using \ac{LiDAR} and \ac{FMCW} \ac{RADAR}, how they work, and what advantages and disadvantages each sensor has.
 
 \subsection{LiDAR}
 \ac{LiDAR} has been a staple in sensing technology in recent history. It has almost an  unlimited  number of applications \cite{lidar100uses} due to its generation of dense data. Some of the most standing out ones are in autonomous vehicles and robotics. 
-\subsubsection{Introduction}
+\subsubsection*{Autonomous Vehicles}
 
- One of the most standing out ones is the use in autonomous vehicles (Fig. \ref{fig:lidarcar}). The insanely accurate depth information combined with a high field of view provided by \ac{LiDAR} enables the development of advanced navigation systems that are able to perform self-driving.
+The use of \ac{LiDAR} in autonomous vehicles has been a common trend for a while now (Fig. \ref{fig:lidarcar}). The insanely accurate depth information combined with a high field of view provided by \ac{LiDAR} enables the development of advanced navigation systems that are able to perform self-driving.
+ 
+ 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/lidarcar.png}}
 \caption{Example of \ac{LiDAR} technology being used for road perception \cite{lidarcar}}
 \label{fig:lidarcar}
 \end{figure}
 
-In \cite{lidarperception}  it was implemented a perception system for ground vehicles based on \ac{LiDAR} using segmentation, clustering and tracking techniques. However, it was noted that it was hard to distinguish between closely  separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
+Some application examples of this is include \cite{lidarperception}  where it was implemented a perception system for ground vehicles based on \ac{LiDAR} using segmentation, clustering and tracking techniques.  However, it was noted that it was hard to distinguish between closely  separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
 
 In \cite{car2dlidar} a low cost solution for object detection, classification and ranging is  proposed by the use of an inexpensive 2D pulsed light \ac{LiDAR}. The system was able to provide reliable detection of 1 meter wide obstacles at distances less than 10 meters.
 
 
 However there are some concerns about this type of technology. CEO of Tesla, Elon Musk has been very critical of it. Recently, at Tesla’s first Autonomy Day event  he said \textit{"Anyone relying on \ac{LiDAR} is doomed. Doomed!"} \cite{elon}. He believes that cameras, radar and ultrasonic sensors are the future for car visions systems. 
-
-\ac{LiDAR} is also the main sensory component for robotics. Various robots rely on this type of sensors for autonomy and navigation. Fig. \ref{fig:robotslidar} show some examples of robots that use \ac{LiDAR} as a sensor source.
+\subsubsection*{Robotics}
+\ac{LiDAR} is also one of the major sensory component for robotics (Fig. \ref{fig:robotslidar}). Various robots rely on it for autonomy and navigation with 
 \begin{figure}[h] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/robot1.jpg}
-        %\caption{Fixed-wing drone (from \cite{parking}).}
         \subcaption{ROSbot - Autonomous Robot with Laser scanner RPLiDAR A2 \cite{robot1}}
     \end{minipage}
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/robot2.jpg}
         \subcaption{Knightscope autonomous security robot with a Velodyne \ac{LiDAR} Puck \cite{robot2}}
-        %\caption{Single-rotor drone (from \cite{tumor}).}
     \end{minipage}
     \caption{Different robots using \ac{LiDAR}}
     \label{fig:robotslidar}
 \end{figure}
+In  \cite{marder2010office}  the PR2 robot was able navigate autonomously for 26.2 miles in an office like environment. During the task, the robot was able to avoid  shelves, tables, chairs and people as well as go
+through narrow spaces. The sensor source used in this case was the Hokuyo UTM-30LX Scanning Laser Rangefinder and the navigation system developed is now known as the \ac{ROS} navigation stack. However it was noted that the robot had difficulty detecting low long obstacles.
+In \cite{lidar2019ros} an autonomous robot mobile robot is constructed  using a 2D \ac{LiDAR} sensor. 
 
-
-
+%%ADD ROBOT INDOOR NAVIGATION
 \subsubsection{How it works}
 
-\subsubsection{Applications}
-\subsubsection{advantages vs disadvantages}
+
+\subsubsection{Limitations}
 
 \subsection{FMCW Radar}
 
-\subsubsection{History}
+\subsubsection{History and applications}
 \subsubsection{Applications}
 \subsubsection{advantages vs disadvantages}
 
 
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
-\section {Autonomous Navigation}
-There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{baranov2014}. To combat this problems various algorithms have been developed over the years. In the sections bellow we will discuss the main ones used in this dissertation.
+\section {Navigation Concepts}
+There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{baranov2014}.  various algorithms have been developed over the years to combat this problems. In the sections bellow we give a brief overview of the more popular solutions.
 
 \subsection{Mapping}
 
@@ -80,9 +74,9 @@ An easy solution to this problem is relying on the robot's odometry information 
 To fix this issue various algorithms were developed being the most popular ones based on particle filters.
 The \ac{AMCL} algorithm  is the standard choice in this case. It takes into account a group of particles, each one corresponding to a certain robot state (position and orientation in this case). As the robot moves the least probable states are filtered out and  the particles should over time converge on the actual position of the robot.  
 \subsection{Path Planning}
-Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find an optimal path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. In our case we will use the well known dijaktra algorithm.
+Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. In our case we will use the well known dijaktra algorithm.
 \subsection{Motion Control}
-After the optimal plan is computed the final step is to compute the best velocity command that will be sent to the base.  In order to do this we will use a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. For each trajectory it is calculated a determined cost given by a cost function. For each cost th
+After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. For each trajectory it is calculated a determined cost given by a cost function  taking into account 
 \section {\ac{FMCW} radars working principle}
 In order to retrieve the best data for our application we first need to understand how the radar works. The following sections will try explain how the radar calculates the range, velocity and angle of an object.
 \subsection{range Detection}
@@ -131,6 +125,8 @@ For this type of de
 - New Technology
 - New possibilities
 \section {ROS}
+
+
 \ac{ROS} is an open-source, meta-operating system that provides libraries and tools to help developers create robotic applications. This includes hardware abstraction, device drivers, tools for introspection, message-passing and more.
 \subsection{ROS architecture}
 %MORE STUFF
