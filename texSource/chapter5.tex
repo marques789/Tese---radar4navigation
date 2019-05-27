@@ -11,7 +11,7 @@ The motion controller will take into account this plan
 
 
 \section {Experiment 2}
-In this following test we want to answer two things: (1) Is the robot able to avoid people that obstruct its pre planned path only using the  \ac{FMCW} radar as an obstacle detector, and (2) if in this case it is also able to clear previously obstructed spaces (by the person in this case) by raytracing its environment. This last requirement may provide to be difficult to get since the radar point cloud is less dense than the 2D laser range finder.
+In this following test we want to answer two things: (1) Is the robot able to avoid people that obstruct its pre planned path only using the  \ac{FMCW} radar as an obstacle detector, and (2) if in this case it is also able to clear previously obstructed spaces (by the person in this case) by ray tracing its environment. This last requirement may provide to be difficult to get since the radar point cloud is less dense than the 2D laser range finder.
 \subsection{Experimental Setup}
 The robot starting position and goal were set the same as the last test, however in this case a single person was instructed to actively obstruct the robot's forward movement until the robot reaches its first goal. After reaching it the person is removed from the environment  and the robot is  instantaneously given a second goal which in this case is its the starting position. 
 \subsubsection{Results}
@@ -26,7 +26,7 @@ obstacle avoidance of dynamic obstacles (in this case a person that continuously
 Over the course of this work the \ac{FMCW} radar has shown to have better performance at detecting certain indoor objects than the 2D \ac{LiDAR}. This means that there might be situations where using the \ac{FMCW} radar for obstacle avoidance produce better results for indoor navigation tasks. To demonstrate this a test was devised in a controlled environment that compares the performance of each sensor for different types of obstacles, in this case two types of chairs, a garbage bin, a low height box and finally a robot (in this case another tutlebot2).  We also try to use the fusion of both sensors that in theory should produce the best results.
 
 
-To ensure the experiment is done in a controlled way the scenario in figure X was constructed. This is a 4 by 4 meter squared box with 1 meter walls with the addition of a half a meter wall in length in the middle. This type of environment optimizes the robots localization system (\ac{AMCL}) as well as make sure we only concentrate with one specific object at a time. Using a \ac{SLAM} package developed here at \ac{IRIS} a map is created (Figure X) that will later be used for localization purposes.
+To ensure the experiment is done in a controlled way the scenario in figure X was constructed. This is a 4 by 4 meter squared box with 1 meter walls with the addition of a half a meter wall in length in the middle. This type of environment optimizes the robots localization system (\ac{AMCL}) as well as make sure we only concentrate with one specific object at a time. Using a \ac{SLAM} package developed here at \ac{IRIS} a map is first created (Figure X) that will later be used for localization purposes.
 \subsection{Experimental setup}
 With the described scenario we setup the robots goal to make 5 loops between 2 goals, positioning in between the route an obstacle as described in  figure X. If the obstacle detection system fails then the robot should collide with said object, if it succeeds the robot should go around the object leaving in between a relatively safe distance. The test was made using the \ac{FMCW} radar, the 2D \ac{LiDAR}, and the fusion of both for different types of objects described in figure X. The  navigation data was recorded in a rosbag file in order to be analyzed later.
 
@@ -35,6 +35,41 @@ The list of objects are shown bellow:
 The first obstacle chosen is an office chair used here at \ac{IRIS} Laboratory (Figure X). This type of swivel chair has a load bearing leg under the seat  that  spreads into a set of wheels for mobility. The space this chair occupies is approximately a circle with 35 cm radius.
 \subsection{Results}
 In this section we show the results of how the robot performed in avoiding the previous obstacles using different type of sensor sources (\ac{FMCW} radar, the 2D \ac{LiDAR} and both).
+\begin{figure}[h!]
+  \centering
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/wchair.jpg}
+     \caption{Wheeled office chair}
+     \label{fig::wchair}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/nchair.jpg}
+    \caption{Four legged chair}
+    \label{fig::nchair}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/box.jpg}
+    \caption{Low height box}
+    \label{fig::box}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/robot.jpg}
+    \caption{Another turtlebot}
+    \label{fig::robot}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/garbage.jpg}
+    \caption{Garbage Bin}
+    \label{fig::garbage}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/garbage.jpg}
+    \caption{Garbage Bin}
+    \label{fig::garbage}
+  \end{subfigure}
+  \caption{Different obstacles used for the controlled test}
+  \label{fig:obstacles}
+\end{figure}
 \subsubsection{Office Chair}
 In the \ac{LiDAR}'s case  the robot completely disregarded the chair going in a straight line and pushing it until it was away from the experimental setup has shown in the video X. This was due to the 2D \ac{LiDAR} only detecting the leg of the chair and not the wheels. This means that the robot only perceived a single point as being occupied and not the full area of the chair. Although the inflation layer  might correct this error in some cases, since the detection is so late the robot still is unable to avoid it.
 

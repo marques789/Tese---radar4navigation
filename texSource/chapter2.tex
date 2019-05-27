@@ -22,14 +22,14 @@ The use of \ac{LiDAR} in autonomous vehicles has been a common trend for a while
 \label{fig:lidarcar}
 \end{figure}
 
-Some application examples of this is include \cite{lidarperception}  where it was implemented a perception system for ground vehicles based on \ac{LiDAR} using segmentation, clustering and tracking techniques.  However, it was noted that it was hard to distinguish between closely  separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
+Some application examples of this include \cite{lidarperception}  where it was implemented a perception system for ground vehicles based on \ac{LiDAR} using segmentation, clustering and tracking techniques.  However, it was noted that it was hard to distinguish between closely  separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
 
 In \cite{car2dlidar} a low cost solution for object detection, classification and ranging is  proposed by the use of an inexpensive 2D pulsed light \ac{LiDAR}. The system was able to provide reliable detection of 1 meter wide obstacles at distances less than 10 meters.
 
 
 However there are some concerns about this type of technology. CEO of Tesla, Elon Musk has been very critical of it. Recently, at Tesla’s first Autonomy Day event  he said \textit{"Anyone relying on \ac{LiDAR} is doomed. Doomed!"} \cite{elon}. He believes that cameras, radar and ultrasonic sensors are the future for car visions systems. 
 \subsubsection*{Robotics}
-\ac{LiDAR} is also one of the major sensory component for robotics (Fig. \ref{fig:robotslidar}). Various robots rely on it for autonomy and navigation with 
+\ac{LiDAR} is also one of the major sensory component for robotics (Fig. \ref{fig:robotslidar}). Various robots rely on it for autonomy and navigation.
 \begin{figure}[h] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/robot1.jpg}
@@ -42,21 +42,51 @@ However there are some concerns about this type of technology. CEO of Tesla, Elo
     \caption{Different robots using \ac{LiDAR}}
     \label{fig:robotslidar}
 \end{figure}
-In  \cite{marder2010office}  the PR2 robot was able navigate autonomously for 26.2 miles in an office like environment. During the task, the robot was able to avoid  shelves, tables, chairs and people as well as go
+\cite{marder2010office}  the PR2 robot was able navigate autonomously for 26.2 miles in an office like environment. During the task, the robot was able to avoid  shelves, tables, chairs and people as well as go
 through narrow spaces. The sensor source used in this case was the Hokuyo UTM-30LX Scanning Laser Rangefinder and the navigation system developed is now known as the \ac{ROS} navigation stack. However it was noted that the robot had difficulty detecting low long obstacles.
 In \cite{lidar2019ros} an autonomous robot mobile robot is constructed  using a 2D \ac{LiDAR} sensor. 
 
 %%ADD ROBOT INDOOR NAVIGATION
-\subsubsection{How it works}
+\subsubsection{Operating Principle}
+The way \ac{LiDAR} technology works is very straightforward, just emit a laser beam and wait for it to bounce back. Based on the proprieties of the reflected signal we can determine the range of the obstacle it hit. By spinning the mirrors at different angles (scanning) we get a set of points cloud that give angle and depth information about the environment. There are two main different operating principles to do this, \textbf{Time of Flight} and \textbf{Phase Based}.
+\subsubsection*{Time of Flight}
+ In this approach a pulse of light is transmitted, when this is done an internal clock is started. The pulse is captured by a photodetector which triggers the clock to stop. Being $\tau$ the time it took for the reflected signal to  comeback and assuming it traveled at approximately the speed of light ($c$) then the distance of the object $d$ is equal to:
+\begin{equation}
+    d=\frac{\tau c}{2}
+\end{equation}
+This method produces very accurate results for a wide range but requires high precision clocks. However greater  range capability leads to slower update rates since it has to wait more time for the pulse to comeback.
+It is typically not used for robotics since this types of systems have very high cost.
+\subsubsection*{Phase Based}
+A more affordable approach  is based on modulating the intensity of the laser at a specific frequency. Figure \ref{fig:cwlidar1} showcases the resulting sinusoidal wave that is sent and the respective returned signal. 
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/cwlidar1.png}}
+\caption{Phase comparison method of measuring distance \cite{cwlidar}}
+\label{fig:cwlidar1}
+\end{figure}
 
+Being $\Phi$ the phase difference between the two and $\lambda_m$ the wavelength of the sinusoid then the distance of the object is given by:
+\begin{equation}
+    d=\frac{\Phi \lambda_m}{4 \pi}
+\end{equation}
+This means that the maximum unambiguous distance that can be measured is  $\frac{\lambda_m}{2}$, and its range resolution depends upon the resolution of the phase difference measurement as well as the wavelength used. Almost all robots use this type of \ac{LiDAR} since it is usually cheaper and as a faster update rate.
+%difficult to generate continuous wave of high energy
 
 \subsubsection{Limitations}
+\ac{LiDAR} technology has some problems associated with it, they are:
+\begin{itemize}
+\item{They are usually expensive sensors costing thousands or even tens of thousands of dollars a piece}  
+\item{Range and perception}  
+\item{bulky}  
+\item{robustness} 
+\item{Particular difficult cases} 
+\end{itemize}
 
 \subsection{FMCW Radar}
 
 \subsubsection{History and applications}
 \subsubsection{Applications}
 \subsubsection{advantages vs disadvantages}
+lack the angular resolution 
 
 
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
@@ -125,12 +155,10 @@ For this type of de
 - New Technology
 - New possibilities
 \section {ROS}
-
-
-\ac{ROS} is an open-source, meta-operating system that provides libraries and tools to help developers create robotic applications. This includes hardware abstraction, device drivers, tools for introspection, message-passing and more.
+Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} fixes this issue by being an open-source general purpose framework for robotics. It provides hardware abstraction, device drivers, tools for introspection, message-passing and more. This greatly facilitates the entrance of new developers to learn and do research in this field.
 \subsection{ROS architecture}
-%MORE STUFF
-The ROS structure is composed by:
+The \ac{ROS}  architecture is based on a peer to peer network between processes usually referred to as \textit{Computation Graph}.
+This structure is composed by:
 \begin{itemize}
 \item \textbf{Nodes} - Processes that perform computation.
 \item \textbf{Messages} - ROS predefined data type used to communicate between nodes. 
@@ -144,11 +172,11 @@ The ROS structure is composed by:
 
 %%REVER ISTO
 
-Figure \ref{fig:rosgraph} shows an overview of the general architecture of ROS.
+Figure \ref{fig:rosgraph} gives a brief overview of how each of this concepts are put together and  generate the in ROS  computation system.
 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/rosgraph.png}}
-\caption{ROS architecture overview \cite{rosbasics}}
+\caption{ROS communication architecture overview \cite{rosbasics}}
 \label{fig:rosgraph}
 \end{figure}
 
