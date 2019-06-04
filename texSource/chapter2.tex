@@ -74,42 +74,40 @@ This means that the maximum unambiguous distance that can be measured is  $\frac
 \subsubsection{Limitations}
 \ac{LiDAR} technology has some problems associated with it, they are:
 \begin{itemize}
-\item{They are usually expensive sensors costing thousands or even tens of thousands of dollars a piece}  
-\item{Range and perception}  
-\item{bulky}  
-\item{robustness} 
-\item{Particular difficult cases} 
+\item{High operation costs that limit their use for small applications.}  
+\item{Limited detection range compared to radar technology.}  
+\item{Sensors are usually bulky and fragile.}  
+\item{Direct exposure to sunlight may negatively impact the sensor maximum range and accuracy or even prevent it from functioning completely.} 
+\item{Slow measurement rate due to large dataset processing.} 
 \end{itemize}
 
 \subsection{FMCW Radar}
+\ac{Radar} technology has been around since the 19th century when it was first discovered that radio waves reflected off metallic surfaces, but serious development of this type systems only truly began in the 1930's for military applications \cite{radar_history}. This include the range and angle detection of ship and aircraft engines by measuring incoming signal fluctuations off an oscilloscope. 
 
-\subsubsection{History and applications}
+Nowadays there are various configuration types of radar systems  \cite{types_radar}, each one providing different types of applications. This usually include air traffic control, remote sensing, ground traffic control, space etc... .  However we will focus on a specific configuration called linear (sawtooth)  \ac{FMCW} radars which are  able to measure distance, velocity, and also angular information. 
+
 \subsubsection{Applications}
-\subsubsection{advantages vs disadvantages}
-lack the angular resolution 
+A multitude of applications are being done using this type of sensors:
+For instance in  [1] there is a low a
 
 
-%GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
-\section {Navigation Concepts}
-There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{baranov2014}.  various algorithms have been developed over the years to combat this problems. In the sections bellow we give a brief overview of the more popular solutions.
 
-\subsection{Mapping}
 
-Creating a map in ROS is typically done by using an improved version of  Rao-Blackwellized particle filters such as the ones described in \cite{grisetti2007improved}. This approach has proven to be an effective way to solve the \ac{SLAM} problem and will be used later on in this work to produce a valid map of our indoor environment.
-%gmapping, slam, eurico LASER
-\subsection{Localization}
-With the grid map built we now need to estimate the robot's position in said map. 
-An easy solution to this problem is relying on the robot's odometry information inferred by the robot's encoders and inertial sensors such as accelerometers and gyroscopes. This kind of dead reckoning is an easy and low cost solution for the localization problem. However since the sensor data is integrated over time, this leads to the accumulation of errors which make this approach not feasible for long navigation tasks. 
-To fix this issue various algorithms were developed being the most popular ones based on particle filters.
-The \ac{AMCL} algorithm  is the standard choice in this case. It takes into account a group of particles, each one corresponding to a certain robot state (position and orientation in this case). As the robot moves the least probable states are filtered out and  the particles should over time converge on the actual position of the robot.  
-\subsection{Path Planning}
-Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. In our case we will use the well known dijaktra algorithm.
-\subsection{Motion Control}
-After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. For each trajectory it is calculated a determined cost given by a cost function  taking into account 
-\section {\ac{FMCW} radars working principle}
-In order to retrieve the best data for our application we first need to understand how the radar works. The following sections will try explain how the radar calculates the range, velocity and angle of an object.
-\subsection{range Detection}
+Currently the main focus of mm-wave radar applications
+are geared towards the automotive market
+Millimeter-wave radars are currently being explored for use
+in numerous medical and diagnostic applications ranging from
+cancer imaging to glucose monitoring
+One emerging
+application area is remote non-contact monitoring of human
+vital signs 
+
+
+
+
+This type of radar retrieves various points containing various points. The following sections will try explain how the radar calculates the range, velocity and angle of an object.
+\subsubsection*{range Detection}
 An \ac{FMCW} radar transmits a signal called a “chirp”. A chirp is a sinusoid whose frequency  increases linearly with time.
 %% put A t and f t plot
 A chirp is characterized by a start frequency (fc), bandwidth (B) and duration (Tc). The slope (S) of the chirp is the rate at which the frequency of the chirp increases and is given by:
@@ -147,13 +145,39 @@ Putting this together the distance to the object $i$ is given by:
  However since the \ac{ADC} has a limited sampling rate, the valid range of frequencies in the \ac{FFT} is also limited, this means there is a maximum amount of range the radar can detect.
 The range resolution is also finite since the \ac{FFT} has a limited amount of samples. In short, the higher the bandwidth of the chirp the better resolution we get.
  
-\subsection{velocity Detection}
+\subsection*{velocity Detection}
 This type of radar also provides an estimate on the radial velocity for each detected range. To do this we need more than one chirp. A set of N chirps is called a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is so low the corresponding range-\ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of velocities  for each range detection. In the end we get a matrix that relates radial velocity and range.
-\subsection{angle Detection}
+\subsection*{angle Detection}
 For this type of de
  %A cluster is just a subset of points of the cloud that are close together. This takes into account if a point has alot of close neighbours. If it has than it is considered a cluster.  
 - New Technology
 - New possibilities
+\subsubsection{History and applications}
+\subsubsection{Applications}
+\subsubsection{advantages vs disadvantages}
+lack the angular resolution 
+
+
+%GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
+
+\section {Navigation Concepts}
+There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{baranov2014}.  various algorithms have been developed over the years to combat this problems. In the sections bellow we give a brief overview of the more popular solutions.
+
+\subsection{Mapping}
+
+Creating a map in ROS is typically done by using an improved version of  Rao-Blackwellized particle filters such as the ones described in \cite{grisetti2007improved}. This approach has proven to be an effective way to solve the \ac{SLAM} problem and will be used later on in this work to produce a valid map of our indoor environment.
+%gmapping, slam, eurico LASER
+\subsection{Localization}
+With the grid map built we now need to estimate the robot's position in said map. 
+An easy solution to this problem is relying on the robot's odometry information inferred by the robot's encoders and inertial sensors such as accelerometers and gyroscopes. This kind of dead reckoning is an easy and low cost solution for the localization problem. However since the sensor data is integrated over time, this leads to the accumulation of errors which make this approach not feasible for long navigation tasks. 
+To fix this issue various algorithms were developed being the most popular ones based on particle filters.
+The \ac{AMCL} algorithm  is the standard choice in this case. It takes into account a group of particles, each one corresponding to a certain robot state (position and orientation in this case). As the robot moves the least probable states are filtered out and  the particles should over time converge on the actual position of the robot.  
+\subsection{Path Planning}
+Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. In our case we will use the well known dijaktra algorithm.
+\subsection{Motion Control}
+After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. For each trajectory it is calculated a determined cost given by a cost function  taking into account 
+\section {\ac{FMCW} radars working principle}
+
 \section {ROS}
 Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} fixes this issue by being an open-source general purpose framework for robotics. It provides hardware abstraction, device drivers, tools for introspection, message-passing and more. This greatly facilitates the entrance of new developers to learn and do research in this field.
 \subsection{ROS architecture}
