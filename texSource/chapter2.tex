@@ -5,9 +5,12 @@
 In this chapter we will discuss some important concepts relevant to this dissertation. This include an overview of both \ac{LiDAR} and \ac{FMCW} radar technologies, the components needed to achieve autonomous navigation,  and a quick overview of the \ac{ROS} platform.
 
 \section{\ac{LiDAR} vs \ac{RADAR}}
-
+\subsection{Context}
 In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This information comes from its sensor sources.
-The most typical type of sensors used for perception are usually laser range finders (\ac{LiDAR}), sonar and the a rgb-d camera. However the new emerging \ac{mmWave} \ac{FMCW} radar technology with high frequency and bandwidth 77-81 GHz is now beginning to be suitable for use in robotic applications. In the following  sections we will give a brief overview of current work being done using \ac{LiDAR} and \ac{FMCW} \ac{RADAR}, how they work, and what advantages and disadvantages each sensor has.
+The most typical type of sensors used for perception are usually are proximity sensors such as laser range finders (\ac{LiDAR}), sonar or the use of a camera. However robots may have have to deal with a wide variety of changing environments like variation in luminosity, weather conditions, presence of dust and smoke, object proprieties etc... The previous highlighted sensors may show difficulty or be completely ineffective in this conditions.
+
+
+However the new emerging \ac{mmWave} \ac{FMCW} radar technology with high frequency and bandwidth 77-81 GHz is now beginning to be suitable for use in robotic applications, and with may provide to be a solution for the previous conditions. In the following  sections we will give a brief overview of current work being done using \ac{LiDAR} and \ac{FMCW} \ac{RADAR}, how they work, and what advantages and disadvantages each sensor has.
 
 \subsection{LiDAR}
 \ac{LiDAR} has been a staple in sensing technology in recent history. It has almost an  unlimited  number of applications \cite{lidar100uses} due to its generation of dense data. Some of the most standing out ones are in autonomous vehicles and robotics. 
@@ -179,20 +182,23 @@ After the optimal plan is computed the final step is to determine the best veloc
 \section {\ac{FMCW} radars working principle}
 
 \section {ROS}
-Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} fixes this issue by being an open-source general purpose framework for robotics. It provides hardware abstraction, device drivers, tools for introspection, message-passing and more. This greatly facilitates the entrance of new developers to learn and do research in this field.
+Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, it is more a kind of middleware, in other words it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter is often preferred.
+
+\ac{ROS} provides hardware abstraction, device drivers, tools for introspection, message-passing and more. Also it is open source which means we can use them for virtually any means which we deem necessary for the development of our application, for example adapting pre established code for a specific case. This greatly facilitates the entrance of new developers to learn and do research in this field.
 \subsection{ROS architecture}
-The \ac{ROS}  architecture is based on a peer to peer network between processes usually referred to as \textit{Computation Graph}.
-This structure is composed by:
+The \ac{ROS}  architecture is based on a peer to peer network between processes usually referred to as \textit{Computation Graph}. This structure is comprised by different concepts that we define bellow:
 \begin{itemize}
-\item \textbf{Nodes} - Processes that perform computation.
-\item \textbf{Messages} - ROS predefined data type used to communicate between nodes. 
-\item \textbf{Topics} - Nodes can send messages by publishing to a topic or receive them by subscribing to a topic. 
-\item \textbf{Master} - Provides registration of names (helps nodes find each other).
+\item \textbf{Nodes} - A node can be defined as a process or piece of software  that performs some type of computation. In \ac{ROS}, for a given application there are typically alot of nodes running in parallel that pass information between each other. For example  controlling the robot movement given the input image of a camera requires a node to act as a driver between the camera firmware and the ROS environment. Then there could be a node that processes the image further using ROS pre established software and finally given the processed information a different node will calculate the velocity of the robot and transmit them to the wheels of the robot. 
+\item \textbf{Messages} - \ac{ROS} uses predefined data structures  called messages to interpret information. This makes it so \ac{ROS} tools to generate the appropriate source code in the selected language (C++ or phyton in this case). Each message can be broke down into more messages and so one and so forth until we arrive at the primitive data types of the given programming language. Nodes communicate by publishing or subscribing  to topics using this messages and in the end we get a fully alive system that performs some type of application we want. 
+ROS predefined data type used to communicate between nodes.
+\item \textbf{Topics} - Nodes can send messages by publishing to a topic or receive them by subscribing to a topic. For example a node can be subscribed a raw velocity message and then after some data processing publish a smoothed version of it into another topic.  
+\item \textbf{Master} - Provides registration and naming for each node (helps nodes find each other). It is also responsible for organizing communication between nodes. Finnaly it also provides the \textbf{Parameter Server} (described bellow).
 % V
-\item \textbf{rosout} - ROS equivalent of stdout 
-\item \textbf{roscore} - Master+rosout+parameter server. 
+\item \textbf{rosout} - This can be viewed as the ROS equivalent of stdout. This tool acts as a log reporting mechanism which is useful when debugging large amounts of code.
+\item \textbf{Paramater Server} -In this server \ac{ROS} tracks different paramater values defined by the running application. It is useful for modifying different parameters dynamically without having to restart the application.
 %X
 \end{itemize}
+
 
 %%REVER ISTO
 

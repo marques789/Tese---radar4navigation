@@ -1,19 +1,25 @@
 \chapter{Experimenton and Results}
 
+
 \section{Introduction}
-With the configuration described in the previous section we can now start to experiment with the robotic platform to do certain navigation tasks. In this part we propose various experiments that try to evaluate the  performance of the \ac{FMCW} \ac{RADAR} as an alternative or support to the \ac{LiDAR} as an obstacle detector for indoor navigation.
-\section{Obstacle Avoidance}
-Over the course of this work it was concluded that the radar data was not appropriate for Map Building or for localization using \ac{AMCL}. However it was noted that the radar was quicker at perceiving effective at detecting different types of obstacles. In the following subsections we will describe how a non holonomic robot is able to avoid this said obstacles. 
+Over the course of this work it was concluded that the radar data was not appropriate for Map Building or for localization using \ac{AMCL}. However it was noted that the radar was quicker   at detecting different types of obstacles. In the following subsections we will describe how a differential drive robot usually is able to avoid  said obstacles. 
 First a description of what is obstacle avoidance is and how it  works, the robots kinematic model, then the description of how he perceives the world around him (configuration space), then how the robot plans around said world in a good fashion.
-\subsection{what is obstacle avoidance}
- Obstacle avoidance is a major subject in robotics, failure in this systems result in catastrophic consequences such as hardware being badly damaged or completely nonfunctional. This problem is usually separated into two categories \textit{local} and \textit{global}. The global case  usually assumes the environment is completely known a priori and can therefore  compute an optimal path  completely safe path around using a variety of different methods. This methds can be heuristic ones Bug algorithm, dijaktra stuff
- 
- 
+\section{Obstacle avoidance}
+ Obstacle avoidance is a major subject in robotics, failure in this systems may result in crashes that have catastrophic consequences such as hardware being badly damaged or completely nonfunctional. This problem is usually separated into two categories local path planning and global path planning \cite{}. 
+ Global methods assume the environment is completely known a priori and can therefore compute an optimal safe path  around static obstacles using a variety of different strategies\cite{}. This models prove to be very reliable for static environments. However this models are usually computational expensive which lead to very slow update times. For fast changing environments such as is in the case for highly populated indoor scenarios they prove to be insufficient. 
+ To combat this issue local path planning techniques are added to improve the responsiveness of the robot. This techniques have a much faster update time  since they use a smaller version of the world around them. However this type of approaches have trouble with local minimum cases where the robot gets stuck (for example the U-shape case).
+\subsection{Global Methods}
+Planning an optimal safe path can be done using a wide variety of methods (list methods). However for \ac{ROS} case a grid map based methods are used such as dijaktra or A*. This algorithms usually require 
+\subsection{Local Methods}
+POTENTIAL FIELD
+DWA
+
+
+
+convert the problem into a graphic search method using the information of a grid cell map
  
 %%GARBAGE
-The use of Obstacle avoidance is the mechanism of the robot achieving a certain objective without colliding with it. This type of systems are usually divided in two different types local and global. Global techniques  based on a a different set of techinques.
 
-To achieve this the robot's needs to be aware of objects around him in a good fashion. If the robot is not intelligent enough, however he can collide with rbots even if he sees them. This is due to motion constrains, limited update of control, or even the algorithms used may be flawed in certain situations. Ok now that we have that out of the way lets talk about the kinematics behind a differential robot whic in our case is turtlebot. Sooo, differential drive robots have 2 wheels mounted on a common axes and the each wheel can go forward or backwards. By varying the robots wheels we can achieve different robot trajectories. I just want to write whatever  
 \subsection{Differential drive robots kinematic model}
 For differential drive robots 
 For a differential drive robot the position he is in can be best described by a simple triplet $(x,y,\theta)$. This position is relative to usually a  global coordinate frame. 
@@ -35,7 +41,8 @@ The motion controller will take into account this plan.
 
 The dynamic path-planning problem consists in finding a suitable plan for each new configuration of the environment by re computing a collision free path using the new information available at each time step
 
-
+\section{Introduction}
+With the configuration described in the previous section we can now start to experiment with the robotic platform to do certain navigation tasks. In this part we propose various experiments that try to evaluate the  performance of the \ac{FMCW} \ac{RADAR} as an alternative or support to the \ac{LiDAR} as an obstacle detector for indoor navigation.
 \section {Experiment 2}
 In this following test we want to answer two things: (1) Is the robot able to avoid people that obstruct its pre planned path only using the  \ac{FMCW} radar as an obstacle detector, and (2) if in this case it is also able to clear previously obstructed spaces (by the person in this case) by ray tracing its environment. This last requirement may provide to be difficult to get since the radar point cloud is less dense than the 2D laser range finder.
 \subsection{Experimental Setup}
