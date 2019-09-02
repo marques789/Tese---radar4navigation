@@ -1,21 +1,31 @@
 \chapter{Hardware and Software Setup}
 
 \section{Introduction}
-In this section we will describe the principal components in terms of hardware and software and how they are interconnected to create a suitable robotic platform that will later be used for comparing the performance of \ac{LiDAR} and \ac{RADAR} as navigation sensors.  
+In this section we will describe the principal components in terms of hardware and software and how they are interconnected to create a suitable robotic platform that will later be used for comparing the performance of \ac{LiDAR} and \ac{FMCW} \ac{radar} as navigation sensors.
+\section{Hardware}
+The basic hardware for this work will be a  modified version of the  turtlebot2 platform connected to an \ac{FMCW} \ac{radar} and a 2D-\ac{LiDAR} as proximity sensors.
 \subsection{Turtlebot2}
-TurtleBot 2 \fig{} is one of the  most popular low cost personal robots around. It is completely run by open source software which makes it exceptional for research and educational purposes. The robot has been developed by the Korean company Yujin Robotics in collaboration with Willow Garage, its differential kinematics mobile platform can be used for multiple applications, due to the huge number of available ROS packages.
-The out of the box kobuki platform was modified in order to include a processing unit, a 2D scanning \ac{LiDAR} and a \ac{FMCW} radar as proximity sensors. The modified version is displayed in Fig.\ref{fig::turlebot2}. 
-\begin{figure}[h] 
-\centerline{\includegraphics [width=0.3 \textwidth]{imgs/chapter4/turtlebot2.PNG}}
-\caption{Modified Turtlebot2 used in this work}
-\label{fig::turlebot2}
-\end{figure}
+TurtleBot 2 (Fig. \ref{fig:t2}) is one of the  most popular low cost personal robots around. It is completely run by open source software which makes it exceptional for research and educational purposes. The robot has been developed by the Korean company Yujin Robotics in collaboration with Willow Garage, its differential kinematics mobile platform can be used for multiple applications, due to the huge number of available ROS packages.
 
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.3 \textwidth]{imgs/chapter4/turtlebot2.png}}
+\caption{Turtlebot 2 platform}
+\label{fig:t2}
+\end{figure}
+\subsubsection*{Technical Specifications}
+When it comes to specs the robots dimension is 354 x 354 x 420 mm as shown in Fig. \ref{fig::t2specs}, its weight is 6.3 Kg with a max payload of 5 Kg which means it is able to attach lots of devices with relatively heavy if needed. The maximum translational  speed of it is 0.7 m/s and the maximum rotational speed is 180º/s . It as a gyroscope with 1 axis(110º/s), odometer at 52 ticks/encoder and  bumpers on left right and center among other things. It is ready for basic operation right out of the box but as we will see later on we have modified to our interests.
+
+\begin{figure}[h] 
+\centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter4/tspecs.png}}
+\caption{Turtlebot 2 dimension specifications}
+\label{fig:t2specs}
+\end{figure}
 
 
 \subsection{FMCW radar}
 
-The radar board chosen for this work is the mmwave Texas Instruments AWR1642BOOST (Fig.\ref{fig:awr}). This is a recently distributed \ac{FMCW} radar dedicated for short range applications. The device supports a wide RF bandwidth of 77-81 GHz that permits good range and angle resolution.
+The radar board chosen for this work is the mmwave Texas Instruments AWR1642BOOST (Fig.\ref{fig:awr}). This is a recently distributed \ac{FMCW} radar dedicated for short range applications. It is an easy-to-use evaluation board for the AWR1642 automotive radar sensor which is connected to the micro-controller unit (MCU) LaunchPad. To develop software it has  on-chip C67x DSP core and low-power ARM Cortex-R4F controllers which include onboard emulation for programming and debugging. The device supports a wide RF bandwidth of 77-81 GHz that permits good range and angle resolution.
+\subsubsection*{}
 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter4/awr1642.jpg}}
@@ -24,6 +34,7 @@ The radar board chosen for this work is the mmwave Texas Instruments AWR1642BOOS
 \end{figure}
 
 \subsection{LiDAR}
+Besides the \ac{FMCW} \ac{radar} the Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder is also attached to the platform. This sensor is an inexpensive 2D-\ac{LiDAR} that is based on phase difference measurement. It retrieves information of the surrounding environment by scanning an area of 240º. The maximum range of it is about 4 meters and it only needs a 5V power source as shown in figure X.
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter4/lidar.jpg}}
 \caption{lidar}
@@ -31,6 +42,8 @@ The radar board chosen for this work is the mmwave Texas Instruments AWR1642BOOS
 \end{figure}
 
 \section{Software Setup}
+\section{PCL}
+Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to prcess and manipulate this type of information.
 
 The software used in this project is divided in three stages. First one is the interface between the radar board TLV data and the ROS point cloud message format. Then using \ac{PCL} a filtering operation is added to remove false detections (this will be explained later). Finally, the filtered radar data as well as the \ac{LiDAR} data are fed to the ROS Navigation Stack as sensor sources. 
 %%Block diagram
@@ -56,6 +69,12 @@ Each point has 6 fields:
 \subsection{\ac{PCL} filtering}
 
 \subsection{ROS Navigation stack}
+The out of the box kobuki platform was modified in order to include a processing unit, a 2D scanning \ac{LiDAR} and a \ac{FMCW} radar as proximity sensors. The modified version is displayed in Fig.\ref{fig::turlebot2}. 
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.3 \textwidth]{imgs/chapter4/turtlebot2.PNG}}
+\caption{Modified Turtlebot2 used in this work}
+\label{fig::turlebot2}
+\end{figure}
 
 
 \section{Summary}   
