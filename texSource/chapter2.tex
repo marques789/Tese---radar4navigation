@@ -176,6 +176,7 @@ Where $d_i$ corresponds to the distance of the object to the radar and $c$ the s
 Putting this together the distance to the object $i$ is given by:
 \begin{equation}
     d_i=\frac{f_ic}{2S}
+    \label{eq:1}
 \end{equation}
 
 
@@ -183,7 +184,46 @@ Putting this together the distance to the object $i$ is given by:
  
  However since the \ac{ADC} has a limited sampling rate, the valid range of frequencies in the \ac{FFT} is also limited, this means there is a maximum amount of range the radar can detect.
 The range resolution is also finite since the \ac{FFT} has a limited amount of samples. In short, the higher the bandwidth of the chirp the better resolution we get.
- 
+\subsection*{Simulation}
+In this section we try to simulate in MATLAB the process of retrieving the range from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix X. Table \ref{tab:table1} shows the respective paramaters used for the radar and the vector of distances of the supposed objects to be retrieved, where $T_c$ is the time of chirp and $F_s$ is the sampling frequency of the \ac{ADC}.
+\begin{table}[h!]
+  \begin{center}
+    \caption{Your first table.}
+    \label{tab:table1}
+    \begin{tabular}{l|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+      \textbf{Paramater} & \textbf{Value } \\
+      \hline
+      $f_c$ & 77 GHz \\
+      Bandwidth & 4 GHz \\
+      $T_c$ & 40us \\
+      $F_s$ & 8 MHz \\
+      Object distance & [0.2345 0.0469 1.1 3.0 5 5.3]  m
+    \end{tabular}
+  \end{center}
+\end{table}
+ In figure show the TX signal in blue and RX signal as the other colors in a plot of time vs frequency.
+ \begin{figure}[h] 
+\centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter2/SimFrequencies.png}}
+\caption{IF signal creation to retrieve range information of the target}
+\label{fig:if2}
+\end{figure}
+Mixing both signals and passing it by a low pass filter we then compute the \ac{FFT} of the \ac{IF} signal. Fig \ref{fig:fft} shows the result. By using equation \ref{eq:1} we can retrieve the distance vs power of the signal plot (Fig. \ref{fig:fft2}). As we can see the power of the signal is stronger in the distances that were chosen a priori. To extract them we must choose a certain threshold of \ac{SNR}. Note that the sampling frequency limits the maximum distance of detection.
+\begin{figure}[h] 
+    \begin{minipage}[b]{.49\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/FFT.png}
+        \subcaption{FFT of IF signal}
+        \label{fig:fft}
+    \end{minipage}
+    \begin{minipage}[b]{.49\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/distance.png}
+        \subcaption{Frequencies converted to distances plot}
+        \label{fig:fft2}
+    \end{minipage}
+    \caption{Range detection using \ac{FMCW} \ac{radar}}
+    \label{fig:distance determination}
+\end{figure}
+
+
 \subsection*{velocity Detection}
 This type of radar also provides an estimate on the radial velocity for each detected range. To do this more than one chirp is needed. For a set of N chirps we call a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is so low the corresponding range (or first) \ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of relative radial velocities  for each range detection. In the end we get a matrix that relates radial velocity and range. 
 Figure \ref{fig:matrix} illustrates this process.
