@@ -1,11 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Background} \label{ch:Concepts}
 
-\section{Introduction}
 In this chapter we will discuss some important concepts relevant to this dissertation. This include an overview of both \ac{LiDAR} and \ac{FMCW} radar technologies, the components needed to achieve autonomous navigation,  and a quick overview of the \ac{ROS} platform.
 
 \section{\ac{LiDAR} and \ac{FMCW} \ac{radar}}
-\subsection{Intro}
 In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This information comes from its sensor sources.
 The most typical type of sensors used for perception usually are proximity sensors such as laser range finders (\ac{LiDAR}), sonar or the use of a camera. However robots may have have to deal with a wide variety of changing environments like variation in luminosity, weather conditions, presence of dust and smoke, object proprieties etc... The previous highlighted sensors may show difficulty or be completely ineffective under this conditions.
 
@@ -266,22 +264,6 @@ The above equation makes it possible to estimate the angle of arrival. But since
 
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
-\section {Navigation Concepts}
-There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{baranov2014}.  various algorithms have been developed over the years to combat this problems. In the sections bellow we give a brief overview of the more popular solutions.
-
-\subsection{Mapping}
-
-Creating a map in ROS is typically done by using an improved version of  Rao-Blackwellized particle filters such as the ones described in \cite{grisetti2007improved}. This approach has proven to be an effective way to solve the \ac{SLAM} problem and will be used later on in this work to produce a valid map of our indoor environment.
-%gmapping, slam, eurico LASER
-\subsection{Localization}
-With the grid map built we now need to estimate the robot's position in said map. 
-An easy solution to this problem is relying on the robot's odometry information inferred by the robot's encoders and inertial sensors such as accelerometers and gyroscopes. This kind of dead reckoning is an easy and low cost solution for the localization problem. However since the sensor data is integrated over time, this leads to the accumulation of errors which make this approach not feasible for long navigation tasks. 
-To fix this issue various algorithms were developed being the most popular ones based on particle filters.
-The \ac{AMCL} algorithm  is the standard choice in this case. It takes into account a group of particles, each one corresponding to a certain robot state (position and orientation in this case). As the robot moves the least probable states are filtered out and  the particles should over time converge on the actual position of the robot.  
-\subsection{Path Planning}
-Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. In our case we will use the well known dijaktra algorithm.
-\subsection{Motion Control}
-After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. For each trajectory it is calculated a determined cost given by a cost function  taking into account 
 
 \section {ROS}
 Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, it is more a kind of middleware, in other words it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter is often preferred.
