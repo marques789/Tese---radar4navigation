@@ -68,19 +68,13 @@ The out of the box kobuki platform was modified in order to include a processing
 
 \section{Software}
 
-\subsection{PCL}
+\subsection{\ac{PCL}}
 %Describe PCL
-Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to prcess and manipulate this type of information.
 
-The software used in this project is divided in three stages. First one is the interface between the radar board TLV data and the ROS point cloud message format. Then using \ac{PCL} a filtering operation is added to remove false detections (this will be explained later). Finally, the filtered radar data as well as the \ac{LiDAR} data are fed to the ROS Navigation Stack as sensor sources. 
-%%Block diagram
+Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to process and manipulate this type of information. A pointcloud is a collection of multi-dimensional points and is commonly used to represent three-dimensional data \cite{pcl}. This points are often just designed to locate points in x,y,z but more dimensions can be added as we will see later on, for the FMCW radar it has 6 dimensions. \ac{PCL} provides open source state of the art library modules that enables  filtering, feature estimation, surface reconstruction, registration, model fitting and segmentation. In our case we will mainly use its passthrough filters. 
 
-Figure X shows a simple block diagram describing   
-\begin{figure}[h] 
-\centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter4/bd.png}}
-\caption{Software blockdiagram}
-\label{fig::turlebot2}
-\end{figure}
+
+
 \subsection{ROS radar driver}
 Texas Instruments provides a ros package that interfaces radar data to the ROS message format \cite{tisetup}. The incoming radar TLV data from the mmWave EVM is decoded in order to create a  \textbf{PointCloud2} type ROS message.
 This point cloud follows the detected objects frame described in the mmWave demo data structure \cite{mmdata} represented in Fig. \ref{fig:demodata}.
@@ -160,15 +154,21 @@ This operations will be done by using the \textbf{Point Cloud Library}. PCL offe
 \end{figure}
 
 
+\section{Software setup for ROS navigation}
+The software used in this project is divided in three stages. First one is the interface between the radar board TLV data and the ROS point cloud message format. Then using \ac{PCL} a filtering operation is added to remove false detections (this will be explained later). Finally, the filtered radar data as well as the \ac{LiDAR} data are fed to the ROS Navigation Stack as sensor sources. 
+%%Block diagram
+
+Figure \ref{fig::softsetup} shows a simple block diagram describing  the software setup.
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter4/bd.png}}
+\caption{Software blockdiagram}
+\label{fig::softsetup}
+\end{figure}
 
 
-\subsection{\ac{PCL} filtering}
-
-\subsection{ROS Navigation stack}
 
 
 
-
-
-\section{Summary}   
+\section{Summary}
+In this chapter it was explained what tools were used for properly setting up the turtlebot robot for indoor navigation.
 

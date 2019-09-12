@@ -245,7 +245,7 @@ Figure \ref{fig:traj2} shows the trajectory of the robot for the \ac{LiDAR} and 
 \subsubsection{Garbage Bin}
 
 \subsubsection*{LiDAR}
-The robot went in a straight line as in the wheeled chair's case pushing the garbage bin until it reached its first goal. This happened again because the \ac{LiDAR} was unable to properly detect the garbage bin at a certain angle. 
+In this case the robot went in a straight line as in the wheeled chair's case pushing the garbage bin until it reached its first goal. This happened again because the \ac{LiDAR} was unable to properly detect the garbage bin at a certain angle. 
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
@@ -284,7 +284,7 @@ Using the \ac{FMCW} radar the robot did detect it properly and went around it ea
 
 \subsubsection{Box}
 \subsubsection*{LiDAR}
-In the LiDAR's case the robot did not detect the low height box throughout all the course. This makes sense since the this sensor is built to detect objects that are the same height as the sensor. In other words it is optimized to detect only the horizontal plane of the 2D-\ac{LiDAR}. This failure of detection made it so the robot could not replan its course and in consequence it collided with said box. Figure \ref{fig::box} shows two instances where the robot collided with the box using \ac{\acLiDAR} as a sensor source.
+In the LiDAR's case the robot did not detect the low height box throughout all the course. This makes sense since the this sensor is built to detect objects that are the same height as the sensor. In other words it is optimized to detect only the horizontal plane of the 2D-\ac{LiDAR}. This failure of detection made it so the robot could not replan its course and in consequence it collided with said box. Figure \ref{fig::box} shows two instances where the robot collided with the box using \ac{LiDAR} as a sensor source.
 
 \begin{figure}[h!]
   \centering
@@ -304,7 +304,7 @@ In the LiDAR's case the robot did not detect the low height box throughout all t
 
 
 \subsubsection*{FMCW radar}
-For this case initially the robot also did not detect the box. However by decreasing the threshold of the passthrough filter of intensity to 14 we made it so it can detect it. With this modification the robot was able to complete the test without colliding with the box. Figure \ref{boxRS} shows two instances of the robot performing the course avoiding the box with the previous modification.
+For this case initially the robot also did not detect the box. However by decreasing the threshold of the passthrough filter of intensity to 14 we made it so it can detect it. With this modification the robot was able to complete the test without colliding with the box. Figure \ref{fig:boxRS} shows two instances of the robot performing the course avoiding the box with the previous modification. However this change may result in the \ac{FMCW} \ac{radar} having false detections due to now having a lower level of \ac{SNR}.
 
 \begin{figure}[h!]
   \centering
@@ -324,31 +324,15 @@ For this case initially the robot also did not detect the box. However by decrea
 
 \subsubsection{Acrylic tube}
 
+\subsubsection*{LiDAR}
+When it comes to the Acrylic tube using the 2-D \ac{LiDAR} it falsely detected targets where there where none. This is due to the physical proprieties of the object.
+\subsubsection*{FMCW radar}
+In this case the robot was able to properly detect the tube and with it avoided it through all the course.
+
 \subsubsection{Robot}
+In this last case both the \ac{FMCW} \ac{radar} and the 2D-LIDAR performed reasonably well avoiding the obstacle with ease.
+
+\section{Experiment 3}
+In the previous experiment we only dealt with static objects however in this new test we want to see how the robot handles dynamic objects in a controlled space. For that we use an additional turtlebot2 to obstruct our turtlebot. In other words we have the robot trying to reach multiple goals multiple times and the additional turtlebot2 will try to make more difficult by obstructing the planned paths of the robot.
 
 
-Both \ac{LiDAR} and the FMCW radar were able to avoid the robot. 
-In the wheeled chairs case the robot was able to detect 
-- Image of plots
-- explain what happened
-- explain some navigation stack stuff
-
-\section {Experiment 4}
-
-\begin{commment}
-\subsection{Differential drive robots kinematic model}
-For differential drive robots 
-For a differential drive robot the position he is in can be best described by a simple triplet $(x,y,\theta)$. This position is relative to usually a  global coordinate frame. 
-\subsection{Map Representation}
-
-
-
-There are two ways in which the navigation stack deals with obstacle avoidance. One way is to plan around the obstacle using the global planner if the obstacle is said on the .
-The motion controller will take into account this plan. 
-
-
-
-The dynamic path-planning problem consists in finding a suitable plan for each new configuration of the environment by re computing a collision free path using the new information available at each time step
-
-In the following subsections we will describe how a differential drive robot usually is able to avoid  said obstacles. 
-\end{commment}
