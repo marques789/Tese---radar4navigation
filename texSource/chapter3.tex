@@ -1,28 +1,60 @@
 \chapter{ROS Navigation} \label{ch:BaseWork}
 
 %%\section{Introduction}
+\section {ROS}
+Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, it is more a kind of middleware, in other words it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter is often preferred.
 
+\ac{ROS} provides hardware abstraction, device drivers, tools for introspection, message-passing and more. Also it is open source which means we can use them for virtually any means which we deem necessary for the development of our application, for example adapting pre established code for a specific case. This greatly facilitates the entrance of new developers to learn and do research in this field.
+\subsection{ROS architecture}
+The \ac{ROS}  architecture is based on a peer to peer network between processes usually referred to as \textit{Computation Graph}. This structure is comprised by different concepts that we define bellow:
+\begin{itemize}
+\item \textbf{Nodes} - A node can be defined as a process or piece of software  that performs some type of computation. In \ac{ROS}, for a given application there are typically alot of nodes running in parallel that pass information between each other. For example  controlling the robot movement given the input image of a camera requires a node to act as a driver between the camera firmware and the ROS environment. Then there could be a node that processes the image further using ROS pre established software and finally given the processed information a different node will calculate the velocity of the robot and transmit them to the wheels of the robot. 
+\item \textbf{Messages} - \ac{ROS} uses predefined data structures  called messages to interpret information. This makes it so \ac{ROS} tools to generate the appropriate source code in the selected language (C++ or phyton in this case). Each message can be broke down into more messages and so one and so forth until we arrive at the primitive data types of the given programming language. Nodes communicate by publishing or subscribing  to topics using this messages and in the end we get a fully alive system that performs some type of application we want. 
+ROS predefined data type used to communicate between nodes.
+\item \textbf{Topics} - Nodes can send messages by publishing to a topic or receive them by subscribing to a topic. For example a node can be subscribed a raw velocity message and then after some data processing publish a smoothed version of it into another topic.  
+\item \textbf{Master} - Provides registration and naming for each node (helps nodes find each other). It is also responsible for organizing communication between nodes. Finnaly it also provides the \textbf{Parameter Server} (described bellow).
+% V
+\item \textbf{rosout} - This can be viewed as the ROS equivalent of stdout. This tool acts as a log reporting mechanism which is useful when debugging large amounts of code.
+\item \textbf{Paramater Server} -In this server \ac{ROS} tracks different paramater values defined by the running application. It is useful for modifying different parameters dynamically without having to restart the application.
+%X
+\end{itemize}
+
+
+%%REVER ISTO
+
+Figure \ref{fig:rosgraph} gives a brief overview of how each of this concepts are put together and  generate the in ROS  computation system.
+
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter3/rosgraph.png}}
+\caption{ROS communication architecture overview \cite{rosbasics}}
+\label{fig:rosgraph}
+\end{figure}
 
 
 %\section{Architecture Overview}\label{ch:requirements}
 \section {Navigation Concepts}
-There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{baranov2014}.  various algorithms have been developed over the years to combat this problems. In the sections bellow we give a brief overview of the more popular solutions.
+There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{nav} as shown in Fig. \ref{fig:probNav} . 
 
-\subsection{Mapping}
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter3/probNAV.png}}
+\caption{Problems regarding autonomous navigation \cite{rosbasics}}
+\label{fig:probNav}
+\end{figure}
+Various algorithms have been developed over the years to combat this problems. 
+%%Mapping
 
-Creating a map in ROS is typically done by using an improved version of  Rao-Blackwellized particle filters such as the ones described in \cite{grisetti2007improved}. This approach has proven to be an effective way to solve the \ac{SLAM} problem and will be used later on in this work to produce a valid map of our indoor environment.
-%gmapping, slam, eurico LASER
-\subsection{Localization}
+In regards to creating a suitable map,  \ac{ROS}  typically uses an improved version of  Rao-Blackwellized particle filters such as the ones described in \cite{grisetti2007improved}. This approach has proven to be an effective way to solve the \ac{SLAM} problem and will be used later on in this work to produce a valid map of our indoor environment.
+%%Localization
+
 With the grid map built we now need to estimate the robot's position in said map. 
-An easy solution to this problem is relying on the robot's odometry information inferred by the robot's encoders and inertial sensors such as accelerometers and gyroscopes. This kind of dead reckoning is an easy and low cost solution for the localization problem. However since the sensor data is integrated over time, this leads to the accumulation of errors which make this approach not feasible for long navigation tasks. 
-To fix this issue various algorithms were developed being the most popular ones based on particle filters.
-The \ac{AMCL} algorithm  is the standard choice in this case. It takes into account a group of particles, each one corresponding to a certain robot state (position and orientation in this case). As the robot moves the least probable states are filtered out and  the particles should over time converge on the actual position of the robot.  
-\subsection{Path Planning}
-Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. This type of planning is often refereed as a global path planner that will be discussed further in the obstacle avoidance section.
-\subsection{Motion Control}
-After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. This subject is often reffered to as local path planner methods that will be further detailed bellow.
-\section{Obstacle avoidance}
- Obstacle avoidance is a major subject in robotics, failure in this systems may result in crashes that have catastrophic consequences such as hardware being badly damaged or completely nonfunctional. This problem is usually separated into two categories local path planning and global path planning. 
+An easy solution to this problem is relying on the robot's odometry information inferred by the robot's encoders and inertial sensors such as accelerometers and gyroscopes. This is called dead reckoning and is an easy and low cost solution for the localization problem. However since the sensor data is integrated over time, this leads to the accumulation of errors which make this approach not feasible for long navigation tasks. 
+To fix this issue various algorithms were developed being the most popular ones based on particle filters. The \ac{AMCL} \cite{amclpaper} algorithm  is the standard choice in this case. It takes into account a group of particles, each one corresponding to a certain robot state (position and orientation in this case). As the robot moves the least probable states are filtered out and  the particles should over time converge on the actual position of the robot.  
+
+Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. This type of planning is often refereed as a global path planner that will be discussed further n in a later section.
+
+After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. This subject is often referred to as local path planner methods that will be further detailed bellow.
+\section{Path Planning and Motion Control}
+ Obstacle avoidance is a major subject in robotics, failure in this systems may result in crashes that have catastrophic consequences such as hardware being badly damaged or being completely nonfunctional. This problem is usually separated into two categories local path planning and global path planning \cite{foxdwa}. 
  Global methods assume the environment is completely known a priori and can therefore compute an optimal safe path  around static obstacles using a variety of different strategies. This models prove to be very reliable for static environments. However this models are usually computational expensive which lead to very slow update times. For fast changing environments such as is in the case for highly populated indoor scenarios they prove to be insufficient. 
  To improve the quality of navigation capabilities, local path planning techniques are added to improve the responsiveness of the robot. This techniques have a much faster update time  since they use a smaller version of the world around them. However this type of approaches have trouble with local minimum cases where the robot gets stuck (for example the U-shape case).
 \subsection{Global Methods}
@@ -48,14 +80,15 @@ In contrast to global path planning in where a large portion of the environment 
 The most popular of this type of methods are \cite{inbookdwa}:
 %cite this
 \begin{itemize}
-    \item Dynamic Window Approach
-    \item Trajectory Rollout
-    \item Elastic Band
-    \item Timed elastic band
-    \item VFH+
+    \item \ac{DWA} \cite{foxdwa}
+    \item Trajectory Rollout  \cite{gerkey2008planning}
+    \item Elastic Band \cite{siegwart2011introduction}
+    \item Timed elastic band \cite{rosmann2013efficient}
+    \item Tentacles Clothoid \cite{alia2015local}
+    \item \ac{VFH}+ \cite{siegwart2011introduction}
 \end{itemize}
 For our case study we will only explore the first two that are already integrated in ROS.
-\subsubsection*{Trajectory Rollout}
+\subsubsection*{\ac{DWA} planner}
 The Trajectory Rollout  the most standard approach when it comes to local path planning in \ac{ROS}. It outputs  rotational and translational velocity by generating multiple trajectories for different types of velocity sample search space and choosing the best one. The algorithm goes as follows \cite{inbookdwa}:
 \begin{itemize}
     \item Start with a set of velocities pairs $\{R_{vR_x},R_{ \omega_z} \}$ that are obtainable by the robot.
