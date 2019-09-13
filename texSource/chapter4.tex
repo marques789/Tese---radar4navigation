@@ -10,7 +10,7 @@ The basic hardware for this work will be a  modified version of the  turtlebot2 
 \subsection{Turtlebot2}
 TurtleBot 2 (Fig. \ref{fig:t2}) is one of the  most popular low cost personal robots around. It is completely run by open source software which makes it exceptional for research and educational purposes. The robot has been developed by the Korean company Yujin Robotics in collaboration with Willow Garage, its differential kinematics mobile platform can be used for multiple applications, due to the huge number of available ROS packages. It comes with a kobuki base a processing unit Intel NUC, the 2-D \ac{LiDAR} Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder and finally a Kinect for XBOX 360.
 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.3 \textwidth]{imgs/chapter4/turtlebot2.png}}
 \caption{Turtlebot 2 platform}
 \label{fig:t2}
@@ -19,7 +19,7 @@ TurtleBot 2 (Fig. \ref{fig:t2}) is one of the  most popular low cost personal ro
 \subsubsection*{Technical Specifications}
 When it comes to specs the robots dimension is 354 x 354 x 420 mm as shown in Fig. \ref{fig::t2specs}, its weight is 6.3 Kg with a max payload of 5 Kg which means it is able to attach lots of devices with relatively heavy if needed. The maximum translational  speed of it is 0.7 m/s and the maximum rotational speed is 180º/s . It as a gyroscope with 1 axis(110º/s), odometer at 52 ticks/encoder and  bumpers on left right and center among other components. 
 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter4/tspecs.png}}
 \caption{Turtlebot 2 dimension specifications}
 \label{fig::t2specs}
@@ -31,7 +31,7 @@ The radar board chosen for this work is the mmwave Texas Instruments AWR1642BOOS
 It requires a 5V > 2.5 A supply brick with a 2.1-mm barrel jack to run.
 The device supports a wide RF bandwidth of 77-81 GHz that permits good range, velocity  and angle resolution.
 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter4/awr1642.jpg}}
 \caption{Texas Instruments AWR1642BOOST evaluation board}
 \label{fig:awr}
@@ -40,7 +40,7 @@ The device supports a wide RF bandwidth of 77-81 GHz that permits good range, ve
 \subsection{LiDAR}
 Besides the \ac{FMCW} \ac{radar} the Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder (Fig. \ref{fig:lidar}) is also attached to the platform.
 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter4/lidar.jpg}}
 \caption{Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder}
 \label{fig:lidar}
@@ -50,7 +50,7 @@ This sensor is an inexpensive 2D-\ac{LiDAR} that is based on phase difference me
 
 
 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.6 \textwidth]{imgs/chapter4/lidarS.png}}
 \caption{Hokuyo URG-04LX-UG01 detection diagram}
 \label{fig:lidarS}
@@ -59,21 +59,25 @@ This sensor is an inexpensive 2D-\ac{LiDAR} that is based on phase difference me
 \subsection{Robotic Platform}
 The out of the box kobuki platform was modified in order to include a processing unit, a 2D scanning \ac{LiDAR} and a \ac{FMCW} radar as proximity sensors. The modified version is displayed in Fig.\ref{fig::turlebot2M}. 
 
-\begin{figure}[h] 
-\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter4/turtlebot2.PNG}}
+\begin{figure}[ht!] 
+\centerline{\includegraphics [width=0.4 \textwidth]{imgs/chapter4/turtlebot2.PNG}}
 \caption{Modified Turtlebot2 used in this work}
 \label{fig::turlebot2M}
 \end{figure}
 
 
 \section{Software}
+In order to produce a suitable platform for navigation we need to interconnect various software modules in \ac{ROS}. First a map of the enviornment is created by the 2-D \ac{LiDAR} using the package \texttt{gmapping}. After that is done we launch the \texttt{amcl} node that will update the localization of the robot taking into account odometry information and the surrounding environment. After that is done we have a robot that can be reasonably well localized. Now all we need is to feed some sensor sources to the navigation module that will act as obstacle detectors.
 
-\subsection{\ac{PCL}}
-%Describe PCL
-
-Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to process and manipulate this type of information. A pointcloud is a collection of multi-dimensional points and is commonly used to represent three-dimensional data \cite{pcl}. This points are often just designed to locate points in x,y,z but more dimensions can be added as we will see later on, for the FMCW radar it has 6 dimensions. \ac{PCL} provides open source state of the art library modules that enables  filtering, feature estimation, surface reconstruction, registration, model fitting and segmentation. In our case we will mainly use its passthrough filters. 
+To do that, first the interface between the radar board TLV data and the ROS point cloud message format is done using the provided radar driver from Texas Instruments.  Then a filter by intensity operation is added to remove false positive detections (this will be explained later). The filtered radar data as well as the \ac{LiDAR} data are fed to the ROS Navigation Stack as sensor sources.
 
 
+Figure \ref{fig::softsetup} shows the block diagram describing  the different modules used to have a proper autonomous navigation platform.
+\begin{figure}[h] 
+\centerline{\includegraphics [width=0.9 \textwidth]{imgs/chapter4/bd.png}}
+\caption{Software blockdiagram}
+\label{fig::softsetup}
+\end{figure}
 
 \subsection{ROS radar driver}
 Texas Instruments provides a ros package that interfaces radar data to the ROS message format \cite{tisetup}. The incoming radar TLV data from the mmWave EVM is decoded in order to create a  \textbf{PointCloud2} type ROS message.
@@ -94,12 +98,12 @@ Each point has 6 fields:
 \item \textbf{intensity} - relative power of the received signal corresponding to that object.
 \end{itemize}
 \subsubsection{Running the driver and observing the outputted pointcloud in rviz}
-After installing the driver \cite{tisetup} to start receiving and visualizing the incoming radar data run the following commands while in your ROS workspace directory:
+After installing the driver \cite{tisetup} to start receiving and visualizing the incoming radar data run the following commands while in the ROS workspace directory:
  \begin{lstlisting}[language=bash]
 source devel/setup.bash
 roslaunch ti_mmwave_rospkg rviz_1642_2d.launch
 \end{lstlisting}
-This will launch the TI mmWave ROS Driver nodes that configure the EVM and publish the radar data. After that rviz will load and you should be able to visualize the objects detected by the radar. Figure \ref{fig:radar_rviz} shows an example of the radar data displayed on rviz. The points correspond to objects   detected by the radar.
+This will launch the TI mmWave ROS Driver nodes that configure the EVM and publish the radar data. After that rviz will load it should be able to visualize the objects detected by the radar. Figure \ref{fig:radar_rviz} shows an example of the radar data displayed on rviz. The points correspond to objects   detected by the radar.
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.2]{imgs/chapter4/radardatarviz.png}
@@ -107,11 +111,16 @@ This will launch the TI mmWave ROS Driver nodes that configure the EVM and publi
     \label{fig:radar_rviz}
 \end{figure}
 
+\subsection{\ac{PCL}}
+%Describe PCL
+Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to process and manipulate this type of information. A pointcloud is a collection of multi-dimensional points and is commonly used to represent three-dimensional data \cite{pcl}. This points are often just designed to locate points in x,y,z but more dimensions can be added as for the for the FMCW radar it has 6 dimensions. \ac{PCL} provides open source state of the art library modules that enables  filtering, feature estimation, surface reconstruction, registration, model fitting and segmentation. In our case we will mainly use its passthrough filters and for construcing visualization markers that show the \ac{radar} information in a more intuitive way.
+
 \subsection{Visualization of the radar point cloud}
 Plotting the points in the XYZ space is not enough to fully visualize the radar data sent since each point also gives velocity and intensity information.
 
 We can visualize it by using markers such as arrows or text in rviz.
 Figure \ref{fig:doppler_marker} displays the radial velocity of each point with an arrow. The size of the arrow indicates how fast the object is going. Figure \ref{fig:intensity_marker} shows the intensity values of each object in text. This type of visualization will be useful later on when we try to filter the cloud.
+
 
 \begin{figure}[!htb]
     \centering
@@ -132,38 +141,45 @@ The characteristics of this point cloud such as publishing rate, range resolutio
 The easiest way to create a chirp configuration file is the mmWave Demo Visualizer. With it you can auto generate a configuration file given a set of specifications.
 Another way of doing this is manually. This however requires the understanding of the radar operating principle and the configuration commands.
 
+
+
+
 \section{Radar Data Processing}
 Now that we have the radar constantly giving us a point cloud we can further process to retrieve the information we want. 
-In our case we will make use of \textbf{passthrough filters} to remove unwanted points and \textbf{euclidean clustering} to identify groups of points that belong to the same object.
+In our case we will make use of \textbf{passthrough filters} to remove unwanted points.This operations will be done by using the \textbf{Point Cloud Library}.
+%and \textbf{euclidean clustering} to identify groups of points that belong to the same object.
+\subsection{Passthrough Filters}
+In the point cloud there may be some points that have undesirable characteristics, such as points with low intensity  that lead to false detections or outside of the radar operating range. To remove this points we use \textbf{passthrough filters} that specify the range of values a given field can have in order for a point to be kept in the point cloud. 
 
-This operations will be done by using the \textbf{Point Cloud Library}. PCL offers a wide variety of modules that handle point clouds but in our case we will only use it for the previously mentioned operations.
+For example, if we are only interested in obstacles that are moving between 0.5 m/s and 1.0 m/s (radial velocity), this can be done by using a passthrough filter on the doppler channel.
+Figure \ref{fig:filters} shows an example where we delete false detections close to the radar by filtering the pointcloud by intensity.
 
-\begin{figure}[h] 
+
+\begin{figure}[ht!] 
     \begin{minipage}[b]{.49\linewidth}
-        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter4/filt.png}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter4/notfilt.png}
         \subcaption{Non filtered pointcloud}
         \label{fig:fft}
     \end{minipage}
     \begin{minipage}[b]{.49\linewidth}
-        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter4/notfilt.png}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter4/filt.png}
         \subcaption{Filtered pointcloud by intensity]}
         \label{fig:fft2}
     \end{minipage}
     \caption{Example of filtering the pointcloud}
-    \label{fig:distance determination}
+    \label{fig:filters}
 \end{figure}
+
+
+
+
+ 
 
 
 \section{Software setup for ROS navigation}
-The software used in this project is divided in three stages. First one is the interface between the radar board TLV data and the ROS point cloud message format. Then using \ac{PCL} a filtering operation is added to remove false detections (this will be explained later). Finally, the filtered radar data as well as the \ac{LiDAR} data are fed to the ROS Navigation Stack as sensor sources. 
+ 
 %%Block diagram
 
-Figure \ref{fig::softsetup} shows a simple block diagram describing  the software setup.
-\begin{figure}[h] 
-\centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter4/bd.png}}
-\caption{Software blockdiagram}
-\label{fig::softsetup}
-\end{figure}
 
 
 
@@ -172,3 +188,5 @@ Figure \ref{fig::softsetup} shows a simple block diagram describing  the softwar
 \section{Summary}
 In this chapter it was explained what tools were used for properly setting up the turtlebot robot for indoor navigation.
 
+
+%The software used in this project is divided in a few stages. First the interface between the radar board TLV data and the ROS point cloud message format is done using the provided radar driver from Texas Instruments.  Then a filter by intensity operation is added to remove false detections (this will be explained later). The filtered radar data as well as the \ac{LiDAR} data are fed to the ROS Navigation Stack as sensor sources. In terms of mapping a f

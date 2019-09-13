@@ -2,11 +2,11 @@
 
 %%\section{Introduction}
 \section {ROS}
-Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, it is more a kind of middleware, in other words it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter is often preferred.
+Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} \cite{ros} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, it is more a kind of middleware, in other words it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter is often preferred.
 
 \ac{ROS} provides hardware abstraction, device drivers, tools for introspection, message-passing and more. Also it is open source which means we can use them for virtually any means which we deem necessary for the development of our application, for example adapting pre established code for a specific case. This greatly facilitates the entrance of new developers to learn and do research in this field.
 \subsection{ROS architecture}
-The \ac{ROS}  architecture is based on a peer to peer network between processes usually referred to as \textit{Computation Graph}. This structure is comprised by different concepts that we define bellow:
+The \ac{ROS}  architecture is based on a peer to peer network between processes usually referred to as \textit{Computation Graph} \cite{packt}. This structure is comprised by different concepts that we define bellow:
 \begin{itemize}
 \item \textbf{Nodes} - A node can be defined as a process or piece of software  that performs some type of computation. In \ac{ROS}, for a given application there are typically alot of nodes running in parallel that pass information between each other. For example  controlling the robot movement given the input image of a camera requires a node to act as a driver between the camera firmware and the ROS environment. Then there could be a node that processes the image further using ROS pre established software and finally given the processed information a different node will calculate the velocity of the robot and transmit them to the wheels of the robot. 
 \item \textbf{Messages} - \ac{ROS} uses predefined data structures  called messages to interpret information. This makes it so \ac{ROS} tools to generate the appropriate source code in the selected language (C++ or phyton in this case). Each message can be broke down into more messages and so one and so forth until we arrive at the primitive data types of the given programming language. Nodes communicate by publishing or subscribing  to topics using this messages and in the end we get a fully alive system that performs some type of application we want. 
@@ -37,7 +37,7 @@ There are four main problems associated with robotic autonomous navigation. They
 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter3/probNAV.png}}
-\caption{Problems regarding autonomous navigation \cite{rosbasics}}
+\caption{Problems regarding autonomous navigation \cite{nav}}
 \label{fig:probNav}
 \end{figure}
 Various algorithms have been developed over the years to combat this problems. 
@@ -88,7 +88,7 @@ The most popular of this type of methods are \cite{inbookdwa}:
     \item \ac{VFH}+ \cite{siegwart2011introduction}
 \end{itemize}
 For our case study we will only explore the first two that are already integrated in ROS.
-\subsubsection*{\ac{DWA} planner}
+\subsubsection{DWA planner}
 The Trajectory Rollout  the most standard approach when it comes to local path planning in \ac{ROS}. It outputs  rotational and translational velocity by generating multiple trajectories for different types of velocity sample search space and choosing the best one. The algorithm goes as follows \cite{inbookdwa}:
 \begin{itemize}
     \item Start with a set of velocities pairs $\{R_{vR_x},R_{ \omega_z} \}$ that are obtainable by the robot.
@@ -121,6 +121,10 @@ The Trajectory Rollout  the most standard approach when it comes to local path p
     
     Where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal in map cells, and \textbf{maxobscost} is equal to the \textbf{maximum obstacle cost} (given by the local costmap) of all the points along the trajectory.
     \end{itemize}
+\subsubsection{Trajectory Rollout}
+The Trajectory Rollout planner follows the same logic as above but in this case the sampling method for the control space is different. In this a set permissible velocities
+in each simulation is calculated including acceleration limits for the entire simulation
+time\cite{inbookdwa}.
 \section {ROS Navigation stack}
 The ROS navigation stack is a set of software packages that properly combined can get a robot to navigate autonomously.
 Figure \ref{fig:plans} shows an example of \textbf{turtlebot2} using the navigation stack to drive autonomously.
@@ -170,12 +174,12 @@ If the setup is done correctly we can now run the navigation stack.
 \subsection{Navigation Stack components}
 %%STUFF
 Now that we have all the things we need for navigation we need an entity that actually processes all this information in an intelligent way to determine the best velocity command for the robot. This is done by the \texttt{move\_base } node and its peripherals.
-Figure \ref{fig:nav_stack} shows an overview of the different components of the navigation stack \cite{movebase}.
+Figure \ref{fig:navstack} shows an overview of the different components of the navigation stack \cite{movebase}.
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=\linewidth]{imgs/chapter3/navstack.png}
     \caption{Navigation stack block diagram}
-    \label{fig:nav_stack}
+    \label{fig:navstack}
 \end{figure}
 \subsubsection{Move Base}
 

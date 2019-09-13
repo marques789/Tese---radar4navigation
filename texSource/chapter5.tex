@@ -58,21 +58,23 @@ obstacle avoidance of dynamic obstacles (in this case a person) that continuousl
 
 
 \section {Experiment 2}
-Over the course of this work the \ac{FMCW} radar has shown to have better performance at detecting certain indoor objects than the 2D \ac{LiDAR}. This means that there might be situations where using it for obstacle avoidance produce better results for indoor navigation tasks. To demonstrate this a test was devised in a controlled environment that compares the performance of each sensor for different types of obstacles, in this case two types of chairs, a garbage bin, a low height box, a transparent acrylic tube and finally a robot (in this case another tutlebot2).  
+Over the course of this work the \ac{FMCW} radar has shown to have better performance at detecting certain indoor objects than the 2D \ac{LiDAR}. This means that there might be situations where using it for obstacle avoidance produce better results for indoor navigation tasks. \\
+
+To demonstrate this a test was devised in a controlled environment that compares the performance of each sensor for different types of obstacles, in this case two types of chairs, a garbage bin, a low height box, a transparent acrylic tube and finally a robot (in this case another tutlebot2).  
 %We also try to use the fusion of both sensors that in theory should produce the best results. 
 To ensure the experiment is done in a controlled way the scenario shown in Figure \ref{fig:cenario} was constructed. 
 \begin{figure}[ht!] 
-    \begin{minipage}[b]{.49\linewidth}
+    \begin{minipage}[t]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter5/mapP.jpg}
-        \subcaption{Scenerio Foto \cite{robot1}}
+        \subcaption{Foto of the scenario \cite{robot1}}
         \label{fig:cenario}
     \end{minipage}
-    \begin{minipage}[b]{.49\linewidth}
+    \begin{minipage}[t]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter5/map.png}
-        \subcaption{Map pgm}
+        \subcaption{Map created using \texttt{SLAM} package developed at \ac{IRIS}}
         \label{fig:map}
     \end{minipage}
-    \caption{Different robots using \ac{LiDAR}}
+    \caption{Scenario Constructed for the experiment}
     \label{fig:setup2}
 \end{figure}
 This is a 4 by 4 meter squared box with 1 meter high walls with the addition of a half a meter wall in length in the middle. This type of environment optimizes the robots localization system (\ac{AMCL}) as well as make sure we only concentrate with one specific object at a time. Using a \texttt{\ac{SLAM}} package developed here at \ac{IRIS} a map is first created (Figure \ref{fig:map}) that will later be used for localization purposes.
@@ -159,7 +161,7 @@ In the \ac{LiDAR}'s case  the robot completely disregarded the chair going in a 
 
 
 
-This was due to the 2D \ac{LiDAR} only detecting the leg of the chair and not the wheels. This means that the robot only perceived a single point as being occupied and not the full area of the chair. Although the inflation layer  might correct this error in some cases, since the detection is so late the robot still is unable to avoid it.
+This was due to the 2D \ac{LiDAR} only detecting the leg of the chair and not the wheels. This means that the robot only perceived a single point as being occupied and not the full area of the chair. Although the inflation layer  might correct this error in some cases, since the detection is so late the robot still was unable to avoid it.
 
 \subsubsection*{\ac{FMCW} \ac{radar}}
 However with the \ac{FMCW} radar the chair is detected almost immediately, this makes the global planner and motion controller to be able to adjust in a very comfortable way and with it the robot is able to avoid collision. Figure \ref{fig:wchairRS} shows some instances of the first experiment. Although the detected space that the chair is occupying has some mismatch, the early detection makes up for it. However since the radar has small field of view (120 degrees) the robot might not detect the obstacle when it is passing by it which in this case lead to it scraping by the chair one time.
@@ -181,7 +183,7 @@ However with the \ac{FMCW} radar the chair is detected almost immediately, this 
 \end{figure}
 
 \subsubsection*{Robot Trajectory}
-Figure \ref{fig:traj1} shows the robot trajectory in the \ac{LiDAR} and the \ac{FMCW} radar case. As we can see the robot flat out ignores the obstacle with \ac{LiDAR} while in the \ac{FMCW} \ac{radar} case it narrowly avoids it at all times.
+Figure \ref{fig:traj1} shows the robot trajectory in the \ac{LiDAR} and the \ac{FMCW} radar case aswell an aproximation of the of the invalid space the  center of the robot can not go through in dimmed red. As we can see the robot flat out ignores the obstacle with \ac{LiDAR} while in the \ac{FMCW} \ac{radar} case it narrowly avoids it at all times.
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter5/traj1.png}}
 \caption{Trajectory of the robot for the wheeled chair's case}
@@ -189,11 +191,11 @@ Figure \ref{fig:traj1} shows the robot trajectory in the \ac{LiDAR} and the \ac{
 \end{figure}
 
 
-\subsubsection{Normal Chair}
+\subsubsection{Four Legged Chair}
 \subsubsection*{LiDAR}
 Using \ac{LiDAR} the robot did not succeed in producing a safe trajectory.
 
-First off it went in a straight line just as the previous case almost hitting  the legs of the chair. However when it got to close to it, it came to a halt and kept oscillating for a long time until it either collided with the leg or scrapping by it. This was again due to the \ac{LiDAR} only detecting this type of obstacle at small distances. This behavior repeated itself throughout the task, leading to the chair being pushed several times. Figure \ref{fig:wchairLF} shows two instances where the robot gets stuck near the chair. This type of behavior is indicative that the robot's motion controller is stuck in local minimum, in other words computing a safe trajectory around the obstacle is countered by its force to follow the goal and path.
+First off it went in a straight line just as the previous case almost hitting  the legs of the chair. However when it got to close to it, it came to a halt and kept oscillating for a long time until it either collided with the leg or scrapping by it. This was again due to the \ac{LiDAR} only detecting this type of obstacle at small distances. This behavior repeated itself throughout the task, leading to the chair being pushed several times. Figure \ref{fig:nchairLF} shows two instances where the robot gets stuck near the chair. This type of behavior is indicative that the robot's motion controller is stuck in local minimum, in other words computing a safe trajectory around the obstacle is countered by its force to follow the goal and path.
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
@@ -207,7 +209,7 @@ First off it went in a straight line just as the previous case almost hitting  t
     \label{fig::nchair}
   \end{subfigure}
   \caption{Robot avoiding with office chair}
-  \label{fig:wchairLF}
+  \label{fig:nchairLF}
 \end{figure}
 
 \subsubsection*{FMCW radar}
@@ -228,14 +230,14 @@ Using the \ac{FMCW} radar proved to be much better with the robot safely circumv
   \label{fig:nchairRS}
 \end{figure}
 
-Analysing the data we see that when the robot is facing it it detects almost all legs immediately 
+Analysing the data we see that when the robot is facing it it detects almost all legs immediately. 
 %PUT RVIZ PICTURE?
-(Fig X). This makes it so the robot is aware of it at all times and planning around it.
+This makes it so the robot is aware of it at all times and planning around it.
 
 
 \subsubsection*{Robot Trajectory}
 
-Figure \ref{fig:traj2} shows the trajectory of the robot for the \ac{LiDAR} and \ac{FMCW} \ac{radar}. As we can see the trajectory  produced in the \ac{FMCW} radar case is much less susceptible to the object than in the \ac{LiDAR} case. 
+Figure \ref{fig:traj2} shows the trajectory of the robot for the \ac{LiDAR} and \ac{FMCW} \ac{radar} and an approximate position of the four legs of the chair coloured in dimmed red. The center of the robot should not passtrough this area since it will lead to collision. As we can see the trajectory  produced in the \ac{FMCW} radar case is much less susceptible to the object than in the \ac{LiDAR} case. 
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter5/traj2.png}}
 \caption{Trajectory of the robot for the 4 legged chair's case}
@@ -245,27 +247,28 @@ Figure \ref{fig:traj2} shows the trajectory of the robot for the \ac{LiDAR} and 
 \subsubsection{Garbage Bin}
 
 \subsubsection*{LiDAR}
-In this case the robot went in a straight line as in the wheeled chair's case pushing the garbage bin until it reached its first goal. This happened again because the \ac{LiDAR} was unable to properly detect the garbage bin at a certain angle. 
+In this case the robot went in a straight line as in the wheeled chair's case pushing the garbage bin until it reached its first goal. This happened again because the \ac{LiDAR} was unable to properly detect the garbage bin at a certain angle.  Figure \ref{fig:garbageLF} shows two instances of the turtlebot hitting the garbage bin.
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/garbageLF.png}
-     \caption{Robot avoiding four legged chair number 1}
-     \label{fig::wchair}
+     \caption{Robot crashing into garbage bin}
+     \label{fig:garbageLF1}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/garbageLF2.png}
-    \caption{Robot avoiding four legged chair number 2}
-    \label{fig::nchair}
+    \caption{Robot pushing garbage bin}
+    \label{fig:garbageLF2}
   \end{subfigure}
-  \caption{Robot avoiding the four legged chair}
-  \label{fig:nchairRS}
+  \caption{Two instances of the robot's navigation with the garbage bin as an obstacle}
+  \label{fig:garbageLF}
 \end{figure}
 
 
 
 \subsubsection*{FMCW radar}
 Using the \ac{FMCW} radar the robot did detect it properly and went around it easily.
+ Figure \ref{fig:garbageRS} shows two instances of the turtlebot avoiding the garbage bin at a safe distance.
 \begin{figure}[h!]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
@@ -279,12 +282,12 @@ Using the \ac{FMCW} radar the robot did detect it properly and went around it ea
     \label{fig::nchair}
   \end{subfigure}
   \caption{Robot avoiding garbage bin}
-  \label{fig:nchairRS}
+  \label{fig:garbageRS}
 \end{figure}
 
 \subsubsection{Box}
 \subsubsection*{LiDAR}
-In the LiDAR's case the robot did not detect the low height box throughout all the course. This makes sense since the this sensor is built to detect objects that are the same height as the sensor. In other words it is optimized to detect only the horizontal plane of the 2D-\ac{LiDAR}. This failure of detection made it so the robot could not replan its course and in consequence it collided with said box. Figure \ref{fig::box} shows two instances where the robot collided with the box using \ac{LiDAR} as a sensor source.
+In the LiDAR's case the robot did not detect the low height box throughout all the course. This makes sense since the this sensor is built to detect objects that are the same height as the sensor. In other words it is optimized to detect only the horizontal plane of the 2D-\ac{LiDAR}. This failure of detection made it so the robot could not replan its course and in consequence it collided with said box. Figure \ref{fig::boxLF} shows two instances where the robot collided with the box using \ac{LiDAR} as a sensor source.
 
 \begin{figure}[h!]
   \centering
@@ -293,27 +296,27 @@ In the LiDAR's case the robot did not detect the low height box throughout all t
      \caption{Robot collision with box number 1}
      \label{fig::box}
   \end{subfigure}
-  \begin{subfigure}[b]{0.47\linewidth}
+  \begin{subfigure}[b]{0.46\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/boxLF2.png}
     \caption{Robot collision with box number 2}
     \label{fig::box}
   \end{subfigure}
   \caption{Robot collision with box}
-  \label{fig:boxLF}
+  \label{fig::boxLF}
 \end{figure}
 
 
 \subsubsection*{FMCW radar}
 For this case initially the robot also did not detect the box. However by decreasing the threshold of the passthrough filter of intensity to 14 we made it so it can detect it. With this modification the robot was able to complete the test without colliding with the box. Figure \ref{fig:boxRS} shows two instances of the robot performing the course avoiding the box with the previous modification. However this change may result in the \ac{FMCW} \ac{radar} having false detections due to now having a lower level of \ac{SNR}.
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
   \centering
-  \begin{subfigure}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.4\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/boxRS.png}
      \caption{Robot avoiding box number 1}
      \label{fig::wchair}
   \end{subfigure}
-  \begin{subfigure}[b]{0.49\linewidth}
+  \begin{subfigure}[b]{0.38\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/boxRS2.png}
     \caption{Robot avoiding box  number 2}
     \label{fig::nchair}
@@ -325,13 +328,15 @@ For this case initially the robot also did not detect the box. However by decrea
 \subsubsection{Acrylic tube}
 
 \subsubsection*{LiDAR}
-When it comes to the Acrylic tube using the 2-D \ac{LiDAR} it falsely detected targets where there where none. This is due to the physical proprieties of the object.
+When it comes to the Acrylic tube using the 2-D \ac{LiDAR} it falsely detected targets where there where none. This is due to the physical proprieties of the object being unsuitable for \ac{LiDAR} technology to handle. The robot in its course got stuck near the obstacle due to thinking it had crashed into it. However this was not the case and the robot did not succeed in the experiment.
 \subsubsection*{FMCW radar}
-In this case the robot was able to properly detect the tube and with it avoided it through all the course.
+In this case the robot was able to properly detect the tube and with it avoided it through all the course. The behavior of the robot was objectively than the previous case since it went through all course without hitting the tube in any way.
 
-\subsubsection{Robot}
-In this last case both the \ac{FMCW} \ac{radar} and the 2D-LIDAR performed reasonably well avoiding the obstacle with ease.
+\subsubsection{Robot  (turtlebot2) }
+In this last case both the \ac{FMCW} \ac{radar} and the 2D-LIDAR performed reasonably well avoiding the obstacle with ease for all the trajectory.
 
+\subsection{Summary}
+In this experiment we conclude that there are multiple types of obstacles that the 2-D LiDAR is unable to properly detect. This poor detection led to the robot crashing into the objects making it so the navigation task presented was ended in failure. However using the \ac{FMCW} radar proved to have a better perception of all the obstacles in the experiment and with it the indoor navigation tests were concluded with sucess with the robot circunventing them in a safe manner.
 \section{Experiment 3}
 In the previous experiment we only dealt with static objects however in this new test we want to see how the robot handles dynamic objects in a controlled space. For that we use an additional turtlebot2 to obstruct our turtlebot. In other words we have the robot trying to reach multiple goals multiple times and the additional turtlebot2 will try to make more difficult by obstructing the planned paths of the robot.
 
