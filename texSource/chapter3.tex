@@ -1,6 +1,9 @@
 \chapter{ROS Navigation} \label{ch:BaseWork}
 
+
 %%\section{Introduction}
+When it comes to navigation we need a wide variety of modules that interconnected produce an intelligent system that goes from one point to another while avoiding obstacles while being well localized. For our case study we will try to define how we can produce a suitable navigation module for a given platform using state of the art algorithms and modules. First an overview of \ac{ROS} framework is presented. After that some navigation concepts are explained and finally how the \ac{ROS} navigation stack combats this problems.
+
 \section {ROS}
 Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} \cite{ros} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, it is more a kind of middleware, in other words it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter is often preferred.
 
@@ -52,29 +55,34 @@ To fix this issue various algorithms were developed being the most popular ones 
 
 Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. This type of planning is often refereed as a global path planner that will be discussed further n in a later section.
 
-After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. This subject is often referred to as local path planner methods that will be further detailed bellow.
+After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. This subject is often referred to as local path planner methods that will be further detailed in the following sections.
+
+
 \section{Path Planning and Motion Control}
- Obstacle avoidance is a major subject in robotics, failure in this systems may result in crashes that have catastrophic consequences such as hardware being badly damaged or being completely nonfunctional. This problem is usually separated into two categories local path planning and global path planning \cite{foxdwa}. 
+ Obstacle avoidance is a major subject in robotics, failure in this systems may result in crashes that have catastrophic consequences such as hardware being badly damaged or being completely nonfunctional. This problem is usually separated into two categories local path planning and global path planning \cite{foxdwa}.
+ 
+ 
  Global methods assume the environment is completely known a priori and can therefore compute an optimal safe path  around static obstacles using a variety of different strategies. This models prove to be very reliable for static environments. However this models are usually computational expensive which lead to very slow update times. For fast changing environments such as is in the case for highly populated indoor scenarios they prove to be insufficient. 
  To improve the quality of navigation capabilities, local path planning techniques are added to improve the responsiveness of the robot. This techniques have a much faster update time  since they use a smaller version of the world around them. However this type of approaches have trouble with local minimum cases where the robot gets stuck (for example the U-shape case).
 \subsection{Global Methods}
 Path planning is crucial for the robot to handle safe trajectory around obstacles. In this work the information regarding this obstacles is based on a grid map built by \ac{SLAM} and new observations retrieved by the robot's sensors.  Planning an optimal safe path can be done using a wide variety of methods like Visibility Graphs, Generalized Voroin Diagram, and \ac{PRM} \cite{globalmethods}. However for in this work we will use the \ac{PRM} method. This method samples its environment and creates a occupancy graph. Then by inserting the initial position and the goal position the path can be computed using dijaktra or A* or Rapidly exploring Random Trees search algorithms . However, the \ac{ROS} navigation packages only use the first two so  we will only focus on this ones.
 
 
-\subsubsection{Dijaktra algorithm}
-Assuming we have an occupancy map we can now start to explain how does a robot compute the shortest path between the starting position and the end goal. Edsgar W. Dijkstra proposed an algorithm that solves this problem for a number of nodes, in our case we have cells on an occupancy grid map. Assuming with each cell costs the same then the shortest path can be calculated doing the following algorithm described in Figure \ref{fig:dalg}. 
+\subsubsection{Dijaktra algorithm}\label{djk}
+Assuming we have an occupancy map we can now start to explain how does a robot compute the shortest path between the starting position and the end goal. Edsgar W. Dijkstra proposed an algorithm that solves this problem for a number of nodes, in our case we have cells on an occupancy grid map. Assuming each cell costs the same then the shortest path can be calculated doing the following algorithm described in Figure \ref{fig:dalg}. 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter5/Dalg.png}}
-\caption{(taken form \cite{Ben-Ari2018})}
+\caption{( Dijkstra algorithm taken form \cite{Ben-Ari2018})}
 \label{fig:dalg}
 \end{figure}
 Each cell is numbered with the number of steps it needs to get to the starting position. This continues until we reach the goal cell and we get the minimum path to reach it. However if we have a map with cells that have variable cost in the algorithm above we do not iterate $n$ with plus one, but with the cell cost. This makes it so for this case that  shortest path geometrically may not be the shortest path when the costs are taken into account.
 
-\subsubsection{A* algorithm}
-In the previous case we search for cells in all directions, however there is a more efficient way of doing it by adding more information. The A* algorithm takes into account an extra \textit{heuristic function} to that gives a preferred direction for the search. Not only does it take into account the cell cost but another value that corresponds to a given direction to be doing in  the search. The function can be shown as:
+\subsubsection{A* algorithm}\label{A*}
+In the previous case we search for cells in all directions, however there is a more efficient way of doing it by adding more information. The A* algorithm besides the cost from the steps to the start position$g(x,y)$,it takes into account an extra \textit{heuristic function} $h(x, y)$ to that gives a preferred direction for the search. Not only does it take into account the cell cost but another value that corresponds to a given direction to be doing in  the search. The function can be shown as:
 \begin{equation}
     f(x,y)=g(x,y) + h(x,y)
 \end{equation}
+Where $g(x,y)$ is the cost of a given the cell, 
 \subsection{Local Methods}
 In contrast to global path planning in where a large portion of the environment is generally assumed to be true, local methods take in to account a partial world view for the motion planning capabilities. In other words, local path planning determines the motion of the robot taking into account the global plan provided by the global methods described earlier.
 The most popular of this type of methods are \cite{inbookdwa}:
@@ -84,12 +92,12 @@ The most popular of this type of methods are \cite{inbookdwa}:
     \item Trajectory Rollout  \cite{gerkey2008planning}
     \item Elastic Band \cite{siegwart2011introduction}
     \item Timed elastic band \cite{rosmann2013efficient}
-    \item Tentacles Clothoid \cite{alia2015local}
+    \item Tentacles Clothoid \cite{ffalia2015local}
     \item \ac{VFH}+ \cite{siegwart2011introduction}
 \end{itemize}
 For our case study we will only explore the first two that are already integrated in ROS.
-\subsubsection{DWA planner}
-The Trajectory Rollout  the most standard approach when it comes to local path planning in \ac{ROS}. It outputs  rotational and translational velocity by generating multiple trajectories for different types of velocity sample search space and choosing the best one. The algorithm goes as follows \cite{inbookdwa}:
+\subsubsection{DWA planner}\label{dwa}
+The \ac{DWA} planner is the most standard approach when it comes to local path planning in \ac{ROS}. It outputs  rotational and translational velocity by generating multiple trajectories for different types of velocity sample search space and choosing the best one. The algorithm goes as follows \cite{inbookdwa}:
 \begin{itemize}
     \item Start with a set of velocities pairs $\{R_{vR_x},R_{ \omega_z} \}$ that are obtainable by the robot.
     \item Genarate in the form of arcs the projected trajectories obtained using the previous velocity sample space.
@@ -121,7 +129,7 @@ The Trajectory Rollout  the most standard approach when it comes to local path p
     
     Where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal in map cells, and \textbf{maxobscost} is equal to the \textbf{maximum obstacle cost} (given by the local costmap) of all the points along the trajectory.
     \end{itemize}
-\subsubsection{Trajectory Rollout}
+\subsubsection{Trajectory Rollout} \label{tr}
 The Trajectory Rollout planner follows the same logic as above but in this case the sampling method for the control space is different. In this a set permissible velocities
 in each simulation is calculated including acceleration limits for the entire simulation
 time\cite{inbookdwa}.
@@ -190,10 +198,10 @@ The global and local planners are plugins specified by the user. This choice wil
 \subsubsection{Global Planner}
  
 The job of this component is to produce the best trajectory for a robot to take with limited amount of information given by the global costmap.
-This plan can be updated when the robot gets stuck or by a user specific frequency. The algorithms used to get this path are usually \textbf{djakarta} or \textbf{A*} that are described in the previous section.
+This plan can be updated when the robot gets stuck or by a user specific frequency. The algorithms used to get this path are usually \textbf{djakarta} or \textbf{A*} that are described in the previous sections \ref{djk} and \ref{A*}.
 
 \subsubsection{Local Planner}
-The local planner takes into account the trajectory given by the global planner and tries to compute velocity commands that follow it. However the path given may be to close to an obstacle detected and in order to avoid it we must deviate from the plan given to avoid collision. The function of the local planner is to avoid dynamic obstacles that appear while still trying to follow the global plan and goal. This type of local planner is usually \textbf{TrajectoryPlannerROS} or \textbf{DWAPlanner} that follow the explanation in the previous sections.
+The local planner takes into account the trajectory given by the global planner and tries to compute velocity commands that follow it. However the path given may be to close to an obstacle detected and in order to avoid it we must deviate from the plan given to avoid collision. The function of the local planner is to avoid dynamic obstacles that appear while still trying to follow the global plan and goal. This type of local planner is usually \textbf{TrajectoryPlannerROS} or \textbf{DWAPlanner} that follow the explanation in the previous sections \ref{dwa} and \ref{tr}.
 \subsubsection{Local and Global Costmap}
 The global and local costmap share the same class, the  \texttt{Costmap2DROS}. This class consists of a layered costmap that takes into account various layers defined by the user.
 
@@ -206,7 +214,14 @@ The global and local costmap share the same class, the  \texttt{Costmap2DROS}. T
     \item \textbf{Static Layer} - Retrieves static information from the \textbf{/map} topic and marks them has lethal objects (Typically only used in global costmap).
 \end{itemize}
 
+Figure \ref{fig:layers1} shows how the combined layers produce the master costmap that will be used by the planners \cite{lu2014layered}
 
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=\linewidth]{imgs/chapter3/layers1.png}
+    \caption{Various costmap layers that together form the master costmap that will be used in the global or local planner from \cite{lu2014layered}}
+    \label{fig:layers1}
+\end{figure}
 
 
 

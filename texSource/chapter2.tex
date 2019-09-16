@@ -223,7 +223,12 @@ Mixing both signals and passing it by a low pass filter we then compute the \ac{
 
 
 \subsubsection{velocity Detection}
-This type of radar also provides an estimate on the radial velocity for each detected range. To do this more than one chirp is needed. For a set of N chirps we call a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is so low the corresponding range (or first) \ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of relative radial velocities  for each range detection. In the end we get a matrix that relates radial velocity and range. 
+This type of radar also provides an estimate on the radial velocity for each detected range. To do this more than one chirp is needed. For a set of N chirps we call a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is so low the corresponding range (or first) \ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of relative radial velocities  for each range detection. Radial velocity information is given by:
+\begin{equation}
+    v_i=\frac{\lambda \omega_i}{4 \pi T_c}
+\end{equation}
+Where $\lambda$ is the wavelength of the chirp and $\omega_i$ is the phase difference between chirps for the respective objects in the Doppler FFT.
+In the end we get a matrix that relates radial velocity and range. 
 Figure \ref{fig:matrix} illustrates this process.
 \begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/dopplerFFT2.png}}

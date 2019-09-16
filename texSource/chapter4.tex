@@ -29,7 +29,7 @@ When it comes to specs the robots dimension is 354 x 354 x 420 mm as shown in Fi
 \subsection{FMCW radar}
 The radar board chosen for this work is the mmwave Texas Instruments AWR1642BOOST (Fig.\ref{fig:awr}). This is a recently distributed \ac{FMCW} radar dedicated for short range applications. It is an easy-to-use evaluation board for the AWR1642 automotive radar sensor which is connected to the micro-controller unit (MCU) LaunchPad. To develop software it has  on-chip C67x DSP core and low-power ARM Cortex-R4F controllers which include onboard emulation for programming and debugging.
 It requires a 5V > 2.5 A supply brick with a 2.1-mm barrel jack to run.
-The device supports a wide RF bandwidth of 77-81 GHz that permits good range, velocity  and angle resolution.
+The device supports a wide RF bandwidth of 77-81 GHz that permits good range, velocity  and angle resolution. This last paramaters depend on the configuration fed to the device.
 
 \begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter4/awr1642.jpg}}
@@ -113,7 +113,7 @@ This will launch the TI mmWave ROS Driver nodes that configure the EVM and publi
 
 \subsection{\ac{PCL}}
 %Describe PCL
-Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to process and manipulate this type of information. A pointcloud is a collection of multi-dimensional points and is commonly used to represent three-dimensional data \cite{pcl}. This points are often just designed to locate points in x,y,z but more dimensions can be added as for the for the FMCW radar it has 6 dimensions. \ac{PCL} provides open source state of the art library modules that enables  filtering, feature estimation, surface reconstruction, registration, model fitting and segmentation. In our case we will mainly use its passthrough filters and for construcing visualization markers that show the \ac{radar} information in a more intuitive way.
+Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to process and manipulate this type of information. A pointcloud is a collection of multi-dimensional points and is commonly used to represent three-dimensional data \cite{pcl}. This points are often just designed to locate points in x,y,z but more dimensions can be added as is for the FMCW radar it has 6 dimensions. \ac{PCL} provides open source state of the art library modules that enables  filtering, feature estimation, surface reconstruction, registration, model fitting and segmentation. In our case we will mainly use its passthrough filters and for construcing visualization markers that show the \ac{radar} information in a more intuitive way.
 
 \subsection{Visualization of the radar point cloud}
 Plotting the points in the XYZ space is not enough to fully visualize the radar data sent since each point also gives velocity and intensity information.
