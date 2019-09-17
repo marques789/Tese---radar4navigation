@@ -1,6 +1,5 @@
 \chapter{Doppler Layer}
 
-\section{Introduction}
 In this section we will explore the implementation of a new plugin in the ROS navigation stack based on the radar's relative radial velocity information. The plugin proposed is a map layer and can be specified by either the global or local costmap. The objective of said layer is to increase the cost values of cells based on the prediction of the motion of said obstacles provided by the radar (doppler channel). The ending result should be a better avoidance of incoming obstacles with negative relative velocity  to the robot.
 
 \section{Layered Costmaps}
@@ -16,7 +15,15 @@ behaviors achievable with the layered costmap approach from \cite{lu2014layered}
 The set of layers used follows a specific hierarchy that determines what order and how they overwrite the master costmap. This is an important part to take into consideration the priority
 
 
-\section{Field Testing}
+\section{Doppler Layer}
+In this work we designed a layer that adjusts the cell values of the master costmap taking into account the radial velocity of said objects. Taking into account the radial velocity $v_r$ the cell value of the surrounding cell's is given by:
+\begin{equation} \label{eq1}
+\begin{split}
+cell_{cost} & = A e^{-(f_1+f_2)} \\
+ & = \frac{1}{2} \pi r^2
+\end{split}
+\end{equation}
+
 
 %\subsection{Side Tracking}
 

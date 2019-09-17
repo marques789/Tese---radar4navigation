@@ -1,4 +1,4 @@
-\chapter{ROS Navigation} \label{ch:BaseWork}
+\chapter{Robotic Navigation using ROS} \label{ch:BaseWork}
 
 
 %%\section{Introduction}
@@ -64,11 +64,11 @@ After the optimal plan is computed the final step is to determine the best veloc
  
  Global methods assume the environment is completely known a priori and can therefore compute an optimal safe path  around static obstacles using a variety of different strategies. This models prove to be very reliable for static environments. However this models are usually computational expensive which lead to very slow update times. For fast changing environments such as is in the case for highly populated indoor scenarios they prove to be insufficient. 
  To improve the quality of navigation capabilities, local path planning techniques are added to improve the responsiveness of the robot. This techniques have a much faster update time  since they use a smaller version of the world around them. However this type of approaches have trouble with local minimum cases where the robot gets stuck (for example the U-shape case).
-\subsection{Global Methods}
+\subsection{Global Methods for Path Planning}
 Path planning is crucial for the robot to handle safe trajectory around obstacles. In this work the information regarding this obstacles is based on a grid map built by \ac{SLAM} and new observations retrieved by the robot's sensors.  Planning an optimal safe path can be done using a wide variety of methods like Visibility Graphs, Generalized Voroin Diagram, and \ac{PRM} \cite{globalmethods}. However for in this work we will use the \ac{PRM} method. This method samples its environment and creates a occupancy graph. Then by inserting the initial position and the goal position the path can be computed using dijaktra or A* or Rapidly exploring Random Trees search algorithms . However, the \ac{ROS} navigation packages only use the first two so  we will only focus on this ones.
 
 
-\subsubsection{Dijaktra algorithm}\label{djk}
+\subsubsection{Dijkstra algorithm}\label{djk}
 Assuming we have an occupancy map we can now start to explain how does a robot compute the shortest path between the starting position and the end goal. Edsgar W. Dijkstra proposed an algorithm that solves this problem for a number of nodes, in our case we have cells on an occupancy grid map. Assuming each cell costs the same then the shortest path can be calculated doing the following algorithm described in Figure \ref{fig:dalg}. 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter5/Dalg.png}}
@@ -82,8 +82,7 @@ In the previous case we search for cells in all directions, however there is a m
 \begin{equation}
     f(x,y)=g(x,y) + h(x,y)
 \end{equation}
-Where $g(x,y)$ is the cost of a given the cell, 
-\subsection{Local Methods}
+\subsection{Local Methods for Motion Control }
 In contrast to global path planning in where a large portion of the environment is generally assumed to be true, local methods take in to account a partial world view for the motion planning capabilities. In other words, local path planning determines the motion of the robot taking into account the global plan provided by the global methods described earlier.
 The most popular of this type of methods are \cite{inbookdwa}:
 %cite this
@@ -127,7 +126,7 @@ The \ac{DWA} planner is the most standard approach when it comes to local path p
        &+\texttt{occdist\_scale} * \textbf{maxobscost} 
     \end{align*}
     
-    Where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal in map cells, and \textbf{maxobscost} is equal to the \textbf{maximum obstacle cost} (given by the local costmap) of all the points along the trajectory.
+    Where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal in map cells, and \textbf{maxobscost} is equal to the maximum obstacle cost (given by the local costmap) of all the points along the trajectory.
     \end{itemize}
 \subsubsection{Trajectory Rollout} \label{tr}
 The Trajectory Rollout planner follows the same logic as above but in this case the sampling method for the control space is different. In this a set permissible velocities
@@ -214,7 +213,7 @@ The global and local costmap share the same class, the  \texttt{Costmap2DROS}. T
     \item \textbf{Static Layer} - Retrieves static information from the \textbf{/map} topic and marks them has lethal objects (Typically only used in global costmap).
 \end{itemize}
 
-Figure \ref{fig:layers1} shows how the combined layers produce the master costmap that will be used by the planners \cite{lu2014layered}
+Figure \ref{fig:layers1} shows how the combined layers produce the master costmap that will be used by the planners \cite{lu2014layered}.
 
 \begin{figure}[!htb]
     \centering

@@ -205,7 +205,7 @@ In this section we try to simulate in MATLAB the process of retrieving the range
 \caption{IF signal creation to retrieve range information of the target}
 \label{fig:if2}
 \end{figure}
-Mixing both signals and passing it by a low pass filter we then compute the \ac{FFT} of the \ac{IF} signal. Fig \ref{fig:fft} shows the result. By using equation \ref{eq:1} we can retrieve the distance vs power of the signal plot (Fig. \ref{fig:fft2}). As we can see the power of the signal is stronger in the distances that were chosen a priori. To extract them we must choose a certain threshold of \ac{SNR}. Note that the sampling frequency limits the maximum distance of detection.
+Mixing both signals and passing it by a low pass filter we then compute the \ac{FFT} of the \ac{IF} signal. Fig \ref{fig:fft} shows the result. By using equation \ref{eq:1} we can retrieve the distance vs power of the signal plot (Fig. \ref{fig:fft2}). 
 \begin{figure}[h] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/FFT.png}
@@ -220,12 +220,13 @@ Mixing both signals and passing it by a low pass filter we then compute the \ac{
     \caption{Range detection using \ac{FMCW} \ac{radar}}
     \label{fig:distance determination}
 \end{figure}
-
+As we can see the power of the signal is stronger in the distances that were chosen a priori. To extract them we must choose a certain threshold of \ac{SNR}. Note that the sampling frequency limits the maximum distance of detection.
 
 \subsubsection{velocity Detection}
 This type of radar also provides an estimate on the radial velocity for each detected range. To do this more than one chirp is needed. For a set of N chirps we call a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is so low the corresponding range (or first) \ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of relative radial velocities  for each range detection. Radial velocity information is given by:
 \begin{equation}
     v_i=\frac{\lambda \omega_i}{4 \pi T_c}
+    \label{eq:2}
 \end{equation}
 Where $\lambda$ is the wavelength of the chirp and $\omega_i$ is the phase difference between chirps for the respective objects in the Doppler FFT.
 In the end we get a matrix that relates radial velocity and range. 
@@ -235,6 +236,43 @@ Figure \ref{fig:matrix} illustrates this process.
 \caption{At the same range peaks the sinusoid has different phases, by calculating the 2D FFT (or doppler FFT) we retrieve radial velocity information, taken form \cite{schroeder2010x})}
 \label{fig:matrix}
 \end{figure}
+
+\subsubsection*{Simulation}
+In this section we try to simulate in MATLAB the process of retrieving the velocity from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix X. Table \ref{tab:table2} shows the parameters used for the radar and the velocity and range of the supposed object to be retrieved.
+\begin{table}[h!]
+  \begin{center}
+    \caption{Your first table.}
+    \label{tab:table2}
+    \begin{tabular}{l|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
+      \textbf{Paramater} & \textbf{Value } \\
+      \hline
+      $f_c$ & 77 GHz \\
+      Bandwidth & 4 GHz \\
+      $T_c$ & 40us \\
+      $F_s$ & 8 MHz \\
+      $N_c$ & 64 \\
+      Object distance & 5  m \\
+      Radial velocity & 7  m/s
+    \end{tabular}
+  \end{center}
+\end{table}
+Where $N_c$ is the number of chirps used. By computing the 2-D doppler \ac{FFT} of the signal we get  Fig \ref{fig:fft3} shows the result. By using equation \ref{eq:2} we can retrieve the velocity vs power of the signal plot (Fig. \ref{fig:fft4}). 
+\begin{figure}[h] 
+    \begin{minipage}[b]{.49\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/fft3.png}
+        \subcaption{FFT of IF signal}
+        \label{fig:fft3}
+    \end{minipage}
+    \begin{minipage}[b]{.49\linewidth}
+        \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/fft4.png}
+        \subcaption{Phase differences converted to velocity plot}
+        \label{fig:fft4}
+    \end{minipage}
+    \caption{Velocity detection using \ac{FMCW} \ac{radar}}
+    \label{fig:distance determination}
+\end{figure}
+As we can see we have a peak near the $7 m/s$ velocity that means this parameters can be used to compute the radial velocity of the target with relatively good precison 
+
 \subsubsection{angle Detection}
 Finally to discover the angle for each target we need more than one receiver antenna. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distance for the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
 \begin{figure}[h] 
