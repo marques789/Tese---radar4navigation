@@ -16,13 +16,20 @@ The set of layers used follows a specific hierarchy that determines what order a
 
 
 \section{Doppler Layer}
-In this work we designed a layer that adjusts the cell values of the master costmap taking into account the radial velocity of said objects. Taking into account the radial velocity $v_r$ the cell value of the surrounding cell's is given by:
+In this work we designed a layer that adjusts the cell values of the master costmap taking into account the radial velocity of said objects. Taking into account the relative  radial velocity $v_r$ the cell value of the surrounding cell's is given by:
 \begin{equation} \label{eq1}
 \begin{split}
-cell_{cost} & = A e^{-(f_1+f_2)} \\
- & = \frac{1}{2} \pi r^2
+cell_{cost} & = A e^{-(\frac{x^2}{2 \sigma_x^2}+\frac{y^2}{2 \sigma_y^2})} \\
+ \sigma_x^2 & = covariance * factor * |v_r| \\
+ \sigma_y^2 & = covariance \\
+ x & =dist *cos(\theta)\\
+ y & =dist *sin(\theta)\\
 \end{split}
 \end{equation}
+Where $covariance$ and $factor$ are parameters adjusted by the user, $\theta$ is the angle between the cell where we want to calculate its value and the direction of the velocity vector of the target object, and finnaly $dist$ is the distance between the two previous cells.
+\section{Experimentation and Results}
+Since this layer is concerned in dealing with dynamic obstacles we will only use it for the local costmap that is able 
+
 
 
 %\subsection{Side Tracking}

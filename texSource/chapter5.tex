@@ -7,7 +7,7 @@ With the configuration described in the previous section we can now start to exp
 
 
 
-\section {Experiment 1 Static Obstacles in controlled environment}
+\section {Static Obstacles in controlled environment}
 In this case study the \ac{FMCW} radar has shown to have better performance at detecting certain indoor objects than the 2D \ac{LiDAR}. This means that there might be situations where using it for obstacle avoidance produce better results for indoor navigation tasks. \\
 
 To demonstrate this a test was devised in a controlled environment that compares the performance of each sensor for different types of obstacles, in this case two types of chairs, a garbage bin, a low height box, a transparent acrylic tube and finally a robot (in this case another tutlebot2).  
@@ -324,7 +324,7 @@ In this last case both the \ac{FMCW} \ac{radar} and the 2D-LIDAR performed reaso
 In this experiment we conclude that there are multiple types of obstacles that the 2-D LiDAR is unable to properly detect. This poor detection led to the robot crashing into the objects making it so the navigation task presented ended in failure. However using the \ac{FMCW} radar proved to have a better perception of all the obstacles in the experiment and with it the indoor navigation tests were concluded with success with the robot circumventing them in a safe manner.
 
 
-\section{Experiment 2 Dynamic Obstacles in controlled environment}
+\section{Dynamic Obstacles in controlled environment}
 In the previous experiment we only dealt with static objects however in this new test we want to see how the robot handles dynamic objects in a controlled space. For that we send multiple goals  to the robot and use an additional turtlebot2 or a person to obstruct its path. In other words we have the robot trying to reach multiple goals multiple times and the dynamic obstacle will try to make more difficult by obstructing the planned paths of the robot.  The main goal of this experiment is to see if the robot can handle unstructured environments that are often the case in indoor scenarios.
 \subsection{Experimental Setup}
 For this test we send four goals to the robotic platform, A,B,C and D in zigzag fashion and we will place a dynamic obstacle obstructing it as shown in Figure \ref{fig:exp3}.
@@ -387,11 +387,11 @@ However if the robot comes from behind there is the chance of it crashing becaus
 \subsection{Summary}
 The robot was able to handle dynamic obstacles using only the \ac{FMCW} \ac{radar}, this means that it might be feasible to only use this sensor for obstacle avoidance in ever changing indoor environments.
 
-\section {Experiment 3 Fynamic Obstacles in uncontrolled environment}
+\section {Dynamic Obstacles in uncontrolled environment}
 In the following test we want to answer two things: (1) Is the robot able to avoid people that obstruct its pre planned path only using the  \ac{FMCW} radar as an obstacle detector, and (2) if in this case it is also able to clear previously obstructed spaces (by the person in this case) by ray tracing its environment. This last requirement may provide to be difficult to get since the radar point cloud is less dense than the 2D laser range finder.
 
 \subsection{Experimental Setup}
-First a map was created of the \ac{IRIS} laboratory using the package \texttt{gmapping} provided by \ac{ROS}. Then using the map and the package \texttt{\ac{AMCL}} we ensure that the robot localization is fairly reasonable. After that we set up the robot to do a certain navigation task.
+First a map was created of the \ac{IRIS} laboratory using the package \texttt{gmapping} provided by \ac{ROS} (Fig. \ref{fig:map}). Then using the map and the package \texttt{\ac{AMCL}} we ensure that the robot localization is fairly reasonable. After that we set up the robot to do a certain navigation task.
 The robot starting position and goal were set as shown in Figure \ref{fig:setup} in the \ac{IRIS} laboratory. 
 
 \begin{figure}[ht!]
@@ -434,6 +434,6 @@ The \ac{radar} was also able to detect the obstructing person and managed to pla
     \label{fig::radarperson4}
   \end{subfigure}
 \end{figure}
-\subsection{Comments}
+\subsection{Summary}
  The \ac{FMCW} radar was able to perform 
 obstacle avoidance of dynamic obstacles (in this case a person) that continuously obstructed its path at 5 different times in the same environment which may suggest the use of the \ac{FMCW} \ac{radar} as an alternate sensory unit over the \ac{LiDAR}.

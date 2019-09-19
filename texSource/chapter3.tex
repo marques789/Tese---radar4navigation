@@ -2,7 +2,7 @@
 
 
 %%\section{Introduction}
-When it comes to navigation we need a wide variety of modules that interconnected produce an intelligent system that goes from one point to another while avoiding obstacles while being well localized. For our case study we will try to define how we can produce a suitable navigation module for a given platform using state of the art algorithms and modules. First an overview of \ac{ROS} framework is presented. After that some navigation concepts are explained and finally how the \ac{ROS} navigation stack combats this problems.
+When it comes to navigation we need a wide variety of modules that interconnected produce an intelligent system that goes from one point to another while avoiding obstacles and being well localized. For our case study we will try to define how we can produce a suitable navigation module for a given platform using state of the art algorithms and modules. First an overview of \ac{ROS} framework is presented. After that some navigation concepts are explained and finally how the \ac{ROS} navigation stack combats this problems.
 
 \section {ROS}
 Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} \cite{ros} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, it is more a kind of middleware, in other words it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter is often preferred.
@@ -21,10 +21,6 @@ ROS predefined data type used to communicate between nodes.
 \item \textbf{Paramater Server} -In this server \ac{ROS} tracks different paramater values defined by the running application. It is useful for modifying different parameters dynamically without having to restart the application.
 %X
 \end{itemize}
-
-
-%%REVER ISTO
-
 Figure \ref{fig:rosgraph} gives a brief overview of how each of this concepts are put together and  generate the in ROS  computation system.
 
 \begin{figure}[h] 
@@ -34,13 +30,49 @@ Figure \ref{fig:rosgraph} gives a brief overview of how each of this concepts ar
 \end{figure}
 
 
+\subsection{ROS tools}
+Now that we described the inner workings of \ac{ROS} we can use its tools to retrieve and analyze information regarding it. We will use the following \ac{ROS} tools:
+\subsubsection{rviz}
+\textbf{Rviz} is a graphical interface that allows 3D visualization environment that allows the view of the different components of \ac{ROS} like the robots transforms, the map, pointclouds, visualization markers etc...
+\subsubsection{rosbag}
+\textbf{Rosbag} enables the recording of topics into a file that can be replayed in the future. It is useful to store information and then running it again at the desired time and speed we want.
+\subsubsection{rqt_graph}
+To understand how the various nodes and topics are interconnected the use of \textbf{rqt_graph} is the best for this case. It can be used to produce an image of all of them and how they communicate between each other
+\subsubsection{Command Line tools}
+In this section we will highlight some of the command tools in \ac{ROS} that we used in this work.
+\subsubsection*{Running ROS Systems}
+\begin{itemize}
+    \item \textbf{roscore} - this launches all the necessary nodes that the ROS System needs in order to properly setup communication between nodes. It starts the \ac{ROS} Master, Paramater Server and rosout. Using \textbf{roslaunch} will automatically run a roscore if it was not initiated before. 
+    \item \textbf{roslaunch} - Used for running multiple ROS nodes as well as setting parameters in the server. This is done by launching ".launch" files that tell which nodes to load, which paramaters to set and what machines it will be used on.
+    \item \textbf{rosrun} - Allows you to run a specific exacutable in a predetermined package.
+\end{itemize}
+\subsubsection*{Debugging and interacting with the \ac{ROS} system}
+\begin{itemize}
+    \item \textbf{rostopic} - is used for displaying debug information. This may be the messages published by a topic, finding a topic by its type, showing information about a topic, listing all the topics in the \ac{ROS} system. among other things.
+   % \item \textbf{rossrv}
+    \item \textbf{rosnode} - Can be used to display information regarding publications, subscriptions and connections.
+    \item \textbf{rosparam} - Used for getting and setting paramaters in the Paramater Server.
+   % \item \textbf{rosmsg}
+
+\end{itemize}
+\subsubsection*{Install, build and filesystem tools}
+\begin{itemize}
+    \item \textbf{rosmake} - Used to build dependencies.
+ %   \item \textbf{rosinstall}
+    %\item \textbf{roslocate}
+\end{itemize}
+%%REVER ISTO
+
+
+
+
 %\section{Architecture Overview}\label{ch:requirements}
 \section {Navigation Concepts}
-There are four main problems associated with robotic autonomous navigation. They are Cognitive Mapping, Localization, Path Planning and Motion Control \cite{nav} as shown in Fig. \ref{fig:probNav} . 
+There are four main problems associated with robotic autonomous navigation. They are Mapping, Localization, Path Planning and Motion Control \cite{nav} as shown in Fig. \ref{fig:probNav} . 
 
 \begin{figure}[h] 
-\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter3/probNAV.png}}
-\caption{Problems regarding autonomous navigation \cite{nav}}
+\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter3/navprobs.png}}
+\caption{Problems regarding autonomous navigation}
 \label{fig:probNav}
 \end{figure}
 Various algorithms have been developed over the years to combat this problems. 
@@ -53,12 +85,12 @@ With the grid map built we now need to estimate the robot's position in said map
 An easy solution to this problem is relying on the robot's odometry information inferred by the robot's encoders and inertial sensors such as accelerometers and gyroscopes. This is called dead reckoning and is an easy and low cost solution for the localization problem. However since the sensor data is integrated over time, this leads to the accumulation of errors which make this approach not feasible for long navigation tasks. 
 To fix this issue various algorithms were developed being the most popular ones based on particle filters. The \ac{AMCL} \cite{amclpaper} algorithm  is the standard choice in this case. It takes into account a group of particles, each one corresponding to a certain robot state (position and orientation in this case). As the robot moves the least probable states are filtered out and  the particles should over time converge on the actual position of the robot.  
 
-Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. This type of planning is often refereed as a global path planner that will be discussed further n in a later section.
+Assuming the robot can localize itself on the map with a reasonable error we can start sending navigation goals to the robot. To reach the goal the robot must be able to find a path that optimizes the travel distance while avoiding obstacles. The outputted plan can vary depending on the algorithm used. This type of planning is often refereed as a global path planner that will be discussed further in a section \ref{ppmc} .
 
-After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. This subject is often referred to as local path planner methods that will be further detailed in the following sections.
+After the optimal plan is computed the final step is to determine the best velocity command that will be sent to the base.  The ROS navigation system follows a similar approach to the one used in \cite{gerkey2008planning}. A set of velocities are simulated during a given set of time and the corresponding predicted trajectories are  computed. This subject is often referred to as local path planner methods that will be further detailed in the following section \ref{ppmc}.
 
 
-\section{Path Planning and Motion Control}
+\section{Path Planning and Motion Control}\label{ppmc}
  Obstacle avoidance is a major subject in robotics, failure in this systems may result in crashes that have catastrophic consequences such as hardware being badly damaged or being completely nonfunctional. This problem is usually separated into two categories local path planning and global path planning \cite{foxdwa}.
  
  
