@@ -8,7 +8,7 @@ With the configuration described in the previous section we can now start to exp
 
 
 \section {Static Obstacles in controlled environment}
-In this case study the \ac{FMCW} radar has shown to have better performance at detecting certain indoor objects than the 2D \ac{LiDAR}. This means that there might be situations where using it for obstacle avoidance produce better results for indoor navigation tasks. \\
+In this work the \ac{FMCW} radar has shown to have better performance at detecting certain indoor objects than the 2D \ac{LiDAR}. This means that there might be situations where using it for obstacle avoidance produce better results for indoor navigation tasks. \\
 
 To demonstrate this a test was devised in a controlled environment that compares the performance of each sensor for different types of obstacles, in this case two types of chairs, a garbage bin, a low height box, a transparent acrylic tube and finally a robot (in this case another tutlebot2).  
 %We also try to use the fusion of both sensors that in theory should produce the best results. 
@@ -33,7 +33,7 @@ This is a 4 by 4 meter squared box with 1 meter high walls with the addition of 
 With the described scenario we setup the robots goal to make five loops between two goals, position A and B, positioning in between the route an obstacle as illustrated in  Figure \ref{fig:exp}. 
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/exp.png}}
-\caption{Demonstration of the course of test, the robot will go back and forth from position A to position B 5 times while  trying to avoid the obstacle in the middle}
+\caption[Demonstration of the course of test]{Demonstration of the course of test, the robot will go back and forth from position A to position B 5 times while  trying to avoid the obstacle in the middle}
 \label{fig:exp}
 \end{figure}
 
@@ -46,7 +46,7 @@ The list of objects used as obstacles are displayed in Fig. \ref{fig:obstacles}.
   \centering
   \begin{subfigure}[b]{0.3\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/wchair.jpg}
-     \caption{Wheeled office chair}
+     \caption{Office chair}
      \label{fig::wchair}
   \end{subfigure}
   \begin{subfigure}[b]{0.3\linewidth}
@@ -138,7 +138,7 @@ However with the \ac{FMCW} radar the chair is detected almost immediately, this 
 Figure \ref{fig:traj1} shows the robot trajectory in the \ac{LiDAR} and the \ac{FMCW} radar case aswell an aproximation of the of the invalid space the  center of the robot can not go through in dimmed red. As we can see the robot flat out ignores the obstacle with \ac{LiDAR} while in the \ac{FMCW} \ac{radar} case it narrowly avoids it at all times.
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter5/traj1.png}}
-\caption{Trajectory of the robot for the wheeled chair's case}
+\caption{Trajectory of the robot for the office chair's case}
 \label{fig:traj1}
 \end{figure}
 
@@ -160,7 +160,7 @@ First off it went in a straight line just as the previous case almost hitting  t
     \caption{Robot getting stuck in chair number 2}
     \label{fig::nchair}
   \end{subfigure}
-  \caption{Robot avoiding with office chair}
+  \caption{Robot avoiding getting stuck in four legged chair}
   \label{fig:nchairLF}
 \end{figure}
 
@@ -192,7 +192,7 @@ This makes it so the robot is aware of it at all times and planning around it.
 Figure \ref{fig:traj2} shows the trajectory of the robot for the \ac{LiDAR} and \ac{FMCW} \ac{radar} and an approximate position of the invalid space the four legs of the chair create coloured in dimmed red. The center of the robot should not passtrough this area since it will lead to collision. As we can see the trajectory  produced in the \ac{FMCW} radar case is much less susceptible to the object than in the \ac{LiDAR} case. 
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter5/traj2.png}}
-\caption{Trajectory of the robot for the 4 legged chair's case}
+\caption{Trajectory of the robot for the four-legged chair's case}
 \label{fig:traj2}
 \end{figure}
 
@@ -320,7 +320,7 @@ In this case the robot was able to properly detect the tube and with it avoided 
 \subsubsection{Robot  (turtlebot2) }
 In this last case both the \ac{FMCW} \ac{radar} and the 2D-LIDAR performed reasonably well avoiding the obstacle with ease for all the trajectory.
 
-\subsection{Summary}
+\subsection{Discussion}
 In this experiment we conclude that there are multiple types of obstacles that the 2-D LiDAR is unable to properly detect. This poor detection led to the robot crashing into the objects making it so the navigation task presented ended in failure. However using the \ac{FMCW} radar proved to have a better perception of all the obstacles in the experiment and with it the indoor navigation tests were concluded with success with the robot circumventing them in a safe manner.
 
 
@@ -331,7 +331,7 @@ For this test we send four goals to the robotic platform, A,B,C and D in zigzag 
 
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/exp3.png}}
-\caption{Demonstration of the course of test, the robot will run through A-B-C-D  while  trying to avoid the dynamic obstacle obstructing its path}
+\caption[Demonstration of the course of test]{Demonstration of the course of test, the robot will run through A-B-C-D  while  trying to avoid the dynamic obstacle obstructing its path}
 \label{fig:exp3}
 \end{figure}
 For the dynamic obstacles we will use first person and in a second trial a a mobile robot. This obstacles will try to obstruct the path of the robot throughout the course. For this case we will only use the \ac{FMCW} \ac{radar} as an obstacle detector.
@@ -340,9 +340,7 @@ For the dynamic obstacles we will use first person and in a second trial a a mob
 \subsection{Results}
 In the following sections we show the results for the person and the mobile robot as obstacles for the experiment.
 \subsubsection{Person}
-Throughout all the test the robot was successfully avoided the person  only using the \ac{FMCW} \ac{radar} as an obstacle detector. 
- 
-Figure \ref{fig:exp3person} shows two instances of the the robot avoiding the person in the experiment.
+Throughout all the test the robot was successfully avoided the person  only using the \ac{FMCW} \ac{radar} as an obstacle detector. Figure \ref{fig:exp3person} shows two instances of the the robot avoiding the person in the experiment.
 \begin{figure}[ht!]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
@@ -358,9 +356,7 @@ Figure \ref{fig:exp3person} shows two instances of the the robot avoiding the pe
   \caption{Robot avoiding person }
   \label{fig:exp3person}
 \end{figure}
-
-
-However the robot was only able to perceive the legs of said person and its feet. This may lead to cases where the robot shocks in the person if it is to close.
+However the robot was only able to perceive the legs of said person and not its feet. This may lead to cases where the robot shocks in the person if it is to close.
 
 When the person got to close to the robot, it stopped completely and had to recover behaviors were activated. We conclude that the \ac{FMCW} \ac{radar} is better suited for detecting obstacles that are at least half a meter away from the robot and that are facing it directly. 
 \subsubsection{Mobile Robot}
@@ -379,12 +375,12 @@ Figure \ref{fig:exp3robot} shows two instances of the robot avoiding the dynamic
     \caption{Robot avoiding dynamic robot 2}
     \label{fig::exp3robot2}
   \end{subfigure}
-  \caption{Robot avoiding person }
+  \caption{Robot avoiding dynamic robot }
   \label{fig:exp3robot}
 \end{figure}
 
 However if the robot comes from behind there is the chance of it crashing because the radar as only a small field of view of 120º.
-\subsection{Summary}
+\subsection{Discussion}
 The robot was able to handle dynamic obstacles using only the \ac{FMCW} \ac{radar}, this means that it might be feasible to only use this sensor for obstacle avoidance in ever changing indoor environments.
 
 \section {Dynamic Obstacles in uncontrolled environment}
@@ -396,7 +392,7 @@ The robot starting position and goal were set as shown in Figure \ref{fig:setup}
 
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter5/setup.png}}
-\caption{Experimental setup showing the initial position and the goal sent to the robot. A person will be put to obstruct the path of the robot}
+\caption[Experimental setup]{Experimental setup showing the initial position and the goal sent to the robot. A person will be put to obstruct the path of the robot}
 \label{fig:setup}
 \end{figure}
 
@@ -434,6 +430,6 @@ The \ac{radar} was also able to detect the obstructing person and managed to pla
     \label{fig::radarperson4}
   \end{subfigure}
 \end{figure}
-\subsection{Summary}
+\subsection{Discussion}
  The \ac{FMCW} radar was able to perform 
 obstacle avoidance of dynamic obstacles (in this case a person) that continuously obstructed its path at 5 different times in the same environment which may suggest the use of the \ac{FMCW} \ac{radar} as an alternate sensory unit over the \ac{LiDAR}.

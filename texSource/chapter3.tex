@@ -2,16 +2,16 @@
 
 
 %%\section{Introduction}
-When it comes to navigation we need a wide variety of modules that interconnected produce an intelligent system that goes from one point to another while avoiding obstacles and being well localized. For our case study we will try to define how we can produce a suitable navigation module for a given platform using state of the art algorithms and modules. First an overview of \ac{ROS} framework is presented. After that some navigation concepts are explained and finally how the \ac{ROS} navigation stack combats this problems.
+When it comes to navigation we need a wide variety of modules that interconnected produce an intelligent system that goes from one point to another while avoiding obstacles and being well localized. For our case study we will try to define how we can produce a suitable navigation module for a given platform using state of the art algorithms and modules. First an overview of \ac{ROS} framework is presented. After that some navigation concepts are explained with further detail in path planning and motion control case. And finally how the \ac{ROS} navigation stack combats this problems.
 
 \section {ROS}
 Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} \cite{ros} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, it is more a kind of middleware, in other words it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter is often preferred.
 
-\ac{ROS} provides hardware abstraction, device drivers, tools for introspection, message-passing and more. Also it is open source which means we can use them for virtually any means which we deem necessary for the development of our application, for example adapting pre established code for a specific case. This greatly facilitates the entrance of new developers to learn and do research in this field.
+\ac{ROS} provides hardware abstraction, device drivers, tools for introspection, message-passing and more. Also it is open source which means we can use them for virtually any means which we deem necessary for the development of our application, for example adapting pre established code for a specific case. This greatly facilitates the entrance of new developers to learn and do research in the field of robotics.
 \subsection{ROS architecture}
 The \ac{ROS}  architecture is based on a peer to peer network between processes usually referred to as \textit{Computation Graph} \cite{packt}. This structure is comprised by different concepts that we define bellow:
 \begin{itemize}
-\item \textbf{Nodes} - A node can be defined as a process or piece of software  that performs some type of computation. In \ac{ROS}, for a given application there are typically alot of nodes running in parallel that pass information between each other. For example  controlling the robot movement given the input image of a camera requires a node to act as a driver between the camera firmware and the ROS environment. Then there could be a node that processes the image further using ROS pre established software and finally given the processed information a different node will calculate the velocity of the robot and transmit them to the wheels of the robot. 
+\item \textbf{Nodes} - A node can be defined as a process or piece of software  that performs some type of computation. In \ac{ROS}, for a given application there are typically various nodes running in parallel that pass information between each other. For example  controlling the robot movement given the input image of a camera,  requires a node to act as a driver between the camera firmware and the ROS environment. Then there could be a node that processes the image further using ROS pre established software and finally given the processed information a different node will calculate the velocity of the robot and transmit them to the wheels of the robot. 
 \item \textbf{Messages} - \ac{ROS} uses predefined data structures  called messages to interpret information. This makes it so \ac{ROS} tools to generate the appropriate source code in the selected language (C++ or phyton in this case). Each message can be broke down into more messages and so one and so forth until we arrive at the primitive data types of the given programming language. Nodes communicate by publishing or subscribing  to topics using this messages and in the end we get a fully alive system that performs some type of application we want. 
 ROS predefined data type used to communicate between nodes.
 \item \textbf{Topics} - Nodes can send messages by publishing to a topic or receive them by subscribing to a topic. For example a node can be subscribed a raw velocity message and then after some data processing publish a smoothed version of it into another topic.  
@@ -104,7 +104,7 @@ Path planning is crucial for the robot to handle safe trajectory around obstacle
 Assuming we have an occupancy map we can now start to explain how does a robot compute the shortest path between the starting position and the end goal. Edsgar W. Dijkstra proposed an algorithm that solves this problem for a number of nodes, in our case we have cells on an occupancy grid map. Assuming each cell costs the same then the shortest path can be calculated doing the following algorithm described in Figure \ref{fig:dalg}. 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter5/Dalg.png}}
-\caption{( Dijkstra algorithm taken form \cite{Ben-Ari2018})}
+\caption{Dijkstra algorithm taken form \cite{Ben-Ari2018}}
 \label{fig:dalg}
 \end{figure}
 Each cell is numbered with the number of steps it needs to get to the starting position. This continues until we reach the goal cell and we get the minimum path to reach it. However if we have a map with cells that have variable cost in the algorithm above we do not iterate $n$ with plus one, but with the cell cost. This makes it so for this case that  shortest path geometrically may not be the shortest path when the costs are taken into account.
@@ -115,18 +115,22 @@ In the previous case we search for cells in all directions, however there is a m
     f(x,y)=g(x,y) + h(x,y)
 \end{equation}
 \subsection{Local Methods for Motion Control }
-In contrast to global path planning in where a large portion of the environment is generally assumed to be true, local methods take in to account a partial world view for the motion planning capabilities. In other words, local path planning determines the motion of the robot taking into account the global plan provided by the global methods described earlier.
+In contrast to global path planning in where a large portion of the environment is generally assumed to be true, local methods take in to account a partial world view for motion planning capabilities. In other words, local path planning determines the motion of the robot taking into account the global plan provided by the global methods described earlier.
 The most popular of this type of methods are \cite{inbookdwa}:
 %cite this
-\begin{itemize}
-    \item \ac{DWA} \cite{foxdwa}
-    \item Trajectory Rollout  \cite{gerkey2008planning}
-    \item Elastic Band \cite{siegwart2011introduction}
-    \item Timed elastic band \cite{rosmann2013efficient}
-    \item Tentacles Clothoid \cite{ffalia2015local}
-    \item \ac{VFH}+ \cite{siegwart2011introduction}
-\end{itemize}
-For our case study we will only explore the first two that are already integrated in ROS.
+\begin{description}
+    \item [\ac{DWA}] -  \cite{foxdwa} Takes into account a substet of admissible velocities taking into account robot's dynamic constraints and simulates them for a given time frame outputting various trajectories. Then using this trajectories derives the best trajectory given a certain cost function.  
+    \item [Trajectory Rollout]  \cite{gerkey2008planning} - Similar to the \ac{DWA} planner except the sampling method for the control space is different.
+    \item [Elastic Band] - \cite{siegwart2011introduction} In this case bubbles are formed that are defined as the maximum local subset of free space around a given robot configuration that can be travelled without collision.
+    Given this bubbles a set of "elastic bands" can be connected to form a collision free trajectory from the initial position to the goal without collision. When it comes to avoid an obstacle that obstructs the global plan, this technique tends to deviate from it  minimizing the bubble band tension.
+    \item [Timed elastic band] - \cite{rosmann2013efficient} This planner is an extension of the 'elastic band' that takes into account time intervals in between the robot's configurations. By doing this and utilizing a  multiple objective optimization function that takes into account the robot's accelaration and velocity limits with penalties and computes the best trajectory taking into account execution time, shortest path and clearance of obstacles it creates a suitable local planner that is suitable for avoiding dynamic obstacles.
+    
+    \item [Tentacles Clothoid] -  \cite{ffalia2015local} This is an empirical approach to the local path planning problem. It generates various "tentacles" and take the form of clothoids. It then chooses the best one taking into account the best obstacle clearance, curvature and distance to the global path planner. 
+    
+    \item [\ac{VFH}+] \cite{siegwart2011introduction} - For this approach first an histogram of the ammount of obstacles in a certain direction is first created.Then using a cost function that takes into account the alignment of the robot towards the goal, the difference between the new direction and the current wheel orientation and the difference between the previously selected direction and the new direction is computed. The best trajectory is then chosen taking into account this information.
+    
+\end{description}
+For our case study we will only explore the first two in detail since that they are already implemented in ROS.
 \subsubsection{DWA planner}\label{dwa}
 The \ac{DWA} planner is the most standard approach when it comes to local path planning in \ac{ROS}. It outputs  rotational and translational velocity by generating multiple trajectories for different types of velocity sample search space and choosing the best one. The algorithm goes as follows \cite{inbookdwa}:
 \begin{itemize}
@@ -150,15 +154,6 @@ The \ac{DWA} planner is the most standard approach when it comes to local path p
   \end{cases}
     \end{equation}
     \item Finally we choose  the most optimal trajectory and in consequence velocity pair taking into account a given objective cost function.
-    The cost function used to evaluate a trajectory in the \ac{ROS} navigation stack local planners is given by:
-    \begin{align*}
-            \textbf{cost} = &
-       \texttt{pdist\_scale} * \textbf{path\_dist}
-       + \texttt{gdist\_scale} * \textbf{goal\_dist}\\
-       &+\texttt{occdist\_scale} * \textbf{maxobscost} 
-    \end{align*}
-    
-    Where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal in map cells, and \textbf{maxobscost} is equal to the maximum obstacle cost (given by the local costmap) of all the points along the trajectory.
     \end{itemize}
 \subsubsection{Trajectory Rollout} \label{tr}
 The Trajectory Rollout planner follows the same logic as above but in this case the sampling method for the control space is different. In this a set permissible velocities
@@ -170,7 +165,7 @@ Figure \ref{fig:plans} shows an example of \textbf{turtlebot2} using the navigat
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=\linewidth]{imgs/chapter3/nav.png}
-    \caption{Rviz displaying the ros navigation stack components while \textbf{turtlebot2} is navigating.}
+    \caption[Rviz view of the ROS Navigation Stack]{Rviz displaying the ros navigation stack components while \textbf{turtlebot2} is navigating.}
     \label{fig:plans}
 \end{figure}
 
@@ -193,7 +188,7 @@ Figure \ref{fig:sensors} shows an example of the published data from both in rvi
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.5]{imgs/chapter3/sensors2.png}
-    \caption{Obstacle defections by both radar and lidar}
+    \caption{Obstacle detections by both radar and lidar}
     \label{fig:sensors}
 \end{figure}
 \subsubsection{Odometry}
@@ -229,10 +224,41 @@ The global and local planners are plugins specified by the user. This choice wil
 \subsubsection{Global Planner}
  
 The job of this component is to produce the best trajectory for a robot to take with limited amount of information given by the global costmap.
-This plan can be updated when the robot gets stuck or by a user specific frequency. The algorithms used to get this path are usually \textbf{djakarta} or \textbf{A*} that are described in the previous sections \ref{djk} and \ref{A*}.
+This plan can be updated when the robot gets stuck or by a user specific frequency the latter is usually preferred. The algorithms used to get this path are usually \textbf{djakarta} or \textbf{A*} that are described in the previous sections \ref{djk} and \ref{A*}.
 
 \subsubsection{Local Planner}
-The local planner takes into account the trajectory given by the global planner and tries to compute velocity commands that follow it. However the path given may be to close to an obstacle detected and in order to avoid it we must deviate from the plan given to avoid collision. The function of the local planner is to avoid dynamic obstacles that appear while still trying to follow the global plan and goal. This type of local planner is usually \textbf{TrajectoryPlannerROS} or \textbf{DWAPlanner} that follow the explanation in the previous sections \ref{dwa} and \ref{tr}.
+The local planner takes into account the trajectory given by the global planner and tries to compute velocity commands that follow it. However the path given may be to close to an obstacle detected and in order to avoid it we must deviate from the plan given to avoid collision. The function of the local planner is to avoid dynamic obstacles that appear while still trying to follow the global plan and goal. This type of local planner is usually \textbf{TrajectoryPlannerROS} or \textbf{DWAPlanner} that follow the explanation in the previous sections \ref{dwa} and \ref{tr} and uses the local costmap to do so. Bellow we define how \textbf{TrajectoryPlannerROS} generates the best trajectory using a determined cost function.
+
+\subsubsection*{Getting the Best Trajectory}
+The algorithm to get the best trajectory goes as follows:
+\begin{enumerate}
+    \item Discreetly sample the velocity space ($d_{vx}$ and $d_{vtheta}$)
+    \begin{align*}
+        & d_{vx}=(\texttt{max\_vel\_x}-\texttt{min\_vel\_x})/\texttt{vx\_samples}\\
+         & d_{vtheta}=(\texttt{max\_vel\_theta}-\texttt{min\_vel\_theta})/\texttt{vtheta\_samples}
+    \end{align*}
+    \item For each sampled velocity predict its trajectory in a given time frame (\texttt{sim\_time}).
+    \item Evaluate the cost of each trajectory  by using the value cost function
+    \item Pick the one with lowest cost and publish the associated velocity.
+    \item Repeat for a given rate (\texttt{controller\_frequency})
+\end{enumerate}
+\subsubsection*{Cost Function}
+As described earlier the cost function used to evaluate a trajectory is given by:
+\begin{align*}
+        \textbf{cost} = &
+   \texttt{pdist\_scale} * \textbf{path\_dist}
+   + \texttt{gdist\_scale} * \textbf{goal\_dist}\\
+   &+\texttt{occdist\_scale} * \textbf{maxobscost} 
+\end{align*}
+
+Where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal in map cells, and \textbf{maxobscost} is equal to the \textbf{maximum obstacle cost} (given by the local costmap) of all the points along the trajectory.
+Fig. \ref{fig:costcloud} displays an example of this values when the robot is navigating.
+\begin{figure}[!htb]
+    \centering
+    \includegraphics[width=0.8\linewidth]{imgs/chapter3/costcloud.png}
+    \caption[Cost cloud published in rviz]{Cost cloud published in rviz. Red cells correspond to low cost and green cells correspond to a high cost}
+    \label{fig:costcloud}
+\end{figure}
 \subsubsection{Local and Global Costmap}
 The global and local costmap share the same class, the  \texttt{Costmap2DROS}. This class consists of a layered costmap that takes into account various layers defined by the user.
 
@@ -250,9 +276,10 @@ Figure \ref{fig:layers1} shows how the combined layers produce the master costma
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=\linewidth]{imgs/chapter3/layers1.png}
-    \caption{Various costmap layers that together form the master costmap that will be used in the global or local planner from \cite{lu2014layered}}
+    \caption[Various costmap layers that together form the master costmap]{Various costmap layers that together form the master costmap that will be used in the global or local planner from \cite{lu2014layered}}
     \label{fig:layers1}
 \end{figure}
-
+\section{Summary}
+In this chapter we described the inner workings of the ROS framework and what tools can be used in order to develop a certain application. We also discussed what types of problems exist in regards to autonomous navigation. Finally we showed how the ROS navigation stack tackles this issues in order to construct a safe navigation module for our robot.
 
 

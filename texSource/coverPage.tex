@@ -24,10 +24,10 @@
         {Indoor navigation using the TurtleBot platform \newline Navegação em ambientes interiores utilizando a plataforma TurtleBot}
   \vspace*{15mm}
   \TEXT{}
-       {%Disserta\c c\~ao apresentada \`a Universidade de Aveiro para cumprimento dos requisitos
-        %necess\'arios \`a obten\c c\~ao do grau de Mestre em Engenharia Electr\'onica e Telecomunica\c 
-        %c\~oes, realizada sob a orienta\c c\~ao cient\'\i fica do Professor Doutor Andr\'e Z\'uquete, Professor Auxiliar do 
-        %Departamento de Electr\'onica, Telecomunica\c c\~oes e Inform\'atica da Universidade de Aveiro, e do Doutor Miguel Lu\'is, Investigador Auxiliar do Instituto de Telecomunica\c c\~oes de Aveiro.
+       {Dissertação apresentada à Universidade de Aveiro para cumprimento dos
+requisitos necessários à obtenção do grau de Mestre em Engenharia Electrónica e Telecomunicações, realizada sob a orientação científica do Professor Doutor Artur Pereira, Professor Catedrático do Departamento de
+Electrónica e Informática da Universidade de Aveiro e co-orientação científica do Doutor Eurico Pedrosa, Investigador da
+Universidade de Aveiro.
         }
         \vspace*{85mm}
   %\TEXT{}
@@ -58,7 +58,13 @@
 \TitlePage
   \vspace*{55mm}
   \TEXT{\textbf{agradecimentos}}
-       {%Em primeiro lugar agradeço à minha família, aos meus país, Adelino e Leonor Gomes, e à minha irmã, Mariline Gomes, por todo o apoio, motivação e presença constante em todos os momentos da minha vida. Sem eles não seria possível alcançar muitos dos objetivos que tive na minha vida. Gostaria também de agradecer à minha namorada, Ana Borges, por todo o tempo, paciência, apoio e carinho que me dedicou ao longo deste percurso académico. É, sem dúvida, uma das pessoas que mais influência tem naquilo que sou hoje e naquilo que consegui conquistar na minha vida.
+       {Em primeiro lugar queria agradecer à minha mãe por todo o apoio ao
+        longo do meu percurso académico. Ao professor Artur Pereira pela paciência e constante entusiasmo que me deu a prevalência de continuar e acabar o projeto.
+     Ao meu co-orientador, Eurico Pedrosa, pela disponibilidade, espírito
+crítico e apoio constante ao longo do desenvolvimento deste trabalho.
+Finalmente, agradeço ao grupo de investigação RETIOT pela ajuda
+crucial nos testes práticos realizados ao longo desta dissertação.
+Muito obrigado a todos.
        }
   \TEXT{}
        {%Gostaria também de agradecer aos meus colegas que tive a sorte de conhecer durante o meu percurso acadêmico nestes últimos anos. Amizades que se criaram que certamente se levarão para o resto da vida.
@@ -95,17 +101,18 @@
 \TitlePage
   \vspace*{55mm}
   \TEXT{\textbf{Abstract}}
-       {Over the past few years the use of autonomous mobile robots that operate in indoor environments has grown significantly. They are used not only in industry settings but are creeping in on our homes and office environments. They are most commonly used for as transportation, telepresence, and cleaning. The robot's perception is usually dependent of laser range finders, infra red depth sensors or the typical camera. However the recent advancements on frequency modulated continuous wave radar technology permit a new solution for the perception problem. In this work we will uncover how \ac{LiDAR} and \ac{FMCW} \ac{radar} are used to perceive the surrounding robot environment and how they enable robotic indoor navigation. As we will uncover this sensors have some advantages and disadvantages when compared. The main purpose of this dissertation is to understand how this technologies work and if the use of the \ac{FMCW} \ac{radar} perception can be advantageous for indoor navigation tasks. 
+       {Over the past few years the use of autonomous mobile robots that operate in indoor environments has grown significantly. They are used not only in industry settings but are creeping in on our homes and office environments. They are most commonly used for as transportation, telepresence, and cleaning. The robot's perception is usually dependent of laser range finders, infra red depth sensors or the typical camera. However the recent advancements on frequency modulated continuous wave radar technology permit a new solution for the perception problem. In this work we will uncover how \ac{LiDAR} and \ac{FMCW} \ac{radar} are used to perceive the surrounding robot environment and how they enable robotic indoor navigation. As we will see later on this sensors have some advantages and disadvantages when compared. The main purpose of this dissertation is to understand how this technologies work and if the use of the \ac{FMCW} \ac{radar} perception can be advantageous for indoor navigation tasks. 
        }
        \TEXT{}     
-       {%In order to improve the communication quality in a multihoming vehicular network, some improvements can be made on the mobility protocol and also at the Network Coding approach that is used. To do so, the objective of 
+       {First a comparative study between each  technology will be presented including the operating principle of each one, work being done and what limitations they have. After that we will uncover how we can use the \ac{ROS} framework and state of the art algorithms  to combat the autonomous navigation problem. After the previous discussion we will describe the hardware and software components and how they are interconnected to produce a suitable robotic platform that will be used to do navigation tasks.
        %his dissertation enhances the communication quality of a \ac{MH} vehicular network by improving its mobility protocol and the \ac{NC} mechanisms. Specifically, changes were performed to ensure the reliability of control mobility messages to help the infrastructure to react faster to the wireless communication conditions of a mobile node.
        %from the mobility protocol developed in our research group allowing a more reliable implementation reducing the packet losses by making use of the best connection possible to send the disconnect message, alongside this, some minor aspects were improved at the mobility protocol. Another objective represent a major improvement on the Network coding implementation that is currently used in our \ac{VANET}, were the encoding process is performed at the start of our network, making use of all the available technologies to reach the end-user, resulting in a multi-technology approach for network coding. 
        %On a different perspective, it has been provided a mechanism to enable \ac{NC} through different technologies being used in \ac{MH}, and making use of all technologies simultaneously to code and recover the packets. %this improvement should also improve the available througput when \ac{NC} is applied.
        %Another proposed architecture in this work is the integration of a multi-technology approach for the network coding directly with the mobility protocol resulting in an major improvement for the available throughput.
         }
         \TEXT{}     
-       {%The tests executed in this dissertation to evaluate the improvement and stability impact on the mobility protocol, originated by the new disconnect mechanism proposed for the mobility protocol, were performed with some laboratory scenarios.
+       {With the navigation platform created we propose various experiments that try to evaluate the performance of the   2-D\ac{LiDAR} and the \ac{FMCW} radar as obstacle detectors and try to find advantages that are created by using the latter. Finally an exploratory work will be conducted that tries to use the doppler channel readings of the \ac{radar} to aid in more safe pathing trajectories for social indoor environments.
+       %The tests executed in this dissertation to evaluate the improvement and stability impact on the mobility protocol, originated by the new disconnect mechanism proposed for the mobility protocol, were performed with some laboratory scenarios.
        %Both approaches were evaluated with real systems in a laboratory scenario. 
        %The comparative results with the previous implementation shows a direct improvement on the reliability reducing the packet losses presented in case of an abrupt disconnection when in presence of other available connections. For the multi-technology architecture proposed for the network coding, some tests using different coding configurations (generation and buffer sizes) were performed, and they were evaluated by analyzing its impact on the packet loss recovery ratio and the delay. The comparative results show that the multi-technology approach has a better delivery ratio when compared to the single-technology, despite the small impact on the packet delay, and the multi-technology approach integrated with the mobility protocol show that it is possible to achieve a better throughput without a negative trade-off on the delivery ratio or the presented delay.
        %The obtained results on the reliability of the control messages show that the new approach is able to provide higher communication reliability, reducing the packet losses presented in case of an abrupt disconnection, and when in presence of other connections. For the multi-technology architecture proposed for the \ac{NC}, the experimental tests evaluated its impact on the effective delivery ratio and the delay. The comparative results show that the multi-technology approach integrated with \ac{MH} has a better delivery ratio when compared to the single-technology, despite the small impact on the packet delay.

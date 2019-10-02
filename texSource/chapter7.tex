@@ -1,6 +1,17 @@
-\chapter{Conclusions and Future Work}
+\chapter{Conclusion and Future Work}
 
 
 \section{Conclusion}
-In this work we it was examined in detail how the \ac{FMCW} \ac{radar} and \ac{LiDAR} technology work and how they are used for certain applications. After this, it was implemented a robotic navigation platform \textbf{turtlebot2} using \ac{ROS} and \ac{TI} \ac{mmWave} devices 2D-\ac{LiDAR} that is ready to use for indoor navigation tasks.
+In this work we it was examined in detail how the \ac{FMCW} \ac{radar} and \ac{LiDAR} technology work and how they are used for certain applications. After this, it was implemented a robotic navigation platform using \ac{ROS}, \ac{TI} \ac{mmWave} devices and the 2D-\ac{LiDAR} that is ready to use for indoor navigation tasks. After that was implemented we devised various experiments that examined the use of the previous sensors for obstacle detection. It was concluded that the \ac{FMCW} \ac{radar} perceived certain objects which the \ac{LiDAR} can not. We also concluded that the robot behaved correctly in unstructured environments only using the \ac{FMCW} \ac{radar} as an obstacle detector. This means the robotic platform may prove to be an alternative or support sensor source to the \ac{LiDAR} when it comes to indoor spaces. Finnaly we also designed a new map layer that uses the relative radial velocity provided by the \ac{radar} in order to produce safer trajectories for the mobile robot. We conclude that the use of the \ac{FMCW} \ac{radar} is a low cost sensor that provide a bundle of information that can be used for optimizing the navigation of mobile robots.
 \section{Future Work}
+There are a wide variety of tasks can be done in the future, they are:
+\begin{itemize}
+    \item Evaluation of the performance of the \ac{FMCW} \ac{radar} for different objects that were not performed in this work.
+    \item Further development and optimization of the implemented doppler layer.
+    \item Construction of an independent navigation system without requirement of the \ac{ROS} navigation stack
+    \item Clustering of obstacles for better perception of the robot.
+    \item Development of new costmap layers to manipulate the master costmap taking into account the application we are trying to build.
+    \item Utilizing the \ac{FMCW} \ac{radar} for localization purposes.
+    \item Utilizing the \ac{FMCW} \ac{radar} for mapping  purposes.
+\end{itemize}
+

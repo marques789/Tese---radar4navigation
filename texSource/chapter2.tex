@@ -9,10 +9,10 @@ However the new emerging \ac{mmWave} \ac{FMCW} radar technology with high freque
 
 \section{LiDAR}
 %LIDAR history
-\ac{LiDAR} is a remote sensing technology that tracks the distance of objects. It has been a staple in sensing technology in recent history. It has almost an  unlimited  number of applications \cite{lidar100uses} due to its generation of dense data. 
+\ac{LiDAR} is a remote sensing technology that tracks the distance of objects. It has been a staple in sensing technology in recent history. It has almost an  unlimited  number of applications \cite{lidar100uses} due to its generation of dense data. Some of the most standing out ones are in autonomous vehicles and robotics.
 \subsection{Applications}
 %More text
-Some of the most standing out ones are in autonomous vehicles and robotics:
+
 \subsubsection{Autonomous Vehicles}
 
 The use of \ac{LiDAR} in autonomous vehicles has been a common trend for a while now. Fig. \ref{fig:lidarcar} ilustrates how multiple of this sensors are used to provide full road environment perception. The insanely accurate depth information combined with a high field of view provided by \ac{LiDAR} enables the development of advanced navigation systems that are able to perform self-driving.
@@ -51,11 +51,11 @@ One of the most popular works with robotic navigation called \textit{"The Office
 through narrow spaces. The sensor source used in this case was the Hokuyo UTM-30LX Scanning Laser Rangefinder and the navigation system developed is now known as the \ac{ROS} navigation stack. However it was noted that the robot had difficulty detecting low long obstacles.
 
 
-In a more recent case study in \cite{lidar2019ros} two different systems are proposed for the implementation of an autonomous  mobile robot, both using a 2D \ac{LiDAR} sensor under \ac{ROS}. Various trails in an indoor environment were conducted with both of them and it was concluded that both performed reasonably well but had some difficulty detecting certain types of objects.  
+In a more recent case study in \cite{lidar2019ros} two different systems are proposed for the implementation of an autonomous  mobile robot, both using a 2D \ac{LiDAR} sensor under \ac{ROS}. Various trials in an indoor environment were conducted with both of them and it was concluded that both performed reasonably well but had some difficulty detecting certain types of objects.  
 
 %%ADD ROBOT INDOOR NAVIGATION
 \subsection{Operating Principle}
-The way \ac{LiDAR} technology works is very straightforward, just emit a laser beam and wait for it to bounce back. Based on the proprieties of the reflected signal it can determined the range of the obstacle it hit. By constantly spinning the mirrors at different angles (scanning) we get angle and depth information about the environment  by a  set of points or in other words a pointcloud. There are two main different operating principles to do this, \textbf{Time of Flight} and \textbf{Phase Based} which are described bellow.
+The way \ac{LiDAR} technology works is very straightforward, just emit a laser beam and wait for it to bounce back. Based on the proprieties of the reflected signal it can determined the range of the obstacle it hit. By constantly spinning the mirrors at different angles (scanning) we get angle and depth information about the environment  by a  set of points or in other words a point cloud. There are two main different operating principles to do this, \textbf{Time of Flight} and \textbf{Phase Based} which are described bellow.
 \subsubsection{Time of Flight}
  In this approach a pulse of light is transmitted, when this is done an internal clock is started. The pulse is captured by a photodetector which triggers the clock to stop. Being $\tau$ the time it took for the reflected signal to  comeback and assuming it traveled at approximately the speed of light ($c$) then the distance of the object $d$ is equal to:
 \begin{equation}
@@ -67,7 +67,7 @@ It is typically not used for robotics since this types of systems have very high
 A more affordable approach  is based on modulating the intensity of the laser at a specific frequency. Figure \ref{fig:cwlidar1} showcases the resulting sinusoidal wave that is sent and the respective returned signal. 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/cwlidar1.png}}
-\caption{Phase comparison method of measuring distance \cite{cwlidar}}
+\caption{Phase based method for measuring range \cite{cwlidar}}
 \label{fig:cwlidar1}
 \end{figure}
 
@@ -92,7 +92,7 @@ The last item on the list proves to be a significant problem because the sensor 
 \begin{figure}[ht!]
     \centering
     \includegraphics[scale=0.7]{imgs/chapter2/lidar2d.png}
-    \caption{Figure illustrating that the 2D \ac{LiDAR} only detects objects in one plane (this plane is usually parallel to the ground (taken from \cite{yalcin2013approaches})}
+    \caption[2D \ac{LiDAR} only detecting objects in one plane ]{2D \ac{LiDAR} only detects objects in one plane (this plane is usually parallel to the ground (taken from \cite{yalcin2013approaches})}
     \label{fig:2dlidar}
 \end{figure}
 
@@ -183,10 +183,10 @@ Putting this together the distance to the object $i$ is given by:
  However since the \ac{ADC} has a limited sampling rate, the valid range of frequencies in the \ac{FFT} is also limited, this means there is a maximum amount of range the radar can detect.
 The range resolution is also finite since the \ac{FFT} has a limited amount of samples. In short, the higher the bandwidth of the chirp the better resolution we get.
 \subsection*{Simulation}
-In this section we try to simulate in MATLAB the process of retrieving the range from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix X. Table \ref{tab:table1} shows the respective paramaters used for the radar and the vector of distances of the supposed objects to be retrieved, where $T_c$ is the time of chirp and $F_s$ is the sampling frequency of the \ac{ADC}.
+In this section we try to simulate in MATLAB the process of retrieving the range from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix A. Table \ref{tab:table1} shows the respective paramaters used for the radar and the vector of distances of the supposed objects to be retrieved, where $T_c$ is the time of chirp and $F_s$ is the sampling frequency of the \ac{ADC}.
 \begin{table}[h!]
   \begin{center}
-    \caption{Your first table.}
+    \caption{Parameters used for simulation for range estimation.}
     \label{tab:table1}
     \begin{tabular}{l|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
       \textbf{Paramater} & \textbf{Value } \\
@@ -199,10 +199,10 @@ In this section we try to simulate in MATLAB the process of retrieving the range
     \end{tabular}
   \end{center}
 \end{table}
- In figure show the TX signal in blue and RX signal as the other colors in a plot of time vs frequency.
+ Figure \ref{fig:if2} shows the TX signal in blue and RX signal as the other colors in a plot of time vs frequency.
  \begin{figure}[h] 
 \centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter2/SimFrequencies.png}}
-\caption{IF signal creation to retrieve range information of the target}
+\caption[Demonstration of the TX signal in blue and RX signal in other colours]{TX signal in blue and RX signal in other colours, each strip corresponds to a different range detection}
 \label{fig:if2}
 \end{figure}
 Mixing both signals and passing it by a low pass filter we then compute the \ac{FFT} of the \ac{IF} signal. Fig \ref{fig:fft} shows the result. By using equation \ref{eq:1} we can retrieve the distance vs power of the signal plot (Fig. \ref{fig:fft2}). 
@@ -233,15 +233,15 @@ In the end we get a matrix that relates radial velocity and range.
 Figure \ref{fig:matrix} illustrates this process.
 \begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/dopplerFFT2.png}}
-\caption{At the same range peaks the sinusoid has different phases, by calculating the 2D FFT (or doppler FFT) we retrieve radial velocity information, taken form \cite{schroeder2010x})}
+\caption[2D FFT for retrieving velocity information]{At the same range peaks the sinusoid has different phases, by calculating the 2D FFT (or doppler FFT) we retrieve radial velocity information, taken form \cite{schroeder2010x})}
 \label{fig:matrix}
 \end{figure}
 
 \subsubsection*{Simulation}
-In this section we try to simulate in MATLAB the process of retrieving the velocity from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix X. Table \ref{tab:table2} shows the parameters used for the radar and the velocity and range of the supposed object to be retrieved.
+In this section we try to simulate in MATLAB the process of retrieving the velocity from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix B. Table \ref{tab:table2} shows the parameters used for the radar and the velocity and range of the supposed object to be retrieved.
 \begin{table}[h!]
   \begin{center}
-    \caption{Your first table.}
+    \caption{Parameters used for simulation of velocity estimation}
     \label{tab:table2}
     \begin{tabular}{l|c} % <-- Alignments: 1st column left, 2nd middle and 3rd right, with vertical lines in between
       \textbf{Paramater} & \textbf{Value } \\
@@ -271,13 +271,13 @@ Where $N_c$ is the number of chirps used. By computing the 2-D doppler \ac{FFT} 
     \caption{Velocity detection using \ac{FMCW} \ac{radar}}
     \label{fig:distance determination}
 \end{figure}
-As we can see we have a peak near the $7 m/s$ velocity that means this parameters can be used to compute the radial velocity of the target with relatively good precison 
+As we can see we have a peak near the $7 m/s$ velocity that means this parameters can be used to compute the radial velocity of the target with relatively good precision. 
 
 \subsubsection{angle Detection}
 Finally to discover the angle for each target we need more than one receiver antenna. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distance for the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
 \begin{figure}[h] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/angle.png}}
-\caption{(taken form \cite{iovescu2017fundamentals})}
+\caption[Angle of arrival estimation using more than one antenna]{More than one antenna is required to estimate the angle of arrival (taken form \cite{iovescu2017fundamentals})}
 \label{fig:angle}
 \end{figure}
 The phase difference $\Delta \phi$ is given by:
@@ -304,7 +304,8 @@ The above equation makes it possible to estimate the angle of arrival. But since
 \item{RADAR cannot provide the exact geometry of an object because of the longer wavelength}  
 \item{Can have intermodulation products that result in ghost objects} 
 \end{itemize}
-
+\section{Summary}
+In this chapter we over viewed two types of proximity sensor technologies, \ac{LiDAR} and \ac{FMCW} radar. First a we discussed on what contexts this sensors are used for and what current work is being done with them. Then we explain the operating principle of each one of them to retrieve information from the environment.  Finally we show what vulnerabilities each sensor has.
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
 
