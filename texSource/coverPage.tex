@@ -84,12 +84,25 @@ Muito obrigado a todos.
 
 \TitlePage
   \vspace*{55mm}
-  \TEXT{\textbf{Resumo}}
-       {%O interesse crescente em Redes Veiculares está a encorajar a sua implementação em novos ambientes, permitindo o desenvolvimento de aplicações de segurança e de entretenimento. Os veículos podem-se ligar a outros veículos ou à infraestrutura, tendo assim uma ligação à Internet. O equipamento de comunicação colocado nos veículos poderá ter múltiplas interfaces de rede de tecnologias diferentes, como por exemplo, IEEE 802.11p/WAVE, IEEE 802.11a/g/n (Wi-Fi) e celular. Esta diversidade permite a exploração e utilização de mecanismos de Multihoming e de Network Coding, os quais podem ser usados para oferecer maior largura de banda e maior fiabilidade a este tipo de aplicações, reduzindo as perdas de pacotes na presença de um sinal sem fios de fraca qualidade, melhorando assim a qualidade de serviço.
+  \TEXT{}
+        {\textbf{Resumo}}
+       {Nos últimos anos, o uso de robôs móveis autónomos que operam em ambientes indoor aumentou significativamente. Eles são usados não apenas
+        em contexto de indústria, mas estão surgir nas nossas casas e ambientes de escritório. Eles são mais tipicamente usados para transporte, telepresença,
+        e limpeza. A percepção do robô geralmente depende de medidor de distâncias a laser, sensores de profundidade de infravermelho ou a típica câmera. No entanto, os recentes avanços na tecnologia de radar de onda contínua modulada em frequência permitem uma nova solução para o problema de percepção. Neste trabalho, descobriremos como  as tecnologias \ac{LiDAR} e o \ac{FMCW} \ac{radar} são usados para perceber o ambiente do robô ao redor dele e como elas permitem  navegação robótica autónoma em ambientes indoor. Como veremos mais adiante, estes sensores têm algumas vantagens e desvantagens quando comparados. O principal objetivo desta dissertação é
+        entender como estas tecnologias funcionam e se o uso do radar FMCW para
+        percepção pode ser vantajosa para tarefas de navegação.
+       
        }
-       \TEXT{} 
-       {%Esta dissertação tem como objetivo melhorar a qualidade de comunicação de uma rede veicular que suporta Multihoming, assim como melhorar os seus mecanismos de Network Coding e do protocolo de mobilidade. Mais especificamente, foram feitas alterações a nível do processo de handover entre redes, para ajudar a infraestrutura a reagir mais rapidamente às condições de comunicação de um nó móvel na rede. Numa perspetiva diferente, foi desenvolvido um mecanismo que permite a aplicação de Network Coding através de diferentes tecnologias em Multihoming, o qual faz uso das diferentes tecnologias simultaneamente para codificar e recuperar os pacotes.
-       }
+       \TEXT{}
+       { Primeiro, será apresentado um estudo comparativo entre cada tecnologia, incluindo o princípio operacional de cada uma, o trabalho em que estão ser usados e quais as suas limitações que cada uma tem. Depois descobriremos como podemos usar o Robot Operating
+        System (ROS) e algoritmos de última geração para combater o problema de navegação autónoma. Após a discussão anterior, descreveremos
+        os componentes de hardware e software e como eles estão interconectados
+        produzir uma plataforma robótica adequada que será usada para executar tarefas de navegação.
+        Com a plataforma de navegação criada, propomos várias experiências que
+        tentam avaliar o desempenho do radar 2-DLiDAR e FMCW como
+        detectores de obstáculos e verificar vantagens criadas usando o
+        último. Finalmente, será realizado um trabalho exploratório que tenta usar o
+        leituras de canal doppler do radar para ajudar em trajetórias de percurso mais seguras para ambientes indoor sociais}.
        \TEXT{}     
        {%Ambos os mecanismos foram avaliados em cenários de laboratório com sistemas reais. Os resultados obtidos relativos ao envio das mensagens de controlo mostram que esta nova abordagem é capaz de fornecer uma comunicação com maior fiabilidade, reduzindo as perdas de pacotes no caso de uma desconexão abrupta, e quando na presença de outras tecnologias e ligações. Quanto à proposta de muti-tecnologia para o Network Coding, os testes experimentais avaliaram o seu impacto na taxa de entrega de pacotes efetiva e no atraso de transmissão. Os resultados comparativos evidenciam que, apesar de ter um pequeno impacto no atraso dos pacotes em comparação com a abordagem que considera o Network Coding em cada tecnologia de forma independente, a abordagem de multi-tecnologia apresenta uma melhor taxa de entrega.
        }

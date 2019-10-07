@@ -22,12 +22,12 @@ To ensure the experiment is done in a controlled way the scenario shown in Figur
     \begin{minipage}[t]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter5/map.png}
         \subcaption{Map created using \texttt{SLAM} package developed at \ac{IRIS}}
-        \label{fig:map}
+        \label{fig:mapcenario}
     \end{minipage}
     \caption{Scenario Constructed for the experiment}
     \label{fig:setup2}
 \end{figure}
-This is a 4 by 4 meter squared box with 1 meter high walls with the addition of a half a meter wall in length in the middle. This type of environment optimizes the robots localization system (\ac{AMCL}) as well as make sure we only concentrate with one specific object at a time. Using a \texttt{\ac{SLAM}} package developed here at \ac{IRIS} a map is first created (Figure \ref{fig:map}) that will later be used for localization purposes.
+This is a 4 by 4 meter squared box with 1 meter high walls with the addition of a half a meter wall in length in the middle. This type of environment optimizes the robots localization system (\ac{AMCL}) as well as make sure we only concentrate with one specific object at a time. Using a \texttt{\ac{SLAM}} package developed here at \ac{IRIS} a map is first created (Figure \ref{fig:mapcenario}) that will later be used for localization purposes.
 
 \subsection{Experimental setup}
 With the described scenario we setup the robots goal to make five loops between two goals, position A and B, positioning in between the route an obstacle as illustrated in  Figure \ref{fig:exp}. 
@@ -72,7 +72,7 @@ The list of objects used as obstacles are displayed in Fig. \ref{fig:obstacles}.
   \begin{subfigure}[b]{0.3\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/glass.jpg}
     \caption{Acrylic tube}
-    \label{fig::garbage}
+    \label{fig::tube}
   \end{subfigure}
   \caption{Different obstacles used for the controlled test}
   \label{fig:obstacles}
@@ -97,12 +97,12 @@ In the \ac{LiDAR}'s case  the robot completely disregarded the chair going in a 
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/wchairLF.png}
      \caption{Robot collision with office chair number 1}
-     \label{fig::wchair}
+     \label{fig::wchairLF1}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/wchairLF2.png}
     \caption{Robot collision with office chair number 2}
-    \label{fig::nchair}
+    \label{fig::wchairLF2}
   \end{subfigure}
   \caption{Robot colliding multiple times with office chair}
   \label{fig:wchairLF}
@@ -123,12 +123,12 @@ However with the \ac{FMCW} radar the chair is detected almost immediately, this 
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/wchairRS.png}
      \caption{Robot avoiding office chair number 1}
-     \label{fig::wchair}
+     \label{fig::wchairRS1}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/wchairRS2.png}
     \caption{Robot avoiding office chair number 2}
-    \label{fig::nchair}
+    \label{fig::wchairRS2}
   \end{subfigure}
   \caption{Robot avoiding with office chair}
   \label{fig:wchairRS}
@@ -153,12 +153,12 @@ First off it went in a straight line just as the previous case almost hitting  t
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/nchairLF.png}
      \caption{Robot getting stuck in chair number 1}
-     \label{fig::wchair}
+     \label{fig::nchairLF1}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/nchairLF2.png}
     \caption{Robot getting stuck in chair number 2}
-    \label{fig::nchair}
+    \label{fig::nchairLF2}
   \end{subfigure}
   \caption{Robot avoiding getting stuck in four legged chair}
   \label{fig:nchairLF}
@@ -171,12 +171,12 @@ Using the \ac{FMCW} radar proved to be much better with the robot safely circumv
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/nchairRS.png}
      \caption{Robot avoiding four legged chair number 1}
-     \label{fig::wchair}
+     \label{fig::nchairRS1}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/nchairRS2.png}
     \caption{Robot avoiding four legged chair number 2}
-    \label{fig::nchair}
+    \label{fig::nchairRS2}
   \end{subfigure}
   \caption{Robot avoiding the four legged chair}
   \label{fig:nchairRS}
@@ -226,12 +226,12 @@ Using the \ac{FMCW} radar the robot did detect it properly and went around it ea
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/garbageRS.png}
      \caption{Robot avoiding garbage bin number 1}
-     \label{fig::wchair}
+     \label{fig::garbageRS1}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/garbageRS2.png}
     \caption{Robot avoiding garbage bin  number 2}
-    \label{fig::nchair}
+    \label{fig::garbageRS2}
   \end{subfigure}
   \caption{Robot avoiding garbage bin}
   \label{fig:garbageRS}
@@ -246,12 +246,12 @@ In the LiDAR's case the robot did not detect the low height box throughout all t
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/boxLF.png}
      \caption{Robot collision with box number 1}
-     \label{fig::box}
+     \label{fig::boxLF1}
   \end{subfigure}
   \begin{subfigure}[b]{0.46\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/boxLF2.png}
     \caption{Robot collision with box number 2}
-    \label{fig::box}
+    \label{fig::boxLF2}
   \end{subfigure}
   \caption{Robot collision with box}
   \label{fig::boxLF}
@@ -266,12 +266,12 @@ For this case initially the robot also did not detect the box. However by decrea
   \begin{subfigure}[b]{0.4\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/boxRS.png}
      \caption{Robot avoiding box number 1}
-     \label{fig::wchair}
+     \label{fig:boxRS1}
   \end{subfigure}
   \begin{subfigure}[b]{0.38\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/boxRS2.png}
     \caption{Robot avoiding box  number 2}
-    \label{fig::nchair}
+    \label{fig::boxRS2}
   \end{subfigure}
   \caption{Robot avoiding box}
   \label{fig:boxRS}
@@ -280,22 +280,22 @@ For this case initially the robot also did not detect the box. However by decrea
 \subsubsection{Acrylic tube}
 
 \subsubsection*{LiDAR}
-When it comes to the Acrylic tube using the 2-D \ac{LiDAR} it falsely detected targets where there where none. This is due to the physical proprieties of the object being unsuitable for \ac{LiDAR} technology to handle. The robot in its course got stuck near the obstacle due to thinking it had crashed into it. However this was not the case and the robot did not succeed in the experiment. Figure \ref{fig:glassRS} shows two instances of the robot getting stuck in the acrylic tube.
+When it comes to the Acrylic tube using the 2-D \ac{LiDAR} it falsely detected targets where there where none. This is due to the physical proprieties of the object being unsuitable for \ac{LiDAR} technology to handle. The robot in its course got stuck near the obstacle due to thinking it had crashed into it. However this was not the case and the robot did not succeed in the experiment. Figure \ref{fig:glassLF} shows two instances of the robot getting stuck in the acrylic tube.
 
 \begin{figure}[ht!]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/glassLF1.png}
      \caption{Robot getting stuck acrylic tube number 1}
-     \label{fig::glassRS1}
+     \label{fig::glassLF1}
   \end{subfigure}
   \begin{subfigure}[b]{0.49\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/glassLF2.png}
     \caption{Robot getting stuck in acrylic tube  number 2}
-    \label{fig::glassRS2}
+    \label{fig::glassLF2}
   \end{subfigure}
   \caption{Robot getting stuck in acrylic tube}
-  \label{fig:glassRS}
+  \label{fig:glassLF}
 \end{figure}
 
 \subsubsection*{FMCW radar}
@@ -433,3 +433,6 @@ The \ac{radar} was also able to detect the obstructing person and managed to pla
 \subsection{Discussion}
  The \ac{FMCW} radar was able to perform 
 obstacle avoidance of dynamic obstacles (in this case a person) that continuously obstructed its path at 5 different times in the same environment which may suggest the use of the \ac{FMCW} \ac{radar} as an alternate sensory unit over the \ac{LiDAR}.
+
+\section{Summary}
+In this chapter we proposed various experiments that try to evaluate the performance of the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} as obstacle detectors. In the first experiment we concluded that there are various objects in which the 2-D\ac{LiDAR} is unable to detect due to the height or proprieties of the object. However this obstacles were correctly detected by the \ac{FMCW} \ac{radar}. This means that this type of sensors  are advantagous for scenarios in which this type of obstacles are commonly used (office enviornments). We also verified how the FMCW radar handles dynamic obstacles, we succefully made the robot avoid them only using the \ac{FMCW} \ac{radar} as an obstacle detector. Finally we conducted an experiment in an unstructured enviornment with a dynamic obstacle (person). It terminated e with success in all 5 cases. WIth this we conclude that the \ac{FMCW} \ac{radar} is a good support for obstacle avoidance when it comes to use in robotic navigation procedures.

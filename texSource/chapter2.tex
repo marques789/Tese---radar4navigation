@@ -97,9 +97,9 @@ The last item on the list proves to be a significant problem because the sensor 
 \end{figure}
 
 \section{FMCW Radar}
-The use of \ac{radar} technology has been around since the 19th century when it was first discovered that radio waves reflected off metallic surfaces, but serious development of this type systems only truly began in the 1930's for military applications \cite{radar_history}. This include the range and angle detection of ship and aircraft engines by measuring incoming signal fluctuations off an oscilloscope. 
+The use of \ac{radar} technology has been around since the 19th century when it was first discovered that radio waves reflected off metallic surfaces, but serious development of this type systems only truly began in the 1930's for military applications \cite{radarhistory}. This include the range and angle detection of ship and aircraft engines by measuring incoming signal fluctuations off an oscilloscope. 
 
-Nowadays there are various configuration types of radar systems  \cite{types_radar}, each one providing different types of applications. This usually include air traffic control, remote sensing, ground traffic control, space etc... .  However we will focus on a specific configuration called \ac{MIMO} linear (sawtooth)  \ac{FMCW} radars with  which are  able to measure distance, velocity, and also angular information. 
+Nowadays there are various configuration types of radar systems  \cite{typesradar}, each one providing different types of applications. This usually include air traffic control, remote sensing, ground traffic control, space etc... .  However we will focus on a specific configuration called \ac{MIMO} linear (sawtooth)  \ac{FMCW} radars with  which are  able to measure distance, velocity, and also angular information. 
 
 \subsection{Applications}
 Multiple works are constantly being done as of right now using this type of sensors. Bellow we showcase some of them.
@@ -139,7 +139,7 @@ Figure \ref{fig:At} shows the plot of the amplitude in function of time for the 
         \label{fig:Ft}
     \end{minipage}
     \caption{Different ways of displaying a chirp}
-    \label{fig:robotslidar}
+    \label{fig:chirp}
 \end{figure}
 
 %%PUT SOME TEXT
@@ -218,7 +218,7 @@ Mixing both signals and passing it by a low pass filter we then compute the \ac{
         \label{fig:fft2}
     \end{minipage}
     \caption{Range detection using \ac{FMCW} \ac{radar}}
-    \label{fig:distance determination}
+    \label{fig:distancedetermination}
 \end{figure}
 As we can see the power of the signal is stronger in the distances that were chosen a priori. To extract them we must choose a certain threshold of \ac{SNR}. Note that the sampling frequency limits the maximum distance of detection.
 
@@ -231,7 +231,7 @@ This type of radar also provides an estimate on the radial velocity for each det
 Where $\lambda$ is the wavelength of the chirp and $\omega_i$ is the phase difference between chirps for the respective objects in the Doppler FFT.
 In the end we get a matrix that relates radial velocity and range. 
 Figure \ref{fig:matrix} illustrates this process.
-\begin{figure}[ht!] 
+\begin{figure}[ht] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/dopplerFFT2.png}}
 \caption[2D FFT for retrieving velocity information]{At the same range peaks the sinusoid has different phases, by calculating the 2D FFT (or doppler FFT) we retrieve radial velocity information, taken form \cite{schroeder2010x})}
 \label{fig:matrix}
@@ -239,7 +239,7 @@ Figure \ref{fig:matrix} illustrates this process.
 
 \subsubsection*{Simulation}
 In this section we try to simulate in MATLAB the process of retrieving the velocity from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix B. Table \ref{tab:table2} shows the parameters used for the radar and the velocity and range of the supposed object to be retrieved.
-\begin{table}[h!]
+\begin{table}[ht]
   \begin{center}
     \caption{Parameters used for simulation of velocity estimation}
     \label{tab:table2}
@@ -257,7 +257,7 @@ In this section we try to simulate in MATLAB the process of retrieving the veloc
   \end{center}
 \end{table}
 Where $N_c$ is the number of chirps used. By computing the 2-D doppler \ac{FFT} of the signal we get  Fig \ref{fig:fft3} shows the result. By using equation \ref{eq:2} we can retrieve the velocity vs power of the signal plot (Fig. \ref{fig:fft4}). 
-\begin{figure}[h] 
+\begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/fft3.png}
         \subcaption{FFT of IF signal}
@@ -269,13 +269,13 @@ Where $N_c$ is the number of chirps used. By computing the 2-D doppler \ac{FFT} 
         \label{fig:fft4}
     \end{minipage}
     \caption{Velocity detection using \ac{FMCW} \ac{radar}}
-    \label{fig:distance determination}
+    \label{fig:velocitydetermination}
 \end{figure}
 As we can see we have a peak near the $7 m/s$ velocity that means this parameters can be used to compute the radial velocity of the target with relatively good precision. 
 
 \subsubsection{angle Detection}
 Finally to discover the angle for each target we need more than one receiver antenna. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distance for the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
-\begin{figure}[h] 
+\begin{figure}[ht] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/angle.png}}
 \caption[Angle of arrival estimation using more than one antenna]{More than one antenna is required to estimate the angle of arrival (taken form \cite{iovescu2017fundamentals})}
 \label{fig:angle}
@@ -293,7 +293,7 @@ Then the angle of arrival is finnaly given by:
 \begin{equation}
     \theta = sin^{-1}(\frac{\lambda \Delta \phi}{2 \pi L})
 \end{equation}
-The above equation makes it possible to estimate the angle of arrival. But since $\phi$ has a non linear dependency of $\sin(\theta)$ then the angle of arrival accuracy depends on the angle of arrival. The closer it is to $0º$ the more accurate is the result.
+The above equation makes it possible to estimate the angle of arrival. But since $\phi$ has a non linear dependency of $\sin(\theta)$ then the angle of arrival accuracy depends on the angle of arrival. The closer it is to 0º the more accurate is the result.
 
  
 \subsection{Limitations}
@@ -305,7 +305,7 @@ The above equation makes it possible to estimate the angle of arrival. But since
 \item{Can have intermodulation products that result in ghost objects} 
 \end{itemize}
 \section{Summary}
-In this chapter we over viewed two types of proximity sensor technologies, \ac{LiDAR} and \ac{FMCW} radar. First a we discussed on what contexts this sensors are used for and what current work is being done with them. Then we explain the operating principle of each one of them to retrieve information from the environment.  Finally we show what vulnerabilities each sensor has.
+In this chapter we over viewed two types of proximity sensor technologies, \ac{LiDAR} and \ac{FMCW} radar. First a we discussed on what contexts this sensors are used for and what current work is being done with them. Then we explain the operating principle of each one of them to retrieve information from the environment as well as simulating the range and velocity estimation provided by the radar.  Finally we show what vulnerabilities each sensor has.
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
 

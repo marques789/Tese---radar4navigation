@@ -15,10 +15,10 @@ behaviors achievable with the layered costmap approach from \cite{lu2014layered}
 
 The set of layers used follows a specific hierarchy that determines what order and how they overwrite the master costmap. This is an important part to take into consideration because the priority of the different layer plugins will determine the final costmap that will be used by each planner (global or local).
 \section{Inflation Layer}
-When it comes to define values for the costmap occupancy grid the inflation layer is usually the case in the \ac{ROS} navigation stack. By definition, inflation is the process of propagating cost values out from occupied cells that decrease with distance \cite{costmap_2d}. Figure \ref{fig::inflation} shows an overview of the different values each cell can have (0 to 254) and what they mean when it comes to the robot perception. 
+When it comes to define values for the costmap occupancy grid the inflation layer is usually the case in the \ac{ROS} navigation stack. By definition, inflation is the process of propagating cost values out from occupied cells that decrease with distance \cite{costmap2d}. Figure \ref{fig::inflation} shows an overview of the different values each cell can have (0 to 254) and what they mean when it comes to the robot perception. 
 \begin{figure}[ht!] 
 \centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter6/costmapspec.png}}
-\caption{Inflation layer specifications from \cite{costmap_2d}}
+\caption{Inflation layer specifications from \cite{costmap2d}}
 \label{fig::inflation}
 \end{figure}
 
