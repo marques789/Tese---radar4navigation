@@ -47,7 +47,7 @@ The device supports a wide RF bandwidth of 77-81 GHz that permits good range, ve
 The radiation pattern of the antenna in the horizontal plane (H-plane Phi = 0 degrees) and elevation plane (E-plane Phi= 90 degrees) is shown by Figure \ref{fig:el}.
 \begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.9 \textwidth]{imgs/chapter4/elevation.png}}
-\caption{Radiation pattern of the antenna from \cite{el}}
+\caption[Radiation pattern of the antenna]{Radiation pattern of the antenna from \cite{el}}
 \label{fig:el}
 \end{figure}
 
@@ -163,7 +163,7 @@ Figure \ref{fig:filters} shows an example where we delete false detections close
 
 
 \section{Summary}
-In this chapter we over viewed the technical specifications of each hardware component in the navigation platform that will be used later on in this work. We also describe what software and how its interconnected  to properly setting up the turtlebot2 robot for indoor navigation using the \ac{FMCW} \ac{radar} and the.
+In this chapter we over viewed the technical specifications of each hardware component in the navigation platform that will be used later on in this work. We also describe what software and how its interconnected  to properly setting up the turtlebot2 robot for indoor navigation using the \ac{FMCW} \ac{radar}.
 
 
 %The software used in this project is divided in a few stages. First the interface between the radar board TLV data and the ROS point cloud message format is done using the provided radar driver from Texas Instruments.  Then a filter by intensity operation is added to remove false detections (this will be explained later). The filtered radar data as well as the \ac{LiDAR} data are fed to the ROS Navigation Stack as sensor sources. In terms of mapping a f

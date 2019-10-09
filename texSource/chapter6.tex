@@ -1,4 +1,4 @@
-\chapter{On the Use of Doppler to Enrich Obstacle Avoidance}
+\chapter{Towards Doppler to Enrich Obstacle Avoidance}
 To ensure more safe trajectories for social indoor environments we can use velocity information from targets to generate more safe pathing for  the robot. Although we have not completed it entirely  we tried to create a software module that takes this objective in mind.
 
 In this section we will explore the implementation of a new plugin in the ROS navigation stack based on the radar's relative radial velocity information. The plugin proposed is a map layer and can be specified by either the global or local costmap. The objective of said layer is to increase the cost values of cells based on the prediction of the motion of said obstacles provided by the radar (doppler channel). The ending result should be a better avoidance of incoming obstacles with negative relative velocity  to the robot.
@@ -18,7 +18,7 @@ The set of layers used follows a specific hierarchy that determines what order a
 When it comes to define values for the costmap occupancy grid the inflation layer is usually the case in the \ac{ROS} navigation stack. By definition, inflation is the process of propagating cost values out from occupied cells that decrease with distance \cite{costmap2d}. Figure \ref{fig::inflation} shows an overview of the different values each cell can have (0 to 254) and what they mean when it comes to the robot perception. 
 \begin{figure}[ht!] 
 \centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter6/costmapspec.png}}
-\caption{Inflation layer specifications from \cite{costmap2d}}
+\caption[Inflation layer specifications]{Inflation layer specifications from \cite{costmap2d}}
 \label{fig::inflation}
 \end{figure}
 
@@ -45,7 +45,7 @@ cell_{cost} & = A e^{-(\frac{x^2}{2 \sigma_x^2}+\frac{y^2}{2 \sigma_y^2})} \\
 Where $cov$ and $factor$ are parameters adjusted by the user, $\theta$ is the angle between the cell where we want to calculate its value and the direction of the velocity vector of the target object, and finally $dist$ is the distance between the two previous cells.
 With this cost function we can manipulate the costmap cell values to have higher values in the directon of incoming objects. Figure \ref{fig::doppler} shows an example of the doppler layer changing the 2D master costmap taking into account the velocity and distance of the target obstacle. 
 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter6/doppler.png}}
 \caption[Doppler layer manipulation of the master costmap]{Example of doppler layer manipulation of the master costmap with the paramaters  A=253,factor=20 and covariance=0.1}
 \label{fig::doppler}

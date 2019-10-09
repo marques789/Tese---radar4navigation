@@ -22,9 +22,9 @@ The \ac{ROS}  architecture is based on a peer to peer network between processes 
 \end{itemize}
 Figure \ref{fig:rosgraph} gives a brief overview of how each of this concepts are put together and  generate the in ROS  computation system.
 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter3/rosgraph.png}}
-\caption{ROS communication architecture overview \cite{rosbasics}}
+\caption[ROS communication architecture overview]{ROS communication architecture overview \cite{rosbasics}}
 \label{fig:rosgraph}
 \end{figure}
 
@@ -69,7 +69,7 @@ In this section we will highlight some of the command tools in \ac{ROS} that we 
 \section {Navigation Concepts}
 There are four main problems associated with robotic autonomous navigation. They are Mapping, Localization, Path Planning and Motion Control \cite{nav} as shown in Fig. \ref{fig:probNav} . 
 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter3/navprobs.png}}
 \caption{Problems regarding autonomous navigation}
 \label{fig:probNav}
@@ -101,9 +101,9 @@ Path planning is crucial for the robot to handle safe trajectory around obstacle
 
 \subsubsection{Dijkstra algorithm}\label{djk}
 Assuming we have an occupancy map we can now start to explain how does a robot compute the shortest path between the starting position and the end goal. Edsgar W. Dijkstra proposed an algorithm that solves this problem for a number of nodes, in our case we have cells on an occupancy grid map. Assuming each cell costs the same then the shortest path can be calculated doing the following algorithm described in Figure \ref{fig:dalg}. 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter5/Dalg.png}}
-\caption{Dijkstra algorithm taken form \cite{Ben-Ari2018}}
+\caption[Dijkstra algorithm]{Dijkstra algorithm taken form \cite{Ben-Ari2018}}
 \label{fig:dalg}
 \end{figure}
 Each cell is numbered with the number of steps it needs to get to the starting position. This continues until we reach the goal cell and we get the minimum path to reach it. However if we have a map with cells that have variable cost in the algorithm above we do not iterate $n$ with plus one, but with the cell cost. This makes it so for this case that  shortest path geometrically may not be the shortest path when the costs are taken into account.
@@ -211,7 +211,7 @@ Figure \ref{fig:navstack} shows an overview of the different components of the n
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=\linewidth]{imgs/chapter3/navstack.png}
-    \caption{Navigation stack block diagram taken from \cite{movebase}}
+    \caption[Navigation stack block diagram]{Navigation stack block diagram taken from \cite{movebase}}
     \label{fig:navstack}
 \end{figure}
 \subsubsection{Move Base}

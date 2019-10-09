@@ -18,9 +18,9 @@ However the new emerging \ac{mmWave} \ac{FMCW} radar technology with high freque
 The use of \ac{LiDAR} in autonomous vehicles has been a common trend for a while now. Fig. \ref{fig:lidarcar} ilustrates how multiple of this sensors are used to provide full road environment perception. The insanely accurate depth information combined with a high field of view provided by \ac{LiDAR} enables the development of advanced navigation systems that are able to perform self-driving.
  
  
-\begin{figure}[h] 
+\begin{figure}[ht] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/lidarcar.png}}
-\caption{Example of \ac{LiDAR} technology being used for road perception \cite{lidarcar}}
+\caption[Example of \ac{LiDAR} technology being used for road perception]{Example of \ac{LiDAR} technology being used for road perception \cite{lidarcar}}
 \label{fig:lidarcar}
 \end{figure}
 
@@ -33,7 +33,7 @@ In \cite{car2dlidar} a low cost solution for object detection, classification an
 However there are some concerns about this type of technology. CEO of Tesla, Elon Musk has been very critical of it. Recently, at Tesla’s first Autonomy Day event  he said \textit{"Anyone relying on \ac{LiDAR} is doomed. Doomed!"} \cite{elon}. He believes that cameras, \ac{radar} and ultrasonic sensors are the future for car visions systems. 
 \subsubsection{Robotics}
 \ac{LiDAR} is also one of the major sensory component for robotics. Various robots rely on it for autonomy and navigation. Fig. \ref{fig:robotslidar} displays an example of two robots (ROSbot and Knightscope) that use this type of sensors for perception.
-\begin{figure}[h] 
+\begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/robot1.jpg}
         \subcaption{ROSbot - Autonomous Robot with Laser scanner RPLiDAR A2 \cite{robot1}}
@@ -51,7 +51,7 @@ One of the most popular works with robotic navigation called \textit{"The Office
 through narrow spaces. The sensor source used in this case was the Hokuyo UTM-30LX Scanning Laser Rangefinder and the navigation system developed is now known as the \ac{ROS} navigation stack. However it was noted that the robot had difficulty detecting low long obstacles.
 
 
-In a more recent case study in \cite{lidar2019ros} two different systems are proposed for the implementation of an autonomous  mobile robot, both using a 2D \ac{LiDAR} sensor under \ac{ROS}. Various trials in an indoor environment were conducted with both of them and it was concluded that both performed reasonably well but had some difficulty detecting certain types of objects.  
+In a more recent case study in \cite{lidar2019ros} two different systems are proposed for the implementation of an autonomous  mobile robot, both using a 2D \ac{LiDAR} sensor under \ac{ROS}. Various trials in an indoor environment were conducted with both of them. It was concluded that both performed reasonably well but had some difficulty detecting certain types of objects.  
 
 %%ADD ROBOT INDOOR NAVIGATION
 \subsection{Operating Principle}
@@ -65,9 +65,9 @@ This method produces very accurate results for a wide range but requires high pr
 It is typically not used for robotics since this types of systems have very high cost.
 \subsubsection{Phase Based}
 A more affordable approach  is based on modulating the intensity of the laser at a specific frequency. Figure \ref{fig:cwlidar1} showcases the resulting sinusoidal wave that is sent and the respective returned signal. 
-\begin{figure}[h] 
+\begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/cwlidar1.png}}
-\caption{Phase based method for measuring range \cite{cwlidar}}
+\caption[Phase based method for measuring range]{Phase based method for measuring range \cite{cwlidar}}
 \label{fig:cwlidar1}
 \end{figure}
 
@@ -89,7 +89,7 @@ This means that the maximum unambiguous distance that can be measured is  $\frac
 \item {If it is a 2D-\ac{LiDAR} it only senses using only a single horizontal scanning line}
 \end{itemize}
 The last item on the list proves to be a significant problem because the sensor has difficulty detecting objects that are above or bellow the height of the sensor (Fig. \ref{fig:2dlidar}). The inability of detecting this type of objects may be crucial for the success rate of the robot being able of doing a certain navigation task safely.
-\begin{figure}[ht!]
+\begin{figure}[ht]
     \centering
     \includegraphics[scale=0.7]{imgs/chapter2/lidar2d.png}
     \caption[2D \ac{LiDAR} only detecting objects in one plane ]{2D \ac{LiDAR} only detects objects in one plane (this plane is usually parallel to the ground (taken from \cite{yalcin2013approaches})}
@@ -127,7 +127,7 @@ An \ac{FMCW} radar transmits a signal called a “chirp”. A chirp is a electro
 %% put A t and f t plot
 Figure \ref{fig:At} shows the plot of the amplitude in function of time for the described chirp. As we can see the frequency of the sinusoid is increased with time. Another way of illustrating the chirp is by its frequency versus time plot (Fig. \ref{fig:At}). The latter version is often preferred due to being more simple and intuitive.
 
-\begin{figure}[h] 
+\begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/chirpAt.png}
         \subcaption{Chirp signal with amplitude as function of time}
@@ -152,7 +152,7 @@ Object detection follows this steps:
     \item The RX signal and TX signal are ‘mixed’ and the resulting signal is called an ‘IF signal’
 \end{enumerate}
 Figure \ref{fig:if} shows graphically how the IF signal is generated through both the RX and TX signal for one target detection.
-\begin{figure}[h] 
+\begin{figure}[ht] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/IFsignal.png}}
 \caption{IF signal creation to retrieve range information of the target}
 \label{fig:if}
@@ -184,7 +184,7 @@ Putting this together the distance to the object $i$ is given by:
 The range resolution is also finite since the \ac{FFT} has a limited amount of samples. In short, the higher the bandwidth of the chirp the better resolution we get.
 \subsection*{Simulation}
 In this section we try to simulate in MATLAB the process of retrieving the range from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix A. Table \ref{tab:table1} shows the respective paramaters used for the radar and the vector of distances of the supposed objects to be retrieved, where $T_c$ is the time of chirp and $F_s$ is the sampling frequency of the \ac{ADC}.
-\begin{table}[h!]
+\begin{table}[ht!]
   \begin{center}
     \caption{Parameters used for simulation for range estimation.}
     \label{tab:table1}
@@ -206,7 +206,7 @@ In this section we try to simulate in MATLAB the process of retrieving the range
 \label{fig:if2}
 \end{figure}
 Mixing both signals and passing it by a low pass filter we then compute the \ac{FFT} of the \ac{IF} signal. Fig \ref{fig:fft} shows the result. By using equation \ref{eq:1} we can retrieve the distance vs power of the signal plot (Fig. \ref{fig:fft2}). 
-\begin{figure}[h] 
+\begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/FFT.png}
         \subcaption{FFT of IF signal}
@@ -304,6 +304,14 @@ The above equation makes it possible to estimate the angle of arrival. But since
 \item{RADAR cannot provide the exact geometry of an object because of the longer wavelength}  
 \item{Can have intermodulation products that result in ghost objects} 
 \end{itemize}
+
+
+
+\section{FMCW radar Simulation}
+
+
+
+
 \section{Summary}
 In this chapter we over viewed two types of proximity sensor technologies, \ac{LiDAR} and \ac{FMCW} radar. First a we discussed on what contexts this sensors are used for and what current work is being done with them. Then we explain the operating principle of each one of them to retrieve information from the environment as well as simulating the range and velocity estimation provided by the radar.  Finally we show what vulnerabilities each sensor has.
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
