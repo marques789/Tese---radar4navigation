@@ -8,15 +8,37 @@
 
 
 \section{Context}
-Automation of mobile robots has been a major subject of interest for a long time. This lead to the development of various algorithms to optimize the behavior of robotic platforms when doing navigation tasks. In terms of perception robots usually rely on \ac{LiDAR} technology which has some limitations in accurately perceiving what is around them. However the \ac{FMCW} \ac{radar} can be used to combat this problems by being a supportive sensor in the robotic navigation module.
+The use of autonomous mobile robots has been rapidly expanding over the last few years. Whether its in industry, our homes or in an office like environment they provide endless applications. A few examples are the use in healthcare, military, agriculture, cleaning, construction, space etc...
+By definition a robot is a device able to perform human activities.  By programming it, it can fulfill a wide variety of tasks that require the link between perception and  action. A mobile autonomous robot in the other hand is a system that has total mobility in its environment that has limited human interaction and has the ability of perceiving what is around it. In terms of perception robots usually rely on \ac{LiDAR} technology which has some limitations in accurately perceiving what is around them. This is usually the case when the mobile robot is exposed directly to sunlight, smoke, or when trying to detect objects of low height. However \ac{radar} technology has constantly  been  upgraded and is not affected by the previous conditions. Due to recent advancements in terms of hardware and software, new high bandwidth low power radars are now available for the use in perception capabilities for the robot.   
+Specifically the \ac{FMCW} \ac{radar} has been constantly improving in terms of being an obstacle detector and  can be used to combat the past mentioned problems by being a supportive sensor in the robotic navigation module.
+%Automation of mobile robots has been a major subject of interest for a long time.
+
+
+
+%This lead to the development of various algorithms to optimize the behavior of robotic platforms when doing navigation tasks. In terms of perception robots usually rely on \ac{LiDAR} technology which has some limitations in accurately perceiving what is around them. However the \ac{FMCW} \ac{radar} can be used to combat this problems by being a supportive sensor in the robotic navigation module.
 
 \section{Objectives}
-The main objective of this project is to evaluate the performance of the \ac{FMCW} radar technology for the use in robot autonomous indoor navigation. To do this we must first convert the radar data into the \ac{ROS} platform and process it accordingly in order to create suitable information for the robot to perceive its environment. Once that is completed we can feed it to our navigation system and study how well the robot performs in indoor navigation tasks. The focus will be in comparing the performance of this sensors with the more commonly used and more expensive \ac{LiDAR} technology sensors. Since the \ac{FMCW} \ac{radar} retrieves radial velocity information from its targets we can manipulate the information of the costmaps of the navigation module to induce the robot to take safer pathing.
+For this dissertation there are multiple objectives to take in mind. First a study of how \ac{LiDAR} and the \ac{FMCW} \ac{radar} technology must be conducted in order to understand where they are used and how they work as well as limitations that each one has. After that we must uncover how we can create a suitable robotic platform using \ac{ROS}  and state of the art algorithms to resolve the navigation problems. After that we want to choose  specific devices and describe what characteristics they have in order to create a suitable navigation platform for our work. After the implementation of the various software and hardware components we want to determine how the \ac{FMCW} \ac{radar} fairs in comparison to the \ac{LiDAR} when it comes as an obstacle detector for indoor navigation capabilities. Finnaly we will try to explore how we can use the relative radial velocity retrieved from the \ac{radar} to produce a software application that tries to manipulate the perception of the robot in order to accommodate more safe path trajectories taking into account incoming obstacles. 
+
+
+
+
+
+
+
+%The main focus of this project is to evaluate the performance of the \ac{FMCW} radar technology for the use in robot autonomous indoor navigation.
+%For this work there are multiple objectives to take in consideration. First the we must discover in which contexts the \ac{FMCW} \ac{radar} and the \ac{LiDAR} are used and how they work. After the examination we must convert the radar data into the \ac{ROS} platform and process it accordingly in order to create suitable information for the robot to perceive its environment.
+ %Once that is completed we can feed it to our navigation system and study how well the robot performs in indoor navigation tasks
+
+
+
+
+%The main focus of this project is to evaluate the performance of the \ac{FMCW} radar technology for the use in robot autonomous indoor navigation. To do this we must first convert the radar data into the \ac{ROS} platform and process it accordingly in order to create suitable information for the robot to perceive its environment. Once that is completed we can feed it to our navigation system and study how well the robot performs in indoor navigation tasks. The focus will be in comparing the performance of this sensors with the more commonly used and more expensive \ac{LiDAR} technology sensors. Since the \ac{FMCW} \ac{radar} retrieves radial velocity information from its targets we can manipulate the information of the costmaps of the navigation module to induce the robot to take safer pathing.
 
 \section{Contributions}
 The main contributions of this dissertation are:
 \begin{itemize}
-    \item Comparative study between the operating principle of the \ac{FMCW} \ac{radar} and the 2D-\ac{LiDAR} as well as demonstrating which works are being done using this type of sensors and what limitations each one has.
+    \item Study of the operating principle of the \ac{FMCW} \ac{radar} and the 2D-\ac{LiDAR} as well as demonstrating which works are being done using this type of sensors and what limitations each one has.
     \item Give light to the \ac{ROS} framework and how it can be used to create a suitable navigation platform using state of the art navigation algorithms.
     \item Constructing a navigation platform using turtlebot2, an \ac{FMCW} \ac{radar}, a 2D- \ac{LiDAR} and a processing unit suitable for conducting navigation tasks.
     \item Perform various experiments that evaluate the performance of the previous sensors for obstacle avoidance capabilities.

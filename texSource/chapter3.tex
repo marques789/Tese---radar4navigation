@@ -1,4 +1,4 @@
-\chapter{Robotic Navigation using ROS} \label{ch:BaseWork}
+\chapter{Robot Navigation using ROS} \label{ch:BaseWork}
 
 
 %%\section{Introduction}
@@ -94,9 +94,9 @@ After the optimal plan is computed the final step is to determine the best veloc
  
  
  Global methods assume the environment is completely known a priori and can therefore compute an optimal safe path  around static obstacles using a variety of different strategies. This models prove to be very reliable for static environments. However this models are usually computational expensive which lead to very slow update times. For fast changing environments such as is in the case for highly populated indoor scenarios they prove to be insufficient. 
- To improve the quality of navigation capabilities, local path planning techniques are added to improve the responsiveness of the robot. This techniques have a much faster update time  since they use a smaller version of the world around them. However this type of approaches have trouble with local minimum cases where the robot gets stuck (for example the U-shape case).
+ To improve the quality of navigation capabilities, local path planning techniques are added to increase the responsiveness of the robot. This techniques have a much faster update time  since they use a smaller version of the world around them. However this type of approaches have trouble with local minimum cases where the robot gets stuck (for example the U-shape case).
 \subsection{Global Methods for Path Planning}
-Path planning is crucial for the robot to handle safe trajectory around obstacles. In this work the information regarding this obstacles is based on a grid map built by \ac{SLAM} and new observations retrieved by the robot's sensors.  Planning an optimal safe path can be done using a wide variety of methods like Visibility Graphs, Generalized Voroin Diagram, and \ac{PRM} \cite{globalmethods}. However for in this work we will use the \ac{PRM} method. This method samples its environment and creates a occupancy graph. Then by inserting the initial position and the goal position the path can be computed using dijaktra or A* or Rapidly exploring Random Trees search algorithms . However, the \ac{ROS} navigation packages only use the first two so  we will only focus on this ones.
+Path planning is crucial for the robot to handle safe trajectory around obstacles. In this work the information regarding this obstacles is based on a grid map built by \ac{SLAM} and new observations retrieved by the robot's sensors.  Planning an optimal safe path can be done using a wide variety of methods like Visibility Graphs, Generalized Voroin Diagram, and \ac{PRM} \cite{globalmethods}. However for in this work we will use the \ac{PRM} method. This method samples its environment and creates a occupancy graph. Then by inserting the initial position and the goal position the path can be computed using dijaktra,A* or Rapidly exploring Random Trees search algorithms . However, the \ac{ROS} navigation packages only use the first two so  we will only focus on this ones.
 
 
 \subsubsection{Dijkstra algorithm}\label{djk}
@@ -156,8 +156,8 @@ The \ac{DWA} planner is the most standard approach when it comes to local path p
     \end{itemize}
 \subsubsection{Trajectory Rollout} \label{tr}
 The Trajectory Rollout planner follows the same logic as above but in this case the sampling method for the control space is different. In this a set permissible velocities
-in each simulation is calculated including acceleration limits for the entire simulation
-time\cite{inbookdwa}.
+in each simulation is calculated including acceleration limits for the entire simulation time\cite{inbookdwa}.Instead of searching the space of feasible trajectories, we search the space of feasible controls. In Trajectory Rollout set of permissible velocities in each simulation is calculated including acceleration limits for the entire simulation
+time, while in Dynamic Window Approach it is limited to one simulation step.
 \section {ROS Navigation stack}
 The ROS navigation stack is a set of software packages that properly combined can get a robot to navigate autonomously.
 Figure \ref{fig:plans} shows an example of \textbf{turtlebot2} using the navigation stack to drive autonomously.
@@ -176,7 +176,7 @@ Figure \ref{fig:tf} shows all the frames and their transforms with each other fo
 \begin{figure}[!htb]
     \centering
     \includegraphics[scale=0.4]{imgs/chapter3/tf.png}
-    \caption{Transform relationships in our robot}
+    \caption{Example of the transform relationships}
     \label{fig:tf}
 \end{figure}
 
