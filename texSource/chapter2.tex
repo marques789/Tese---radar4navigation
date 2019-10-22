@@ -2,7 +2,7 @@
 \chapter{LiDAR and the FMCW radar} \label{ch:Concepts}
 
 In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This information comes from its sensor sources.
-The most typical type of sensors used for perception are proximity sensors such as laser range finders (\ac{LiDAR}), sonar or the use of a camera. However robots may have to deal with a wide variety of changing environments like variation in luminosity, weather conditions, presence of dust and smoke, object proprieties etc,... The previous highlighted sensors may show difficulty or be completely ineffective under these conditions.
+The most typical type of sensors used for perception are proximity sensors such as laser range finders (\ac{LiDAR}), sonar or the use of a camera. However robots may have to deal with a wide variety of changing environments like variation in luminosity, weather conditions, presence of dust and smoke, object proprieties, etc. The previous highlighted sensors may show difficulty or be completely ineffective under these conditions.
 
 The new emerging \ac{mmWave} \ac{FMCW} radar technology with high frequency and bandwidth of 77-81 GHz is now beginning to be suitable for use in robotic applications, and it may provide a solution for the previous conditions. In this chapter we will give a brief overview of current work being done using \ac{LiDAR} and \ac{FMCW} \ac{radar}, how they work, and what limitations each sensor has.
 
@@ -13,7 +13,7 @@ The new emerging \ac{mmWave} \ac{FMCW} radar technology with high frequency and 
 %More text
 
 \subsubsection{Autonomous Vehicles}
-The use of \ac{LiDAR}s in autonomous vehicles has been a common trend for a while now. Fig. \ref{fig:lidarcar} ilustrates how several of these sensors are used to provide full road environment perception. The \ac{LiDAR}s accurate depth information combined with a high field of view provided by  enables the development of advanced navigation systems that are able to perform self-driving.
+The use of \ac{LiDAR}s in autonomous vehicles has been a common trend for a while now. Fig. \ref{fig:lidarcar} ilustrates how several of these sensors are used to provide full road environment perception. The \ac{LiDAR}s accurate depth information combined with a high field of view enables the development of advanced navigation systems that are able to perform self-driving.
  
 \begin{figure}[ht] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/lidarcar.png}}
@@ -21,15 +21,15 @@ The use of \ac{LiDAR}s in autonomous vehicles has been a common trend for a whil
 \label{fig:lidarcar}
 \end{figure}
 
-One application example is the work done by Dominguez \cite{lidarperception}  where a perception system for ground vehicles was implemented a  using segmentation, clustering and tracking techniques.  However, it was noted that it was hard to distinguish between closely separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
+One application example of this is the work done by Dominguez \cite{lidarperception}  where a perception system for ground vehicles was implemented a  using segmentation, clustering and tracking techniques.  However, it was noted that it was hard to distinguish between closely separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
 
 
-Catapamga and Ramos \cite{car2dlidar} proposed  a low cost solution for object detection, classification and ranging is by the use of an inexpensive 2D pulsed light \ac{LiDAR}. The system was able to provide reliable detection of 1 meter wide obstacles at distances less than 10 meters.
+Catapamga and Ramos \cite{car2dlidar} proposed  a low cost solution for object detection, classification and ranging by the use of an inexpensive 2D pulsed light \ac{LiDAR}. The system was able to provide reliable detection of 1 meter wide obstacles at distances less than 10 meters.
 
 
 However there are some concerns about this type of technology. The CEO of Tesla, Elon Musk, has been very critical of it. Recently, at Tesla’s first Autonomy Day event,  he said \textit{"Anyone relying on \ac{LiDAR} is doomed. Doomed!"} \cite{elon}. He believes that cameras, \ac{radar} and ultrasonic sensors are the future for car visions systems. 
 \subsubsection{Robotics}
-\ac{LiDAR} is also one of the major sensory components for robotics. Various robots rely on it for autonomy and navigation. Fig. \ref{fig:robotslidar} shows an example of two robots (ROSbot and Knightscope) that use this type of sensors for perception.
+\ac{LiDAR} is also one of the major sensory components for robotics. Various robots rely on it for autonomous navigation. Fig. \ref{fig:robotslidar} shows an example of two robots (ROSbot and Knightscope) that use this type of sensors for perception.
 \begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/robot1.jpg}
@@ -52,7 +52,7 @@ In a more recent case study in \cite{lidar2019ros}, two different systems are pr
 
 %%ADD ROBOT INDOOR NAVIGATION
 \subsection{Operating Principle}
-The way \ac{LiDAR} technology works is very straightforward, just emit a laser beam and wait for it to bounce back. Based on the propriety of the reflected signal it can determine the distance of the obstacle it hits. By constantly spinning the mirrors at diffrent angles (scanning) it gets angle and depth information about the environment  by a  set of points or in other words a point cloud. There are two main different operating principles to do this, \textbf{Time of Flight} and \textbf{Phase Based}, which are described bellow.
+The way \ac{LiDAR} technology works is very straightforward, just emit a laser beam and wait for it to bounce back. Based on the propriety of the reflected signal it can determine the distance of the obstacle it hits. By constantly spinning the mirrors at different angles (scanning) it gets angle and depth information about the environment  by a  set of points or in other words a point cloud. There are two main different operating principles to do this, \textbf{Time of Flight} and \textbf{Phase Based}, which are described bellow.
 \subsubsection{Time of Flight}
  In this approach a pulse of light is transmitted and,  when it is done, an internal clock is started. The reflected pulse is captured by a photodetector which triggers the clock to stop. Being $\tau$ the time taken by the reflected signal to  comeback and assuming it traveled at approximately the speed of light ($c$) then the distance to the object $d$ is given by:
 \begin{equation}
@@ -72,7 +72,7 @@ Being $\Phi$ the phase difference between the two and $\lambda_m$ the wavelength
 \begin{equation}
     d=\frac{\Phi \lambda_m}{4 \pi}
 \end{equation}
-This means that the maximum unambiguous distance that can be measured is  $\frac{\lambda_m}{2}$, and its range resolution depends upon the resolution of the phase difference measurement as well as the wavelength used. Almost all robots use this type of \ac{LiDAR} since it is usually cheaper and as a faster update rate.
+This means that the maximum unambiguous distance that can be measured is  $\frac{\lambda_m}{2}$, and its range resolution depends upon the resolution of the phase difference measurement as well as the wavelength used. Almost all robots use this type of \ac{LiDAR} since it is usually cheaper.and as a faster update rate.
 %difficult to generate continuous wave of high energy
 
 \subsection{Limitations}
@@ -85,13 +85,14 @@ This means that the maximum unambiguous distance that can be measured is  $\frac
 \item{Slow measurement rate due to large dataset processing.} 
 \item {If it is a 2D-\ac{LiDAR} it only senses in a horizontal plan}
 \end{itemize}
-The last item on the list proves to be a significant problem because the sensor has difficulty detecting objects that are above or bellow the height of the sensor (Fig. \ref{fig:2dlidar}). The inability of detecting this type of objects may be crucial for the success rate of the robot being able of doing a certain navigation task safely.
+The last item on the list proves to be a significant problem because the sensor cannot detect objects that are above or bellow the height of the sensor (Fig. \ref{fig:2dlidar}). The inability of detecting this type of objects may be crucial for the success rate of the robot being able of doing a certain navigation task safely.
 \begin{figure}[ht]
     \centering
     \includegraphics[scale=0.7]{imgs/chapter2/lidar2d.png}
     \caption[2D \ac{LiDAR} only detecting objects in one plane ]{2D \ac{LiDAR} only detects objects in one plane (this plane is usually parallel to the ground (taken from \cite{yalcin2013approaches})}
     \label{fig:2dlidar}
 \end{figure}
+
 
 \section{FMCW Radar}
 The use of \ac{radar} technology has been around since the 19th century when it was first discovered that radio waves reflected off metallic surfaces, but serious development of this type systems only truly began in the 1930's for military applications \cite{radarhistory}. This include the range and angle detection of ship and aircraft engines by measuring incoming signal fluctuations off an oscilloscope. 
@@ -104,7 +105,7 @@ Multiple works are constantly being done using this type of sensors. Bellow we s
   \subsubsection{Pedestrian detection}  
  In \cite{heuel2010pedestrian} three systems are implemented, the first one only using a single radar measurement, the second using multiple, and the final one with additional tracking algorithms. Each system had the objective of distinguishing between people walking, vehicles, and other objects. In the end it was concluded that that \ac{FMCW} \ac{radar} can be used for classification of inroad objects with relatively good accuracy in all systems.
   
-   Another case study is presented in \cite{knudde2017indoor} where by a processing pipeline the system proposed was able to detect and track people in indoor environments using a 77 GHz \ac{MIMO} \ac{FMCW} radar.
+   Another case study is presented in \cite{knudde2017indoor} where by pre processing the raw radar data and then using  data processing pipeline the system proposed was able to detect and track people in indoor environments using a 77 GHz \ac{MIMO} \ac{FMCW} radar.
    
  \subsubsection{Localization of Land Vehicles}  
   Vehicle localization is often done using \ac{GPS} accompanied by \ac{RISS}. But is often the case in which \ac{GPS} signal can not be received correctly. This is often due the land vehicle being in an indoor environment or high rise building blocking the signal. In \cite{abosekeen2018utilizing} it is proposed a radar based \ac{RISS} that not only seeks odometer information but also radar readings. This proved to make the localization system of the vehicle more robust.
@@ -127,15 +128,15 @@ Figure \ref{fig:At} shows the plot of the amplitude in function of time for the 
 \begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/chirpAt.png}
-        \subcaption{Chirp signal with amplitude as function of time}
+        \subcaption{Representation of the chirp, with magnitude as function of time}
         \label{fig:At}
     \end{minipage}
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/chirpFt.png}
-        \subcaption{Chirp signal with frequency as function of time}
+        \subcaption{Representation of the chirp, with frequency as function of time}
         \label{fig:Ft}
     \end{minipage}
-    \caption{Different ways of displaying a chirp}
+    \caption{A chirp seen in time and frequency domains}
     \label{fig:chirp}
 \end{figure}
 
@@ -197,10 +198,10 @@ Figure \ref{fig:matrix} illustrates this process.
 \end{figure}
 
 \subsubsection{Angle Detection}
-Finally to determine the angle for each target more than one receiver antenna are needed. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distances to the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
+Finally to determine the angle for each target more than one receiver antenna are needed. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distances to the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received \ac{IF} signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
 \begin{figure}[ht] 
-\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/angle.png}}
-\caption[Angle of arrival estimation using more than one antenna]{More than one antenna is required to estimate the angle of arrival (taken form \cite{iovescu2017fundamentals})}
+\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/angle2.png}}
+\caption[Angle of arrival estimation using more than one antenna]{More than one antenna is required to estimate the angle of arrival (adapted form \cite{iovescu2017fundamentals})}
 \label{fig:angle}
 \end{figure}
 The phase difference $\Delta \phi$ is given by:
@@ -224,9 +225,25 @@ The above equation makes it possible to estimate the angle of arrival. But since
 \begin{itemize}
 \item{Limited range and angular resolution when compared to \ac{LiDAR} which make difficulty to distinguish between two close targets}  
 \item{Low pointcloud density}  
-\item{\ac{radar} cannot provide the exact geometry of an object because of the longer wavelength}  
+\item{Radar cannot provide the exact geometry of an object because of the longer wavelength}  
 \item{Can have intermodulation products that result in ghost objects} 
 \end{itemize}
+
+
+\section{Ultrasonic Sensors}
+When it comes to sensing the range of an obstacle, the use of ultrasonic sensors may also be the choice for some cases. Using sound waves, an ultrasonic sensor is able to measure range. It uses a transducer to send and receive ultrasonic pulses that relay back information about an object’s proximity. High-frequency sound waves reflect from boundaries to produce distinct echo patterns.
+%\subsection{Applications}
+
+%\subsection{Operating principle}
+\section{Cameras}
+Besides the previous highlighted sensors, cameras can be used to determine the distance of obstacles. There are three image based object distance measurement techniques, (1) using two cameras i.e stereovision, (2) using a single camera and (3) time-of-flight camera.
+The first method is highly accurate but is costly when compared to the monovision and it is not accurate for high distances. In the time of flight technique the distance is obtained using the time it took for the light to be reflected back. This method is a simple way to retrieve range from obstacles and it is also very fast that can reach up to 160 frames per second. It is also efficient having lower computation needs when compared to sterovision. However this technique comes with the problems of background lighting, interference from other time of flight cameras and multiple reflections. 
+\subsection{Applications}
+The use of range cameras is widely used for ground vehicle applications. One example is in Canesta
+
+
+
+
 
 
 
@@ -292,7 +309,8 @@ In this section we try to simulate in MATLAB the process of retrieving the veloc
     \end{tabular}
   \end{center}
 \end{table}
-By computing the 2-D doppler \ac{FFT} of the signal we get  Fig \ref{fig:fft3} shows the result. By using equation \ref{eq:2} we can retrieve the velocity vs power of the signal plot (Fig. \ref{fig:fft4}). 
+
+By computing the FFT of the $N_c$ phase differences we get the 2-D doppler \ac{FFT}  for the object at 5 m.  Fig \ref{fig:fft3} shows the resulting  2D-Doppler FFT that displays which phases are stronger. By using equation \ref{eq:2} we can retrieve the velocity vs power of the signal plot (Fig. \ref{fig:fft4}). 
 \begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/fft3.png}
