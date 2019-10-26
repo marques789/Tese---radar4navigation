@@ -231,16 +231,36 @@ The above equation makes it possible to estimate the angle of arrival. But since
 
 
 \section{Ultrasonic Sensors}
-When it comes to sensing the range of an obstacle, the use of ultrasonic sensors may also be the choice for some cases. Using sound waves, an ultrasonic sensor is able to measure range. It uses a transducer to send and receive ultrasonic pulses that relay back information about an object’s proximity. High-frequency sound waves reflect from boundaries to produce distinct echo patterns.
-%\subsection{Applications}
+One of the best ways when it comes to  sensing the range of an obstacle, is by using ultrasonic sensors. Using sound waves, an ultrasonic sensor is able to measure range. 
+These type of sensors have high reliability and outstanding versatility can be used for wide variety of applications. 
 
-%\subsection{Operating principle}
+\subsection{Applications}
+\subsubsection{Robotics}
+Some examples of robotic applications is the work done by Byoung-hoon Kim \cite{kim2006improved} where by using a multi modulation processing of the ultrasonic sensors the proposed system was able to estimate the 3D coordinates of a moving object while being robust for noisy environments.
+\subsubsection{Ground Vehicles}
+The use of ultrasonic sensors are also widely used for ground vehicles. On the work  proposed by Enas Odat \cite{pir}, a traffic sensing system is constructed using \ac{PIR} sensors and ultrasonic range finders. It was able to determine  vehicle detection, speed estimation, and vehicle type classification. However the variability of the sensors readings, thermal noise and environmental conditions may produce unwanted reading errors.
+\subsubsection{Medicine}
+Ultrasonic sensors are also used in medicine, for example in the work done by Ibrahim AlMohimeed \cite{}, a wearable and flexible ultrasonic sensor was developed for monitoring of skeletal muscle contraction, the tissue thickness variations were successfully measured in accordance with the muscle contraction performed. 
+\subsection{Operating Principle}
+To retrieve range information about the environment the ultrasonic sensors work similarly as the  Time of of flight \ac{LiDAR}. But instead of light waves the sensor uses sound waves. A transducer sends and receives ultrasonic pulses that relay back information about an object’s proximity.  
+
+\begin{figure}[ht] 
+\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/us.png}}
+\caption[Ultrasonic wave operating principle]{Ultrasonic wave operating principle (taken form \cite{burnett_2019})}
+\label{fig:us}
+\end{figure}
+
 \section{Cameras}
 Besides the previous highlighted sensors, cameras can be used to determine the distance of obstacles. There are three image based object distance measurement techniques, (1) using two cameras i.e stereovision, (2) using a single camera and (3) time-of-flight camera.
 The first method is highly accurate but is costly when compared to the monovision and it is not accurate for high distances. In the time of flight technique the distance is obtained using the time it took for the light to be reflected back. This method is a simple way to retrieve range from obstacles and it is also very fast that can reach up to 160 frames per second. It is also efficient having lower computation needs when compared to sterovision. However this technique comes with the problems of background lighting, interference from other time of flight cameras and multiple reflections. 
 \subsection{Applications}
-The use of range cameras is widely used for ground vehicle applications. One example is in Canesta
+\subsubsection{Ground Vehicles}
+The use of range cameras is widely used for ground vehicle applications. One example of this is by Canesta \cite{hsu2006performance}, where  occupant sensing and backup obstacle warning was achieved using a ranging camera.
 
+Another example is the work of Elkhalili \cite{}, where, by the use of these type of sensors enabled the detection of objects with a resolution of 2.2cm for a single pulse in the range up to 20m.
+
+\subsubsection{Robotics}
+Using this technology mobile robots can build up a map of their surroundings very quickly, enabling them to avoid obstacles or follow a leading person. As the distance calculation is simple, only little computational power is used.
 
 
 
