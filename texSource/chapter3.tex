@@ -3,8 +3,8 @@
 
 %%\section{Introduction}
 When it comes to navigation we need a wide variety of modules that interconnected produce an intelligent system that makes the robot go from one point to another while avoiding obstacles and being well localized. 
-
-For that we will try to define how we can produce a suitable navigation module for a given platform using state of the art algorithms and modules. First an overview of Robot Operating System (ROS) framework is presented. After that some navigation concepts are explained with further detail in path planning and motion control case. And finally how the \ac{ROS} navigation stack combats this problems.
+The first problem that needs to be taken into account is where the robot is, for that we require map for a global reference. The second issue is finding the best route to a predefined goal. For that various algorithms and systems are already proposed and ready for use.
+%For that we will try to define how we can produce a suitable navigation module for a given platform using state of the art algorithms and modules. First an overview of Robot Operating System (ROS) framework is presented. After that some navigation concepts are explained with further detail in path planning and motion control case. And finally how the \ac{ROS} navigation stack combats this problems.
 
 \section {ROS}
 Creating software for robotic applications is not an easy task to do from scratch. It usually involves very complex code to achieve even the simplest applications due to the wide variety of hardware and data that robots rely on. \ac{ROS} \cite{ros} fixes this issue by being a general purpose framework for robotics. Despite its name, it is not an operating system, being more a kind of middleware, since it  handles communication between programs in a distributed system. You can either construct one program that does all the computation needed in your application or you can have sub programs with each one having a specific functionality, the latter being often preferred.
@@ -21,8 +21,8 @@ Nodes can send messages by publishing to a topic or receive them by subscribing 
 \item \textbf{Master} - Provides registration and naming for each node (helps nodes find each other). It is also responsible for organizing communication between nodes. Finnaly it also provides the \textbf{Parameter Server} (described bellow).
 % V
 \item \textbf{rosout} - This can be viewed as the ROS equivalent of stdout. This acts as a log reporting mechanism which is useful when debugging large amounts of code.
-\item \textbf{Paramater Server} -In this server \ac{ROS} tracks different paramater values defined by the running application. It is useful for setting different parameters dynamically without having to restart the application.
-It is also useful to get which paramaters are being used.
+\item \textbf{Paramater Server} -In this server \ac{ROS} tracks different paramater values defined by the running application. It is useful for setting or getting different parameters dynamically without having to restart the application.
+
 %X
 \end{itemize}
 Figure \ref{fig:rosgraph} gives a brief overview of how each of these concepts are put together and  generate the ROS  computation system.
@@ -39,13 +39,13 @@ Now that we described the inner workings of \ac{ROS} we can use its tools to ret
 \subsubsection{rviz}
 \textbf{Rviz} is a graphical interface that allows 3D visualization environment that allows the view of the different components of \ac{ROS} like the robots frame transforms, the map, pointclouds, visualization markers etc...
 \subsubsection{rosbag}
-Stores information in files called "bags". Rosbag will subscribe to one or more topics and the serialized message data will be stored in a file as it is received.
+ Rosbag will subscribe to one or more topics and the serialized message data will be stored in a file as it is received. These files are called "bags" and contain information about all the \ac{ROS} topics chosen and can be played back at a predefined rate and can be started in any moment.
 %\textbf{Rosbag} enables the recording of topics into a file that can be replayed in the future. By running this tool all the information regarding a the ROS structure is stored in a given time frame. This include the nodes, topics and messages that are passed along the way. 
 %It is useful to store information and then running it again at the desired time and frequency rate we want.
 \subsubsection{rqt_graph}
 To understand how the various nodes and topics are interconnected the use of \textbf{rqt_graph} is the best for this case. It can be used to produce an image of all of them and how they communicate between each other
 \subsubsection{Command Line tools}
-In this section we will highlight some of the command lineools in \ac{ROS} that we used in this work.
+In this section we will highlight some of the command line tools in \ac{ROS} that we used in this work.
 \subsubsection*{Running ROS Systems}
 \begin{itemize}
     \item \textbf{roscore} - this launches a process that the ROS System needs in order to properly setup communication between nodes. It starts the \ac{ROS} Master, Paramater Server and rosout. Using \textbf{roslaunch} will automatically run a roscore if it was not initiated before. 
@@ -56,7 +56,7 @@ In this section we will highlight some of the command lineools in \ac{ROS} that 
 \begin{itemize}
     \item \textbf{rostopic} - is used for displaying debug information and interact with a given topic. This may be the messages published by a topic, finding a topic by its type, showing information about a topic, listing all the topics in the \ac{ROS} system. among other things.
    % \item \textbf{rossrv}
-    \item \textbf{rosnode} - Can be used to display information about a node, regarding publications, subscriptions and connections.
+    \item \textbf{rosnode} - Can be used to display debug information about a node, regarding publications, subscriptions and connections.
     \item \textbf{rosparam} - Used for manage paramaters in the Paramater Server.
    % \item \textbf{rosmsg}
 
@@ -79,7 +79,7 @@ There are four main problems associated with robotic autonomous navigation. They
 Various algorithms have been developed over the years to combat these problems. 
 %%Mapping
 
-In regards to creating a suitable map,  \ac{ROS}  typically uses an improved version of  Rao-Blackwellized particle filters such as the ones described in \cite{grisetti2007improved}. This approach has proven to be an effective way to solve the \ac{SLAM} problem and will be used later on in this work to produce a valid map of our indoor environment.
+In regards to creating a suitable map,  \ac{ROS}  uses an improved version of  Rao-Blackwellized particle filters such as the ones described in \cite{grisetti2007improved}. This approach has proven to be an effective way to solve the \ac{SLAM} problem and will be used later on in this work to produce a valid map of our indoor environment.
 %%Localization
 
 With the grid map built we now need to estimate the robot's position in said map. 
@@ -98,7 +98,7 @@ After an optimal plan is computed the final step is to determine the best veloci
  Global methods assume the environment is completely known a priori and can therefore compute an optimal safe path  around static obstacles using a variety of different strategies. These models prove to be very reliable for static environments. However these models are usually computational expensive which lead to very slow update times. For fast changing environments such as is in the case for highly populated indoor scenarios they prove to be insufficient. 
  To improve the quality of navigation capabilities, local path planning techniques are added to increase the responsiveness of the robot. These techniques have a much faster update time  since they use a smaller version of the world around them. However this type of approaches have trouble with local minimum cases where the robot can get stuck (for example the U-shape case).
 \subsection{Global Methods for Path Planning}
-Path planning is crucial for the robot to handle safe trajectory around obstacles. In this work the information regarding this obstacles is based on a grid map built by \ac{SLAM} and new observations retrieved by the robot's sensors.  Planning an optimal safe path can be done using a wide variety of methods like Visibility Graphs, Generalized Voronoi Diagram, and \ac{PRM} \cite{globalmethods}. However for in this work we will use the \ac{PRM} method. This method samples its environment and creates anoccupancy graph. Then by inserting the initial position and the goal position the path can be computed using dijkstra, A* or Rapidly exploring Random Trees search algorithms . However, the \ac{ROS} navigation packages only use the first two so  we will only focus on these ones.
+Path planning is crucial for the robot to handle safe trajectory around obstacles. In this work the information regarding this obstacles is based on a grid map built by \ac{SLAM} and new observations retrieved by the robot's sensors.  Planning an optimal safe path can be done using a wide variety of methods like Visibility Graphs, Generalized Voronoi Diagram, and \ac{PRM} \cite{globalmethods}. However for in this work we will use the \ac{PRM} method. This method samples its environment and creates ano ccupancy graph. Then by inserting the initial position and the goal position the path can be computed using dijkstra, A* or Rapidly exploring Random Trees search algorithms . However, the \ac{ROS} navigation packages only use the first two so  we will only focus on these ones.
 
 
 \subsubsection{Dijkstra algorithm}\label{djk}
@@ -125,7 +125,7 @@ In contrast to global path planning where a large portion of the environment is 
     \item [Trajectory Rollout]  \cite{gerkey2008planning} - Similar to the \ac{DWA} planner except the sampling method for the control space is different.
     \item [Elastic Band] - \cite{siegwart2011introduction} In this case bubbles are formed that are defined as the maximum local subset of free space around a given robot configuration that can be travelled without collision.
     Given these bubbles a set of "elastic bands" are connected to form a collision free trajectory from the initial position to the goal without collision. When it comes to avoid an obstacle that obstructs the global plan, this technique tends to deviate from it  minimizing the bubble band tension.
-    \item [Timed elastic band] - \cite{rosmann2013efficient} This planner is an extension of the 'elastic band' that takes into account time intervals in between the robot's position and orientation. By doing this and utilizing a  multiple objective optimization function that takes into account the robot's accelaration and velocity limits with penalties and computes the best trajectory taking into account execution time, shortest path and clearance of obstacles it creates a suitable local planner that is suitable for avoiding dynamic obstacles.
+    \item [Timed elastic band] - \cite{rosmann2013efficient} This planner is an extension of the 'elastic band' that takes into account time intervals in between the robot's position and orientation. By doing this, and utilizing a  multiple objective optimization function, that takes into account the robot's acceleration and velocity limits with penalties and computes the best trajectory taking into account execution time, shortest path and clearance of obstacles it creates a suitable local planner that is suitable for avoiding dynamic obstacles.
     
     \item [Clothoid Tentacles] -  \cite{ffalia2015local} This is an empirical approach to the local path planning problem. It generates various "tentacles" and take the form of clothoids. It then chooses the best one taking into account the best obstacle clearance, curvature and distance to the global path planner. 
     
@@ -140,7 +140,7 @@ The \ac{DWA} planner is the most standard approach when it comes to local path p
     \item Genarate in the form of arcs the projected trajectories obtained using the previous velocity sample space.
     \item Dismiss velocities that result in the robot colliding with an object in a given time frame. With this we are left of a subset of admissible velocities $V_a=(R_{vR_a},R_{ \omega_a})$ in which:
     \begin{equation}
-         V_a=(R_{vR_a},R_{ \omega_a}) \iff \begin{cases}
+         V_a=(R_{vR_a},R_{ \omega_a}) \Rightarrow \begin{cases}
     R_{vR_x} & 	\leq \sqrt{2*dist(R_{vR_x},R_{ \omega_z})*R_{\dot{v}_{xb}}}.\\
     R_{ \omega_z}  &  	\leq \sqrt{2*dist(R_{vR_x},R_{ \omega_z})*R_{\dot{\omega}_{zb}}}.
   \end{cases}
@@ -150,7 +150,7 @@ The \ac{DWA} planner is the most standard approach when it comes to local path p
     
     \item Dismiss velocities that don't respect the robot's acceleration limits in a given simulated time frame. With this we are left with a subset of velocities called dynamic window $V_d=(R_{vR_d},R_{ \omega_d})$  in which:
     \begin{equation}
-         V_d=(R_{vR_d},R_{ \omega_d}) \iff \begin{cases}
+         V_d=(R_{vR_d},R_{ \omega_d}) \Rightarrow \begin{cases}
     R_{vR_x} & 	\in [R_{v_a}-R_{\dot{vR}_{x}}*t,R_{v_a} + R_{\dot{vR}_{x}}*t].\\
     R_{\omega_z} & 	\in [R_{ \omega_a}-R_{\dot{\omega}_{z}}*t,R_{\omega_a}+R_{\dot{\omega}_{z}}*t].\\
   \end{cases}
@@ -207,7 +207,7 @@ This part is not mandatory but it helps to have some sort of map being published
     \label{fig:map}
 \end{figure}
 If the setup is done correctly we can now run the navigation stack.
-\subsection{Navigation Stack components}
+\subsection{Navigation Node}
 %%STUFF
 Now that we have all the things we need for navigation we need an entity that actually processes all this information in an intelligent way to determine the best velocity command for the robot. This is done by the \texttt{move\_base } node and its peripherals.
 Figure \ref{fig:navstack} shows an overview of the different components of the navigation stack \cite{movebase}.
@@ -217,16 +217,17 @@ Figure \ref{fig:navstack} shows an overview of the different components of the n
     \caption[Navigation stack block diagram]{Navigation stack block diagram taken from \cite{movebase}}
     \label{fig:navstack}
 \end{figure}
-\subsubsection{Move Base}
 
-The move base node base links together the global and local planner as well as a local and global costmap to achieve the end goal provided by an action server. It also loads a set of determined recovery behaviors if the planners fail to produce a valid path. 
+The move base node links together the global and local planner as well as a local and global costmap to achieve the end goal provided by an action server. It also loads a set of determined recovery behaviors if the planners fail to produce a valid path. 
 
-The global and local planners are plugins specified by the user. This choice will affect the behavior of the robot depending on the planners architecture and parameters. In this work it will be used \textbf{navfn} as our global planner and \textbf{TrajectoryPlannerROS} as our local planner.
+The global and local planners are plugins specified by the user. This choice will affect the behavior of the robot depending on the planners architecture and parameters. As of right now, it is integrated in \ac{ROS}  two global planners, the \textbf{navfn} and \textbf{global_planner}, and three local planners the \textbf{TrajectoryPlannerROS}, \textbf{DWAPlanner} and \textbf{carrot_planner}.
+
+In this work it will be used \textbf{navfn} as our global planner and \textbf{TrajectoryPlannerROS} as our local planner.
 
 \subsubsection{Global Planner}
  
 The job of this component is to produce the best trajectory for a robot to take with limited amount of information given by the global costmap.
-This plan can be updated when the robot gets stuck or by a user specific frequency the latter is usually preferred. The algorithms used to get this path are usually \textbf{dijkstra} or \textbf{A*} that are described in the previous sections \ref{djk} and \ref{A*}.
+This plan can be updated when the robot gets stuck or by using a user specific frequency, the latter is usually preferred. The algorithms used to get this path are usually \textbf{dijkstra} or \textbf{A*} that are described in the previous sections \ref{djk} and \ref{A*}.
 
 \subsubsection{Local Planner}
 The local planner takes into account the trajectory given by the global planner and tries to compute velocity commands that follow it. However the path given may be to close to an obstacle detected and in order to avoid it the robot must deviate from the plan given to avoid collision. The function of the local planner is to avoid dynamic obstacles that appear while still trying to follow the global plan and goal. This type of local planner is usually \textbf{TrajectoryPlannerROS} or \textbf{DWAPlanner} that follow the explanation in the previous sections \ref{dwa} and \ref{tr} and uses the local costmap to do so. Bellow, we explain how \textbf{TrajectoryPlannerROS} generates the best trajectory using a determined cost function.
@@ -252,7 +253,7 @@ The cost function used to evaluate a trajectory is given by:
    + \texttt{gdist\_scale} * \textbf{goal\_dist}\\
    &+\texttt{occdist\_scale} * \textbf{max\_obs\_cost} 
 \end{align*}
-where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal in map cells, and \textbf{max\_obs\_cost} is equal to the \textbf{maximum obstacle cost} (given by the local costmap) of all the points along the trajectory.
+where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal (goal that is withing the local costmap taking into account the global plan)  in map cells, and \textbf{max\_obs\_cost} is equal to the \textbf{maximum obstacle cost} (given by the local costmap) of all the points along the trajectory.
 Fig. \ref{fig:costcloud} displays an example of this values when the robot is navigating.
 \begin{figure}[!htb]
     \centering
@@ -277,7 +278,7 @@ Figure \ref{fig:layers1} shows how the combined layers produce the master costma
 \begin{figure}[!htb]
     \centering
     \includegraphics[width=\linewidth]{imgs/chapter3/layers1.png}
-    \caption[Various costmap layers that together form the master costmap]{Determination of the master costmap taking into account different costmap layers from \cite{lu2014layered}}
+    \caption[Determination of the master costmap taking into account different costmap layers]{Determination of the master costmap taking into account different costmap layers from \cite{lu2014layered}}
     \label{fig:layers1}
 \end{figure}
 \section{Summary}

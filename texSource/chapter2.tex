@@ -8,7 +8,7 @@ The new emerging \ac{mmWave} \ac{FMCW} radar technology with high frequency and 
 
 \section{LiDAR}
 %LIDAR history
-\ac{LiDAR} is a remote sensing technology (acquires information of an object without making physical contact) , that measures the distance of objects. It has been a staple in sensing technology in recent history. It has almost an  unlimited  number of applications \cite{lidar100uses} due to its generation of dense data. Some of the most standing out ones are in autonomous vehicles and robotics.
+\ac{LiDAR} is a remote sensing technology (acquires information of an object without making physical contact) , that measures the distance to objects. It has been a staple in sensing technology in recent history. It has almost an  unlimited  number of applications \cite{lidar100uses} due to its generation of dense data. Some of the most standing out ones are in autonomous vehicles and robotics.
 \subsection{Applications}
 %More text
 
@@ -21,13 +21,13 @@ The use of \ac{LiDAR}s in autonomous vehicles has been a common trend for a whil
 \label{fig:lidarcar}
 \end{figure}
 
-One application example of this is the work done by Dominguez \cite{lidarperception}  where a perception system for ground vehicles was implemented a  using segmentation, clustering and tracking techniques.  However, it was noted that it was hard to distinguish between closely separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
+One application example of this is the work done by Dominguez et al \cite{lidarperception}  where a perception system for ground vehicles was implemented using segmentation, clustering and tracking techniques.  However, it was noted by the authors that it was hard to distinguish between closely separated obstacles adding that a movement detection algorithm should be implemented to solve this problem. 
 
 
 Catapamga and Ramos \cite{car2dlidar} proposed  a low cost solution for object detection, classification and ranging by the use of an inexpensive 2D pulsed light \ac{LiDAR}. The system was able to provide reliable detection of 1 meter wide obstacles at distances less than 10 meters.
 
 
-However there are some concerns about this type of technology. The CEO of Tesla, Elon Musk, has been very critical of it. Recently, at Tesla’s first Autonomy Day event,  he said \textit{"Anyone relying on \ac{LiDAR} is doomed. Doomed!"} \cite{elon}. He believes that cameras, \ac{radar} and ultrasonic sensors are the future for car visions systems. 
+However there are some concerns about this type of technology. The CEO of Tesla, Elon Musk, has been very critical of it. Recently, at Tesla’s first Autonomy Day event,  he said \textit{"Anyone relying on \ac{LiDAR} is doomed. Doomed!"} \cite{elon}. He believes that cameras, \ac{radar} and ultrasonic sensors are the future for car perception systems. 
 \subsubsection{Robotics}
 \ac{LiDAR} is also one of the major sensory components for robotics. Various robots rely on it for autonomous navigation. Fig. \ref{fig:robotslidar} shows an example of two robots (ROSbot and Knightscope) that use this type of sensors for perception.
 \begin{figure}[ht] 
@@ -48,18 +48,18 @@ In one of the most popular works with robotic navigation called \textit{"The Off
 through narrow spaces. The sensor device used in this case was the Hokuyo UTM-30LX Scanning Laser Rangefinder and the navigation system developed is now known as the \ac{ROS} navigation stack. However it was noted that the robot had difficulty detecting low height and long width obstacles.
 
 
-In a more recent case study in \cite{lidar2019ros}, two different systems are proposed for the implementation of an autonomous  mobile robot, both using a 2D \ac{LiDAR} sensor under \ac{ROS}. Various trials in an indoor environment were conducted with both of them. It was concluded that both performed reasonably well but had some difficulty detecting certain types of objects.  
+In a more recent case study \cite{lidar2019ros}, two different systems are proposed for the implementation of an autonomous  mobile robot, both using a 2D \ac{LiDAR} sensor under \ac{ROS}. Various trials in an indoor environment were conducted with both of them. It was concluded that both performed reasonably well but had some difficulty detecting objects with lower or higher height from the sensor, objects that are transparent, or even dark obstacles with high absorption of light waves.  
 
 %%ADD ROBOT INDOOR NAVIGATION
 \subsection{Operating Principle}
-The way \ac{LiDAR} technology works is very straightforward, just emit a laser beam and wait for it to bounce back. Based on the propriety of the reflected signal it can determine the distance of the obstacle it hits. By constantly spinning the mirrors at different angles (scanning) it gets angle and depth information about the environment  by a  set of points or in other words a point cloud. There are two main different operating principles to do this, \textbf{Time of Flight} and \textbf{Phase Based}, which are described bellow.
+The way \ac{LiDAR} technology works is straightforward, emit a laser beam and wait for it to bounce back. Based on the propriety of the reflected signal it can determine the distance of the obstacle it hits. By constantly spinning the mirrors at different angles (scanning) it gets angle and depth information about the environment  by a  set of points or in other words a point cloud. There are two main different operating principles to do this, \textbf{Time of Flight} and \textbf{Phase Based}, which are described bellow.
 \subsubsection{Time of Flight}
  In this approach a pulse of light is transmitted and,  when it is done, an internal clock is started. The reflected pulse is captured by a photodetector which triggers the clock to stop. Being $\tau$ the time taken by the reflected signal to  comeback and assuming it traveled at approximately the speed of light ($c$) then the distance to the object $d$ is given by:
 \begin{equation}
     d=\frac{\tau c}{2}
 \end{equation}
-This method produces very accurate results for a wide range but requires high precision clocks. However greater  range capability leads to slower update rates since it has to wait more time for the pulse to comeback.
-It is typically not used for robotics since this type of systems has very high cost.
+This method produces very accurate results for a long range but requires high precision clocks. However, greater  range capability leads to slower update rates since it has to wait more time for the pulse to comeback.
+It is typically not used for robotics since this type of systems has very high cost ranging from a few thousand dollars to upwards hundreds of thousands of dollars \cite{cost}.
 \subsubsection{Phase Based}
 A more affordable approach  is based on modulating the intensity of the laser at a specific frequency. Figure \ref{fig:cwlidar1} showcases the resulting sinusoidal wave that is sent and the respective returned signal. 
 \begin{figure}[ht!] 
@@ -72,15 +72,15 @@ Being $\Phi$ the phase difference between the two and $\lambda_m$ the wavelength
 \begin{equation}
     d=\frac{\Phi \lambda_m}{4 \pi}
 \end{equation}
-This means that the maximum unambiguous distance that can be measured is  $\frac{\lambda_m}{2}$, and its range resolution depends upon the resolution of the phase difference measurement as well as the wavelength used. Almost all robots use this type of \ac{LiDAR} since it is usually cheaper.and as a faster update rate.
+This means that the maximum unambiguous distance that can be measured is  $\frac{\lambda_m}{2}$, and its range resolution depends upon the resolution of the phase difference measurement as well as the wavelength used. Almost all robots use this type of \ac{LiDAR} since it is usually cheaper and has a faster update rate.
 %difficult to generate continuous wave of high energy
 
 \subsection{Limitations}
-\ac{LiDAR} technology has some problems associated with it, they are:
+\ac{LiDAR} technology has some problems associated with it:
 \begin{itemize}
 \item{Even the most cheap devices have relative high operation costs that limit their use for small applications.}  
 \item{Limited maximum detection range compared to radar technology.}  
-\item{Sensors are usually bulky and fragile.}  
+\item{Sensors are usually bulky and fragile when compared to radar boards used in this project.} 
 \item{Direct exposure to sunlight may negatively impact the sensor maximum range and accuracy or even prevent it from functioning properly.} 
 \item{Slow measurement rate due to large dataset processing.} 
 \item {If it is a 2D-\ac{LiDAR} it only senses in a horizontal plan}
@@ -94,28 +94,28 @@ The last item on the list proves to be a significant problem because the sensor 
 \end{figure}
 
 
-\section{FMCW Radar}
+\section{MIMO Linear FMCW Radar}
 The use of \ac{radar} technology has been around since the 19th century when it was first discovered that radio waves reflected off metallic surfaces, but serious development of this type systems only truly began in the 1930's for military applications \cite{radarhistory}. This include the range and angle detection of ship and aircraft engines by measuring incoming signal fluctuations off an oscilloscope. 
 
-Nowadays there are various configuration types of radar systems  \cite{typesradar}, each one providing different types of applications. This usually include air traffic control, remote sensing, ground traffic control, space, etc.  However we will focus on a specific configuration called \ac{MIMO} linear (sawtooth)  \ac{FMCW} radars which are  able to measure distance, velocity, and also angular information. 
+Nowadays there are various configuration types of radar systems  \cite{typesradar}, each one providing different types of applications. This usually include air traffic control, remote sensing, ground traffic control, space, etc.  However we will focus on a specific configuration called \ac{MIMO} linear (sawtooth)  \ac{FMCW} radars which are  able to measure distance, velocity and also angular information. 
 
 \subsection{Applications}
-Multiple works are constantly being done using this type of sensors. Bellow we showcase some of them.
+
 
   \subsubsection{Pedestrian detection}  
- In \cite{heuel2010pedestrian} three systems are implemented, the first one only using a single radar measurement, the second using multiple, and the final one with additional tracking algorithms. Each system had the objective of distinguishing between people walking, vehicles, and other objects. In the end it was concluded that that \ac{FMCW} \ac{radar} can be used for classification of inroad objects with relatively good accuracy in all systems.
+ In \cite{heuel2010pedestrian} three systems are implemented, the first one using a single radar measurement, the second using multiple, and the final one with additional tracking algorithms. Each system had the objective of distinguishing between people walking, vehicles and other objects. In the end it was concluded that that \ac{FMCW} \ac{radar} can be used for classification of inroad objects with relatively good accuracy in all systems.
   
-   Another case study is presented in \cite{knudde2017indoor} where by pre processing the raw radar data and then using  data processing pipeline the system proposed was able to detect and track people in indoor environments using a 77 GHz \ac{MIMO} \ac{FMCW} radar.
+   Another case study is presented in \cite{knudde2017indoor} where by pre-processing the raw radar data and then using  data processing pipeline, the system proposed was able to detect and track people in indoor environments using a 77 GHz \ac{MIMO} \ac{FMCW} radar.
    
  \subsubsection{Localization of Land Vehicles}  
-  Vehicle localization is often done using \ac{GPS} accompanied by \ac{RISS}. But is often the case in which \ac{GPS} signal can not be received correctly. This is often due the land vehicle being in an indoor environment or high rise building blocking the signal. In \cite{abosekeen2018utilizing} it is proposed a radar based \ac{RISS} that not only seeks odometer information but also radar readings. This proved to make the localization system of the vehicle more robust.
+  Vehicle localization is often done using \ac{GNSS} accompanied by \ac{RISS}. But is often the case in which \ac{GNSS} signal can not be received correctly. This is often due the land vehicle being in an indoor environment or high rise building blocking the signal. In \cite{abosekeen2018utilizing} it is proposed a radar based \ac{RISS} that not only seeks odometer information but also radar readings. This proved to make the localization system of the vehicle more robust.
   
 \subsubsection{Monitoring of human vital signs}  
 Monitoring vital signs of a patient such as the breathing rate or hearth rate may be critical in some situations.
 In \cite{alizadeh2019remote} a system for detecting this type of signals using \ac{mmWave} \ac{FMCW} \ac{radar} is proposed. By doing a phase analysis of the \ac{radar} signal it was concluded that the proposed system measurement was in tune with a reference ground truth signal. It was also concluded that by increasing the \ac{SNR} of \ac{radar} it could estimate the heartbeat (\ac{ECG}) waveform of multiple targets.
 
 \subsection{Operating principle}
-The \ac{MIMO} \ac{FMCW} \ac{mmWave}  radar used in our case study can retrieve range, velocity and angle of multiple targets. The following sections will explain how to calculate each one of these components.
+The \ac{MIMO} \ac{FMCW} \ac{mmWave}  radar can retrieve range, velocity and angle of multiple targets. The following sections will explain how to calculate each one of these components.
 
 
 An \ac{FMCW} radar transmits a signal called a “chirp”. A chirp is an electromagnetic sinusoid whose frequency  increases linearly with time. A chirp is characterized by a start frequency (fc), bandwidth (B) and duration (Tc). The slope (S) of the chirp is the rate at which the frequency of the chirp increases and is given by:
@@ -123,7 +123,7 @@ An \ac{FMCW} radar transmits a signal called a “chirp”. A chirp is an electr
     S=\frac{B}{T_c}
 \end{equation}
 %% put A t and f t plot
-Figure \ref{fig:At} shows the plot of the amplitude in function of time for the described chirp. As we can see the frequency of the sinusoid is increasing with time. Another way of illustrating the chirp is by its frequency plot (Fig. \ref{fig:Ft}). The latter version is often preferred because it is simpler and more intuitive.
+Figure \ref{fig:At} shows the plot of the amplitude in function of time for the described chirp. It shows that the frequency of the sinusoid is increasing with time. Another way of illustrating the chirp is by its frequency plot (Fig. \ref{fig:Ft}). The latter version is often preferred because it is simpler and more intuitive.
 
 \begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
@@ -149,7 +149,7 @@ Object detection follows these steps:
     \item The chirp is reflected off an object and the reflected chirp is received at the RX antenna
     \item The RX signal and TX signal are ‘mixed’ and the resulting signal is called an ‘\ac{IF} signal’
 \end{enumerate}
-Figure \ref{fig:if} shows graphically how the IF signal is generated through both the RX and TX signals for one target detection.
+Figure \ref{fig:if} shows how the IF signal is generated through both the RX and TX signals for one target detection.
 \begin{figure}[ht] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/IFsignal.png}}
 \caption{IF signal creation to retrieve range information of the target}
@@ -176,19 +176,19 @@ Putting this together the distance to the object $i$ is given by:
 \end{equation}
 
 
- So, to determine the range of all objects detected, we only need to find the according frequency components in the \ac{IF} signal. To do this the analog signal is first sent to an \ac{ADC} and with the resulting digital output the \ac{FFT} is computed by a \ac{DSP}. Each peak in the \ac{FFT} that meets a certain \ac{SNR} threshold corresponds to a different range detection. 
+To determine the range of all objects detected, we need to find the according frequency components in the \ac{IF} signal. To do this the analog signal is first sent to an \ac{ADC} and with the resulting digital output the \ac{FFT} is computed by a \ac{DSP}. Each peak in the \ac{FFT} that meets a certain \ac{SNR} threshold corresponds to a different range detection. 
  
  However since the \ac{ADC} has a limited sampling rate, the valid range of frequencies in the \ac{FFT} is also limited, this meaning there is a maximum amount of ranges the radar can detect.
 The range resolution is also finite since the \ac{FFT} has a limited amount of samples. In short, the higher the bandwidth of the chirp the better resolution we get.
 
 
 \subsubsection{Velocity Detection}
-This type of radar also provides an estimate on the radial velocity for each detected range. To do this more than one chirp is needed. For a set of N chirps it is called a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is so low the corresponding range (or first) \ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of relative radial velocities  for each range detection. Radial velocity information is given by:
+This type of radar also provides an estimate on the radial velocity for each detected range. To do this more than one chirp is needed. A set of N chirps it is called a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is low the corresponding range (or first) \ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of relative radial velocities  for each range detection. Radial velocity information is given by:
 \begin{equation}
     v_i=\frac{\lambda \omega_i}{4 \pi T_c}
     \label{eq:2}
 \end{equation}
-where $\lambda$ is the wavelength of the chirp and $\omega_i$ is the phase difference between chirps for the respective objects in the Doppler FFT.
+where $\lambda$ is the wavelength of the chirp, $\omega_i$ is the phase difference between chirps for the respective objects in the Doppler FFT and $T_c$ is the time required to send a single chirp.
 In the end we get a matrix that relates radial velocity and range. 
 Figure \ref{fig:matrix} illustrates this process.
 \begin{figure}[ht] 
@@ -198,7 +198,7 @@ Figure \ref{fig:matrix} illustrates this process.
 \end{figure}
 
 \subsubsection{Angle Detection}
-Finally to determine the angle for each target more than one receiver antenna are needed. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distances to the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received \ac{IF} signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
+Finally, to determine the angle for each target more than one receiver antenna are needed. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distances to the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received \ac{IF} signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
 \begin{figure}[ht] 
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/angle2.png}}
 \caption[Angle of arrival estimation using more than one antenna]{More than one antenna is required to estimate the angle of arrival (adapted form \cite{iovescu2017fundamentals})}
@@ -232,7 +232,7 @@ The above equation makes it possible to estimate the angle of arrival. But since
 
 \section{Ultrasonic Sensors}
 One of the best ways when it comes to  sensing the range of an obstacle, is by using ultrasonic sensors. Using sound waves, an ultrasonic sensor is able to measure range. 
-These type of sensors have high reliability and outstanding versatility can be used for wide variety of applications. 
+These type of sensors have high reliability and outstanding versatility and can be used for wide variety of applications. 
 
 \subsection{Applications}
 \subsubsection{Robotics}
@@ -240,29 +240,30 @@ Some examples of robotic applications is the work done by Byoung-hoon Kim \cite{
 \subsubsection{Ground Vehicles}
 The use of ultrasonic sensors are also widely used for ground vehicles. On the work  proposed by Enas Odat \cite{pir}, a traffic sensing system is constructed using \ac{PIR} sensors and ultrasonic range finders. It was able to determine  vehicle detection, speed estimation, and vehicle type classification. However the variability of the sensors readings, thermal noise and environmental conditions may produce unwanted reading errors.
 \subsubsection{Medicine}
-Ultrasonic sensors are also used in medicine, for example in the work done by Ibrahim AlMohimeed \cite{}, a wearable and flexible ultrasonic sensor was developed for monitoring of skeletal muscle contraction, the tissue thickness variations were successfully measured in accordance with the muscle contraction performed. 
+Ultrasonic sensors are also used in medicine, for example in the work done by Ibrahim AlMohimeed et al \cite{med}, a wearable and flexible ultrasonic sensor was developed for monitoring of skeletal muscle contraction, the tissue thickness variations were successfully measured in accordance with the muscle contraction performed. 
 \subsection{Operating Principle}
 To retrieve range information about the environment the ultrasonic sensors work similarly as the  Time of of flight \ac{LiDAR}. But instead of light waves the sensor uses sound waves. A transducer sends and receives ultrasonic pulses that relay back information about an object’s proximity.  
 
 \begin{figure}[ht] 
 \centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/us.png}}
-\caption[Ultrasonic wave operating principle]{Ultrasonic wave operating principle (taken form \cite{burnett_2019})}
+\caption[Ultrasonic wave operating principle]{Ultrasonic wave operating principle (taken form \cite{burnett2019})}
 \label{fig:us}
 \end{figure}
 
 \section{Cameras}
-Besides the previous highlighted sensors, cameras can be used to determine the distance of obstacles. There are three image based object distance measurement techniques, (1) using two cameras i.e stereovision, (2) using a single camera and (3) time-of-flight camera.
+Besides the previous highlighted sensors, cameras can be used to determine the distance of obstacles. There are three image based object distance measurement techniques, (1) using two cameras i.e stereovision, (2) using a single camera and (3) time-of-flight camera \cite{cam}.
 The first method is highly accurate but is costly when compared to the monovision and it is not accurate for high distances. In the time of flight technique the distance is obtained using the time it took for the light to be reflected back. This method is a simple way to retrieve range from obstacles and it is also very fast that can reach up to 160 frames per second. It is also efficient having lower computation needs when compared to sterovision. However this technique comes with the problems of background lighting, interference from other time of flight cameras and multiple reflections. 
 \subsection{Applications}
 \subsubsection{Ground Vehicles}
 The use of range cameras is widely used for ground vehicle applications. One example of this is by Canesta \cite{hsu2006performance}, where  occupant sensing and backup obstacle warning was achieved using a ranging camera.
 
-Another example is the work of Elkhalili \cite{}, where, by the use of these type of sensors enabled the detection of objects with a resolution of 2.2cm for a single pulse in the range up to 20m.
+Another example is the work of Elkhalili et al \cite{eka}, where, by the use of these type of sensors enabled the detection of objects with a resolution of 2.2cm for a single pulse in the range up to 20m.
 
 \subsubsection{Robotics}
 Using this technology mobile robots can build up a map of their surroundings very quickly, enabling them to avoid obstacles or follow a leading person. As the distance calculation is simple, only little computational power is used.
 
-
+\subsection{Operating principle}
+As said before there are multiple ways in which a camera can retrieve range information. The first one is by stereovision (using two cameras). This takes into account camera calibration and the disparity map is computed that retrieves the distance of obstacles. The second way is by time of flight range cameras that work by the principle that the received signal proprieties to determine the range of obstacles.
 
 
 
@@ -349,7 +350,7 @@ As we can see we have a peak near the $7 m/s$ velocity that means this parameter
 
 
 \section{Summary}
-In this chapter we overviewed two types of proximity sensor technologies, \ac{LiDAR} and \ac{FMCW} radar. First we discussed on what contexts this sensors are used for and what current work is being done with them. Then we explain the operating principle of each one of them to retrieve information from the environment as well as simulating the range and velocity estimation provided by the radar.  Finally we show what vulnerabilities each sensor has.
+In this chapter we overviewed two types of proximity sensor technologies, \ac{LiDAR} and \ac{FMCW} radar. First we discussed on what contexts this sensors are used for and what current work is being done with them. Then we explain the operating principle of each one of them to retrieve information from the environment as well as simulating the range and velocity estimation provided by the radar.  Finally we show what limitations each sensor has.
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
 
