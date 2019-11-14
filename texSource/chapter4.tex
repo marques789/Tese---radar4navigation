@@ -1,4 +1,4 @@
-\chapter{Robotic Navigation Platform }
+\chapter{Evaluation Navigation Platform }
 
 In this section we will describe the principal components in terms of hardware and software and how they are interconnected to create a suitable robotic platform that will later be used for evaluating the performance of \ac{LiDAR} and \ac{FMCW} \ac{radar} as obstacle avoidance sensors.
 
@@ -52,21 +52,28 @@ The radiation pattern of the antenna in the horizontal plane (H-plane Phi = 0 de
 \end{figure}
 
 \subsection{LiDAR}
-Besides the \ac{FMCW} \ac{radar} the Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder (Fig. \ref{fig:lidar}) is also attached to the platform.
+Besides the \ac{FMCW} \ac{radar} the Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder (Fig. \ref{fig:lidarP}) is also attached to the platform.
 
-\begin{figure}[ht!] 
-\centerline{\includegraphics [width=0.3 \textwidth]{imgs/chapter4/lidar.jpg}}
-\caption{Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder}
-\label{fig:lidar}
+This sensor is an inexpensive 2D-\ac{LiDAR} that is based on phase difference measurement. It retrieves information of the surrounding environment by scanning an area of 240º with 0.36º angular resolution. The maximum range of it is about 4 meters and its range resolution is 1mm. Its scan update time is 100ms/scan and its weight is 360 g.  As for the power supply it only needs a 5V DC provided by the USB connection as shown in Figure \ref{fig::lidarS}.
+
+
+
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[t]{0.35\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter4/lidar.jpg}
+     \caption{Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder}
+     \label{fig:lidarP}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.55\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter4/lidarS.png}
+    \caption{Hokuyo URG-04LX-UG01 specifications diagram}
+    \label{fig::lidarS}
+  \end{subfigure}
+  \caption{Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder overview }
+  \label{fig:lidar}
 \end{figure}
 
-This sensor is an inexpensive 2D-\ac{LiDAR} that is based on phase difference measurement. It retrieves information of the surrounding environment by scanning an area of 240º with 0.36º angular resolution. The maximum range of it is about 4 meters and its range resolution is 1mm. Its scan update time is 100ms/scan and its weight is 360 g.  As for the power supply it only needs a 5V DC provided by the USB connection as shown in figure \ref{fig::lidarS}.
-
-\begin{figure}[ht!] 
-\centerline{\includegraphics [width=0.6 \textwidth]{imgs/chapter4/lidarS.png}}
-\caption{Hokuyo URG-04LX-UG01 specifications diagram}
-\label{fig::lidarS}
-\end{figure}
 
 \section{Software}
 Figure \ref{fig::softsetup} shows the block diagram describing  the different modules used to have a proper autonomous navigation platform.
@@ -86,7 +93,8 @@ First of, a map of the surrounding  environment must first be created.  There ar
 
 
 \subsection{ROS Interface}
-Texas Instruments provides a ros package that interfaces radar data to the ROS message format \cite{tisetup}. The incoming radar TLV data from the mmWave radar is decoded in order to create a  \textbf{PointCloud2} type ROS message.
+In order to use the radar for obstacle detection we must first convert the \ac{TLV} data of the robot to the \ac{ROS} message format.
+To do this Texas Instruments provides a \ac{ROS} package that interfaces radar data to the ROS framework \cite{tisetup}. The incoming radar \ac{TLV} data from the mmWave radar is decoded in order to create a  \textbf{PointCloud2} type ROS message.
 This point cloud follows the detected objects frame described in the mmWave demo data structure \cite{mmdata} represented in Fig. \ref{fig:demodata}.
 \begin{figure}[!htb]
     \centering
@@ -110,40 +118,39 @@ Another way of doing this is manually. This however requires the understanding o
 
 
 
-\subsection{Point Cloud Library}
+
 %Describe PCL
-Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to process and manipulate this type of information. A pointcloud is a collection of multi-dimensional points and is commonly used to represent three-dimensional data \cite{pcl}. These points are often just designed to locate points in x,y,z but more dimensions can be added as is for the FMCW radar which has 6 dimensions. \ac{PCL} provides open source, state of the art library modules that enables  filtering, feature estimation, surface reconstruction, registration, model fitting and segmentation. In our case we will mainly use its passthrough filters for constructing visualization markers that show the \ac{radar} information in a more intuitive way.
 
 \subsection{Visualization of the radar point cloud}
-Plotting the points in the XYZ space is not enough to fully visualize the radar data sent since each point also gives velocity and intensity information. We can visualize it by using markers such as arrows or text in rviz.
+Plotting the points in the XYZ space is not enough to fully visualize the radar data sent since each point also gives velocity and intensity information. We can better visualize it by using markers such as arrows or text in rviz.
 Figure \ref{fig:dopplermarker} displays the radial velocity of each point with an arrow. The width of the arrow indicates how fast in the direction  of the radar the object is going. Figure \ref{fig:intensitymarker} shows the intensity values of each object in text. This type of visualization will be useful when we want to filter the cloud.
 
 
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[scale=0.25]{imgs/chapter4/dopplermarker.png}
-    \caption{Arrow markers displaying the points radial velocity}
-    \label{fig:dopplermarker}
-\end{figure}
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[scale=0.25]{imgs/chapter4/intensitymarker.png}
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[b]{0.49\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter4/dopplermarker.png}
+     \caption{Arrow markers displaying the points radial velocity}
+     \label{fig:dopplermarker}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.44\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter4/intensitymarker.png}
     \caption{Text markers displaying the points intensity values}
     \label{fig:intensitymarker}
+  \end{subfigure}
+  \caption{Visualization markers displaying radar data information}
+  \label{fig:vismark}
 \end{figure}
-
-
 
 
 \subsection{Radar Data Processing}
-Now that we have the radar constantly giving us a point cloud we can further process to retrieve the information we want. 
-In our case we will make use of \textbf{passthrough filters} to remove unwanted points. This operations will be done by using the \textbf{Point Cloud Library}.
+Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to process and manipulate this type of information. A pointcloud is a collection of multi-dimensional points and is commonly used to represent three-dimensional data \cite{pcl}. These points are often just designed to locate points in x,y,z but more dimensions can be added as is for the FMCW radar which has 6 dimensions. \ac{PCL} provides open source, state of the art library modules that enables  filtering, feature estimation, surface reconstruction, registration, model fitting and segmentation. 
+
 %and \textbf{euclidean clustering} to identify groups of points that belong to the same object.
 In the point cloud there may be some points that have undesirable characteristics, such as points with low intensity  that lead to false detections or outside of the radar operating range. To remove these points we use \textbf{passthrough filters} that specify the range of values a given field can have in order for a point to be kept in the point cloud. 
 
 For example, if we are only interested in obstacles that are moving between 0.5 m/s and 1.0 m/s (radial velocity), this can be done by using a passthrough filter on the doppler channel.
-Figure \ref{fig:filters} shows an example where we delete false detections close to the radar by filtering the point cloud by intensity. In this work we will use an intensity filter of 16, which means all target points that have an intensity bellow that will be filtered out due to have low \ac{SNR}
+Figure \ref{fig:filters} shows an example where we delete false detections close to the radar by filtering the point cloud by intensity. In this work we will use an intensity filter of 16, which means all target points that have an intensity bellow that will be filtered out due to having a low \ac{SNR}
 
 
 \begin{figure}[ht!] 
@@ -160,6 +167,9 @@ Figure \ref{fig:filters} shows an example where we delete false detections close
     \caption{Example of filtering the pointcloud}
     \label{fig:filters}
 \end{figure}
+\subsubsection{Navigation Module}
+The navigation module first needs a map in order to have a global frame as reference. After that we need to localize the robot in said map, for that we use the \ac{AMCL} node. Finnaly we need range sensors that detect obstacles.
+With the processed the \ac{radar} data we can now feed it to our navigation system. We can either feed the \ac{LiDAR} or/and \ac{FMCW} \ac{radar} as obstacle detectors. 
 
 
 \section{Summary}
