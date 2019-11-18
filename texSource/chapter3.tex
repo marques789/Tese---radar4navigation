@@ -39,7 +39,7 @@ Now that we described the inner workings of \ac{ROS} we can use its tools to ret
 \subsubsection{rviz}
 \textbf{Rviz} is a graphical interface that allows 3D visualization environment that allows the view of the different components of \ac{ROS} like the robots frame transforms, the map, pointclouds, visualization markers etc...
 \subsubsection{rosbag}
- Rosbag will subscribe to one or more topics and the serialized message data will be stored in a file as it is received. These files are called "bags" and contain information about all the \ac{ROS} topics chosen and can be played back at a predefined rate and can be started in any moment.
+ Rosbag will subscribe to one or more topics and the serialized message data will be stored in a file as it is received. These files are called "bags" and contain information about all the \ac{ROS} topics chosen and can be played back at a predefined rate and can be started in any moment we want. The data will be played back as it was recorded.
 %\textbf{Rosbag} enables the recording of topics into a file that can be replayed in the future. By running this tool all the information regarding a the ROS structure is stored in a given time frame. This include the nodes, topics and messages that are passed along the way. 
 %It is useful to store information and then running it again at the desired time and frequency rate we want.
 \subsubsection{rqt_graph}
@@ -234,7 +234,6 @@ This plan can be updated when the robot gets stuck or by using a user specific f
 \subsubsection{Local Planner}
 The local planner takes into account the trajectory given by the global planner and tries to compute velocity commands that follow it. However the path given may be to close to an obstacle detected and in order to avoid it the robot must deviate from the plan given to avoid collision. The function of the local planner is to avoid dynamic obstacles that appear while still trying to follow the global plan and goal. This type of local planner is usually \textbf{TrajectoryPlannerROS} or \textbf{DWAPlanner} that follow the explanation in the previous sections \ref{dwa} and \ref{tr} and uses the local costmap to do so. Bellow, we explain how \textbf{TrajectoryPlannerROS} generates the best trajectory using a determined cost function.
 
-\subsubsection*{Getting the Best Trajectory}
 The algorithm to get the best trajectory goes as follows:
 \begin{enumerate}
     \item Discreetly sample the velocity space ($d_{vx}$ and $d_{vtheta}$)

@@ -1,4 +1,4 @@
-\chapter{Towards Doppler to Enrich Obstacle Avoidance}
+\chapter{Towards The Use Of Doppler To Enrich Obstacle Avoidance}
 To ensure more safe trajectories for social indoor environments we can use velocity information from targets to generate more safe pathing for  the robot. 
 
 In this chapter we will explore the implementation of a new plugin in the ROS navigation stack based on the radar's relative radial velocity information. The plugin proposed is a map layer and can be specified by either the global or local costmap. The objective of said layer is to increase the cost values of cells based on the prediction of the motion of said obstacles provided by the radar (doppler channel). The ending result should be a better avoidance of incoming obstacles with negative relative velocity  to the robot.
@@ -31,7 +31,7 @@ This means that cells near obstacles will have a value that will tend to 253 whi
 This inflation is only taking into account distance from the obstacle as input which means that the values of the cells will be propagated radially.
 
 \section{Doppler Layer}
-In the previous case, inflation only took into account the distance of obstacles for computing what value each cell in the costmap will have. Now we want to design a layer that not only takes into account the distance but also the relative radial velocity of the object to determine the value of cells in the costmap.
+In the previous case, inflation only took into account the distance of obstacles for computing what value each cell in the costmap will have. In unstructered enviornments there may be obstacles that have negative relative radial velocity in regards to the robot, or in other words incoming obstacles. This obstacles may crash into the robot since the velocity information is not considered by the robot. To combat this we  want to design a layer that not only takes into account the distance but also the relative radial velocity of the object to determine the value of cells in the costmap.  
 To do this we designed a layer that adjusts the cell values of the master costmap taking into account the radial velocity of said objects taken from the \ac{FMCW} \ac{radar}. Taking into account the relative  radial velocity $v_r$ the cell value of the surrounding cell's is given by:
 \begin{equation} \label{eq1}
 \begin{split}
@@ -42,7 +42,7 @@ cell_{cost} & = A e^{-(\frac{x^2}{2 \sigma_x^2}+\frac{y^2}{2 \sigma_y^2})} \\
  y & =dist *sin(\theta)\\
 \end{split}
 \end{equation}
-where $cov$, $factor$ and $A$ are parameters adjusted by the user, $\theta$ is the angle between the cell where we want to calculate its value and the direction of the velocity vector of the target object, and finally $dist$ is the distance between the two previous cells.
+where $cov$, $factor$ and $A$ are parameters adjusted by the user, $\theta$ is the angle between the cell where we want to calculate its value and the direction of the velocity vector of the target object, and finally $dist$ is the distance between the two previous cells. This function is a gaussian distrubution that takes into account velocity and distance from the obstacle.
 With this cost function we can manipulate the costmap cell values to have higher values in the directon of incoming objects. Figure \ref{fig::doppler} shows an example of the doppler layer changing the 2D master costmap taking into account the velocity and distance of the target obstacle. 
 
 \begin{figure}[ht!] 

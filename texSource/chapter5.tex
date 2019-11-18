@@ -69,7 +69,7 @@ This is a 4 by 4 meter squared box with 1 meter high walls with the addition of 
 \subsection{Experimental setup}
 With the described scenario we setup the robots path to make five loops between two goals, positions A and B, positioning in between the route an obstacle as illustrated in  Figure \ref{fig:exp}. 
 \begin{figure}[ht!]
-\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/exp.png}}
+\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/exp5.png}}
 \caption[Demonstration of the course of test]{Demonstration of the course of test, the robot will go back and forth from position A to position B 5 times while  trying to avoid the obstacle in the middle}
 \label{fig:exp}
 \end{figure}
@@ -119,13 +119,13 @@ Figure \ref{fig::rvizwchairscan} shows two instances of the experiment in rviz w
     \caption{Robot only perceiving a single point as an obstacle}
     \label{fig::rvizwchairscan2}
   \end{subfigure}
-  \caption{Rviz display of the navigation data with the office chair as an obstacle and the \ac{LiDAR} as an obstacle detector}
+  \caption[Navigation data with the office chair as an obstacle with \ac{LiDAR}]{Rviz display of the navigation data with the office chair as an obstacle and the \ac{LiDAR} as an obstacle detector}
   \label{fig::rvizwchairscan}
 \end{figure}
  As we can see the robot only perceives a single point as being occupied.
 %Although the inflation layer  might correct this error in some cases, since the detection is so late the robot still was unable to avoid it.
 
-However with the \ac{FMCW} radar the chair is detected almost immediately, this makes the global planner and motion controller to be able to adjust in a very comfortable way and with it the robot is able to avoid collision. Figure \ref{fig:wchairRS} shows some instances of the experiment. Although the detected space that the chair is occupying has some mismatch, the early detection makes up for it. However since the radar has small field of view (120 degrees) the robot might not detect the obstacle when it is passing by it which in this case lead to it scraping by the chair one time.
+However with the \ac{FMCW} radar the chair is detected almost immediately, this makes the global planner and motion controller to be able to adjust in a very comfortable way and with it the robot is able to avoid collision. Figure \ref{fig:wchairRS} shows some instances of the experiment. However since the radar has small field of view (120 degrees) the robot might not detect the obstacle when it is passing by it which in this case lead to it scraping by the chair one time.
 
 \begin{figure}[ht!]
   \centering
@@ -157,7 +157,7 @@ Figure \ref{fig::rvizwchairradar} shows two instances of the experiment in rviz 
     \caption{Robot circumventing the office chair 2}
     \label{fig::rvizwchairradar2}
   \end{subfigure}
-  \caption{Rviz display of the navigation data with the office chair as an obstacle and the  \ac{FMCW} \ac{radar} as the obstacle detector}
+  \caption[Navigation data with the office chair as an obstacle with \ac{FMCW} \ac{radar}]{Rviz display of the navigation data with the office chair as an obstacle and the  \ac{FMCW} \ac{radar} as the obstacle detector}
   \label{fig::rvizwchairradar}
 \end{figure}
 Analysing the navigation data we can clearly see that the robot detects multiple points in the office chair's case.
@@ -208,7 +208,7 @@ Figure \ref{fig:rviznchairscan} shows two instances of the experiment in rviz wh
     \caption{Robot getting stuck in chair due to being to close to it}
     \label{fig::rviznchairscan3}
   \end{subfigure}
-  \caption{Rviz display of the navigation data with the four legged chair as an obstacle and with the 2D-\ac{LiDAR} as an obstacle detector}
+  \caption[Navigation data with the four legged chair as an obstacle with \ac{LiDAR}]{Rviz display of the navigation data with the four legged chair as an obstacle and with the 2D-\ac{LiDAR} as an obstacle detector}
   \label{fig:rviznchairscan}
 \end{figure}
  As we can see the robot only detects the chair's legs when it got close to it. This made the robot get stuck in between the chair's legs.
@@ -232,10 +232,10 @@ Using the \ac{FMCW} radar proved to be much better with the robot safely circumv
 Figure \ref{fig:rviznchairradar} shows an instance of the experiment in rviz where the robot uses the \ac{FMCW} \ac{radar} has an obstacle detector.
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/rviznchairradar.png}}
-\caption{Rviz display of the navigation data with the four legged chair with the \ac{FMCW} \ac{radar} as an obstacle detector. The robot circumvents the four legged chair}
+\caption[Navigation data with the four legged chair as an obstacle with \ac{FMCW} \ac{radar}]{Rviz display of the navigation data with the four legged chair with the \ac{FMCW} \ac{radar} as an obstacle detector. The robot circumvents the four legged chair}
 \label{fig:rviznchairradar}
 \end{figure}
-In this case the legs of the chair are detected immediatly which makes the robot circumvent safely without getting stuck. 
+In this case the legs of the chair are detected immediately which makes the robot circumvent safely without getting stuck. 
 
 
 Analysing the data we see that when the robot is facing it it detects almost all legs immediately. 
@@ -307,7 +307,7 @@ Figure \ref{fig:rvizgarbageradar} shows three instances of the experiment in rvi
     \caption{Robot avoiding the garbage bin 3}
     \label{fig::rvizgarbageradar3}
   \end{subfigure}
-  \caption{Rviz display of the navigation data with the garbage bin as an obstacle and with the \ac{FMCW} \ac{radar} as an obstacle detector}
+  \caption[Navigation data with the garbage bin as an obstacle with \ac{FMCW} \ac{radar}]{Rviz display of the navigation data with the garbage bin as an obstacle and with the \ac{FMCW} \ac{radar} as an obstacle detector}
   \label{fig:rvizgarbageradar}
 \end{figure}
 Analysing the navigation data we see that the robot perceives the grabage bin correctly but it also detects obstacles behind it. However the robot still made its course without any trouble.
@@ -352,7 +352,7 @@ For the \ac{FMCW} \ac{radar} case, initially the robot also did not detect the b
 Figure \ref{fig:rvizboxradar} shows an instance of the experiment in rviz where the robot uses the \ac{FMCW} \ac{radar} has an obstacle detector.
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/rvizboxradar.png}}
-\caption{Rviz display of the navigation data with box as an obstacle and the \ac{FMCW} \ac{radar} as an obstacle detector}
+\caption[Navigation data with box as an obstacle and with the \ac{FMCW} \ac{radar}]{Rviz display of the navigation data with box as an obstacle and the \ac{FMCW} \ac{radar} as an obstacle detector}
 \label{fig:rvizboxradar}
 \end{figure}
 As we can see  with the change the robot perceives the bx with the threshold change. This made it so the robot sucessfully finishefd the course without hitting it.
@@ -382,7 +382,7 @@ Figure \ref{fig:rvizglassradar} shows an instance of the experiment in rviz wher
 
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/rvizglassscan.png}}
-\caption{Rviz display of the navigation data with acrylic tube as an obstacle and the 2D-\ac{LiDAR} as an obstacle detector}
+\caption[Navigation data with acrylic tube as an obstacle and with \ac{LiDAR}]{Rviz display of the navigation data with acrylic tube as an obstacle and the 2D-\ac{LiDAR} as an obstacle detector}
 \label{fig:rvizglassradar}
 \end{figure}
 As we can see the robot perceives obstacles where there are none. This made the robot behave in a strange way that was not optimal for the experiment.
@@ -425,7 +425,7 @@ Figure \ref{fig:rvizboxradar} shows three instances of the experiment in rviz wh
     \caption{Robot avoiding the acrylic tube 3}
     \label{fig::rvizglassradar3}
   \end{subfigure}
-  \caption{Rviz display of the navigation data with the acrylic tube  as an obstacle and with the \ac{FMCW} \ac{radar} as an obstacle detector}
+  \caption[Navigation data with the acrylic tube  as an obstacle with the \ac{FMCW} \ac{radar}]{Rviz display of the navigation data with the acrylic tube  as an obstacle and with the \ac{FMCW} \ac{radar} as an obstacle detector}
   \label{fig::rvizglassradar}
 \end{figure}
 As shown in the figure we see that the robot avoids the obstacle without any problem.
@@ -443,7 +443,7 @@ In the previous experiment we only dealt with static objects. In this new test w
 For this test we send four goals to the robotic platform, A,B,C,D in zigzag fashion and we will place a dynamic obstacle obstructing it as shown in Figure \ref{fig:exp3}.
 
 \begin{figure}[ht!]
-\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/exp3.png}}
+\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/exp4.png}}
 \caption[Demonstration of the course of test]{Demonstration of the course of test, the robot will run through A-B-C-D  while  trying to avoid the dynamic obstacle obstructing its path}
 \label{fig:exp3}
 \end{figure}
@@ -496,7 +496,7 @@ Figure \ref{fig:exp3robot} shows two instances of the robot avoiding the dynamic
 \subsection{Discussion}
 The robot was able to handle dynamic obstacles using only the \ac{FMCW} \ac{radar}, this meaning that it might be feasible to use this sensor for obstacle avoidance in ever changing indoor environments.
 
-\section {Moving Obstacles in uncontrolled environment}
+\section {Dynamic Obstacles in uncontrolled environment}
 In the previous section we used a small confined space for the robot to operate in. This made it so the robot localization was easy to determine. It also was in an almost closed space, which means he can raytrace the enviornment to clean previous detected obstacles. However in this next experiment we seek to analyse how the robot behaves when it is exposed t an open space. For that we try to make an experiment in the \ac{IRIS} laboratory.
 In the following test we want to answer  if the \ac{FMCW} \ac{radar} is  able to clear previously obstructed spaces (by the person in this case) by ray tracing its environment. 
 \subsection{Experimental Setup}
