@@ -469,9 +469,32 @@ Throughout all the test the robot successfully avoided the person  only using th
   \caption{Robot avoiding the person }
   \label{fig:exp3person}
 \end{figure}
+
 However the robot was only able to perceive the legs of said person and not its feet. This may lead to cases where the robot shocks in the person if it is to close.
 
-When the person got to close to the robot, it stopped completely and its recover behaviors were activated. We conclude that using  the \ac{FMCW} \ac{radar} is able to avoid moving people which may indicate that this sensor can be used for social environments. We also conclude that it is better suited for detecting obstacles that are at least half a meter away from the robot and that are facing it directly. 
+Figure \ref{fig:person} shows three instances of the experiment in rviz.
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[t]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/person1.png}
+     \caption{Robot avoiding the person 1}
+     \label{fig::person1}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/person2.png}
+    \caption{Robot avoiding the person 2}
+    \label{fig::person2}
+  \end{subfigure}
+   \begin{subfigure}[t]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/person3.png}
+    \caption{Robot avoiding the person 3}
+    \label{fig::person3}
+  \end{subfigure}
+  \caption[Navigation data with the person as a dynamic obstacle]{Rviz display of the navigation data with the person as a dynamic obstacle and with the \ac{FMCW} \ac{radar} as an obstacle detector}
+  \label{fig:person}
+\end{figure}
+Analysing the navigation data we see that the robot perceives the person and goes around it easily most of the time.
+However when the person got too close to the robot, it stopped completely and its recover behaviors were activated. We conclude that using  the \ac{FMCW} \ac{radar} is able to avoid moving people which may indicate that this sensor can be used for social environments. We also conclude that it is better suited for detecting obstacles that are at least half a meter away from the robot and that are facing it directly. 
 \subsubsection{Mobile Robot}
 For the mobile robot case the results were similar to the previous case. The robot was able to detect and avoid the other robot when it is facing it.
 
@@ -492,6 +515,28 @@ Figure \ref{fig:exp3robot} shows two instances of the robot avoiding the dynamic
   \label{fig:exp3robot}
 \end{figure}
 
+Figure \ref{fig:person} shows three instances of the experiment in rviz.
+\begin{figure}[ht!]
+  \centering
+  \begin{subfigure}[t]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/robot1.png}
+     \caption{Robot avoiding the robot 1}
+     \label{fig::robot1}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/robot2.png}
+    \caption{Robot avoiding the robot 2}
+    \label{fig::person2}
+  \end{subfigure}
+   \begin{subfigure}[t]{0.3\linewidth}
+    \includegraphics[width=\linewidth]{imgs/chapter5/robot3.png}
+    \caption{Robot avoiding the robot 3}
+    \label{fig::person3}
+  \end{subfigure}
+  \caption[Navigation data with the robot as a dynamic obstacle ]{Rviz display of the navigation data with the robot as a dynamic obstacle and with the \ac{FMCW} \ac{radar} as an obstacle detector}
+  \label{fig:person}
+\end{figure}
+As we can see by the figures our robot is able to avoid the mobile robot at all times in the experiment.
 %However if the robot comes from behind there is the chance of it crashing because the radar as only a small field of view of 120º.
 \subsection{Discussion}
 The robot was able to handle dynamic obstacles using only the \ac{FMCW} \ac{radar}, this meaning that it might be feasible to use this sensor for obstacle avoidance in ever changing indoor environments.
