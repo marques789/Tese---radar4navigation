@@ -2,8 +2,8 @@
 
 
 %%\section{Introduction}
-When it comes to navigation we need a wide variety of modules that interconnected produce an intelligent system that makes the robot go from one point to another while avoiding obstacles and being well localized. 
-The first problem that needs to be taken into account is where the robot is, for that we require map for a global reference. The second issue is finding the best route to a predefined goal. For that various algorithms and systems are already proposed and ready for use.
+When it comes to navigation we need a wide variety of modules that interconnected produce an intelligent system that makes the robot go from one point to another while avoiding obstacles. 
+The first problem that needs to be taken into account is where the robot is and where it is trying to go, for that we require a localization system and a map for a global reference. The second issue is finding the best route to a predefined goal. For that various algorithms and systems are already proposed and ready for use.
 %For that we will try to define how we can produce a suitable navigation module for a given platform using state of the art algorithms and modules. First an overview of Robot Operating System (ROS) framework is presented. After that some navigation concepts are explained with further detail in path planning and motion control case. And finally how the \ac{ROS} navigation stack combats this problems.
 
 \section {ROS}
@@ -36,25 +36,24 @@ Figure \ref{fig:rosgraph} gives a brief overview of how each of these concepts a
 
 \subsection{ROS tools}
 Now that we described the inner workings of \ac{ROS} we can use its tools to retrieve and analyze information regarding it. We will use the following \ac{ROS} tools:
-\subsubsection{rviz}
-\textbf{Rviz} is a graphical interface that allows 3D visualization environment that allows the view of the different components of \ac{ROS} like the robots frame transforms, the map, pointclouds, visualization markers etc...
-\subsubsection{rosbag}
- Rosbag will subscribe to one or more topics and the serialized message data will be stored in a file as it is received. These files are called "bags" and contain information about all the \ac{ROS} topics chosen and can be played back at a predefined rate and can be started in any moment we want. The data will be played back as it was recorded.
+
+
+
+
 %\textbf{Rosbag} enables the recording of topics into a file that can be replayed in the future. By running this tool all the information regarding a the ROS structure is stored in a given time frame. This include the nodes, topics and messages that are passed along the way. 
 %It is useful to store information and then running it again at the desired time and frequency rate we want.
-\subsubsection{rqt_graph}
-To understand how the various nodes and topics are interconnected the use of \textbf{rqt_graph} is the best for this case. It can be used to produce an image of all of them and how they communicate between each other
-\subsubsection{Command Line tools}
-In this section we will highlight some of the command line tools in \ac{ROS} that we used in this work.
-\subsubsection*{Running ROS Systems}
+
+
 \begin{itemize}
-    \item \textbf{roscore} - this launches a process that the ROS System needs in order to properly setup communication between nodes. It starts the \ac{ROS} Master, Paramater Server and rosout. Using \textbf{roslaunch} will automatically run a roscore if it was not initiated before. 
+    \item \textbf{rviz} - A graphical interface that enables a 3D visualization environment that allows the view of the different components of \ac{ROS} like the robots frame transforms, the map, pointclouds, visualization markers etc...
+    \item \textbf{rosbag}- Rosbag will subscribe to one or more topics and the serialized message data will be stored in a file as it is received. These files are called "bags" and contain information about all the \ac{ROS} topics chosen and can be played back at a predefined rate and can be started in any moment we want. 
+    \item \textbf{rqt_graph} - To understand how the various nodes and topics are interconnected the use of rqt\_graph is the best for this case. It can be used to produce an image of all of them and how they communicate between each other
+
+    \item \textbf{roscore} - This launches a process that the ROS System needs in order to properly setup communication between nodes. It starts the \ac{ROS} Master, Paramater Server and rosout. Using \textbf{roslaunch} will automatically run a roscore if it was not initiated before. 
     \item \textbf{roslaunch} - Used for running multiple ROS nodes as well as setting parameters in the server. This is done by launching ".launch" files that tell which nodes to load, which paramaters to set and what machines it will be used on.
     \item \textbf{rosrun} - Allows you to run a specific exacutable in a predetermined package.
-\end{itemize}
-\subsubsection*{Debugging and interacting with the \ac{ROS} system}
-\begin{itemize}
-    \item \textbf{rostopic} - is used for displaying debug information and interact with a given topic. This may be the messages published by a topic, finding a topic by its type, showing information about a topic, listing all the topics in the \ac{ROS} system. among other things.
+
+    \item \textbf{rostopic} - Is used for displaying debug information and interact with a given topic. This may be the messages published by a topic, finding a topic by its type, showing information about a topic, listing all the topics in the \ac{ROS} system. among other things.
    % \item \textbf{rossrv}
     \item \textbf{rosnode} - Can be used to display debug information about a node, regarding publications, subscriptions and connections.
     \item \textbf{rosparam} - Used for manage paramaters in the Paramater Server.
@@ -168,7 +167,7 @@ The ROS navigation stack is a set of software packages that properly combined ca
 Figure \ref{fig:plans} shows an example of \textbf{turtlebot2} using the navigation stack to drive autonomously.
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=\linewidth]{imgs/chapter3/nav.png}
+    \includegraphics[scale=0.35]{imgs/chapter3/nav.png}
     \caption[Rviz view of the ROS Navigation Stack]{Rviz displaying the ros navigation stack components while \textbf{turtlebot2} is navigating.}
     \label{fig:plans}
 \end{figure}
@@ -180,7 +179,7 @@ The Navigation stack requires that the relationships between the different frame
 Figure \ref{fig:tf} shows all the frames and their transforms with each other for \textbf{turtlebot2}. However the main transforms that we need to worry about are between the sensors and the base link frame.
 \begin{figure}[!htb]
     \centering
-    \includegraphics[scale=0.4]{imgs/chapter3/tf.png}
+    \includegraphics[scale=0.3]{imgs/chapter3/tf.png}
     \caption{Example of the transform relationships}
     \label{fig:tf}
 \end{figure}
@@ -191,7 +190,7 @@ This information needs to be in either a  \texttt{PointCloud2} or \texttt(LaserS
 Figure \ref{fig:sensors} shows an example of the published data from both in rviz.
 \begin{figure}[!htb]
     \centering
-    \includegraphics[scale=0.5]{imgs/chapter3/sensors2.png}
+    \includegraphics[scale=0.4]{imgs/chapter3/sensors2.png}
     \caption{Obstacle detections by both radar and lidar}
     \label{fig:sensors}
 \end{figure}
@@ -246,7 +245,7 @@ The algorithm to get the best trajectory goes as follows:
     \item Pick the one with lowest cost and publish the associated velocity.
     \item Repeat for a given rate (\texttt{controller\_frequency})
 \end{enumerate}
-\subsubsection*{Cost Function}
+
 The cost function used to evaluate a trajectory is given by:
 \begin{align*}
         \textbf{cost} = &
@@ -254,7 +253,7 @@ The cost function used to evaluate a trajectory is given by:
    + \texttt{gdist\_scale} * \textbf{goal\_dist}\\
    &+\texttt{occdist\_scale} * \textbf{max\_obs\_cost} 
 \end{align*}
-where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal (goal that is withing the local costmap taking into account the global plan)  in map cells, and \textbf{max\_obs\_cost} is equal to the \textbf{maximum obstacle cost} (given by the local costmap) of all the points along the trajectory.
+where \textbf{path\_dist} is the distance from the endpoint of the trajectory to the global path in map cells, \textbf{goal\_dist} is the distance from the endpoint of the trajectory to the local goal (goal that is withing the local costmap taking into account the global plan)  in map cells, and \textbf{max\_obs\_cost} is equal to the maximum obstacle cost (given by the local costmap) of all the points along the trajectory.
 Fig. \ref{fig:costcloud} displays an example of this values when the robot is navigating.
 \begin{figure}[!htb]
     \centering

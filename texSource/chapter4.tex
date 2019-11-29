@@ -1,4 +1,4 @@
-\chapter{Evaluation Navigation Platform }
+\chapter{Evaluation Platform}
 
 In this section we will describe the principal components in terms of hardware and software and how they are interconnected to create a suitable robotic platform that will later be used for evaluating the performance of \ac{LiDAR} and \ac{FMCW} \ac{radar} as obstacle avoidance sensors.
 
@@ -78,13 +78,13 @@ This sensor is an inexpensive 2D-\ac{LiDAR} that is based on phase difference me
 \section{Software}
 Figure \ref{fig::softsetup} shows the block diagram describing  the different modules used to have a proper autonomous navigation platform.
 \begin{figure}[h] 
-\centerline{\includegraphics [width=0.9 \textwidth]{imgs/chapter4/bd.png}}
+\centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter4/bd.png}}
 \caption{Block diagram of the software architecture designed for this work}
 \label{fig::softsetup}
 \end{figure}
 
 First of, a map of the surrounding  environment must first be created.  There are multiple packages for doing this in \ac{ROS}, but in our case we used the package \texttt{gmapping} with 2D-\ac{LiDAR} as input. The robot also needs to be able to localize itself, for that we will use again the 2D-\ac{LiDAR} for input in the package \texttt{amcl}. This will update the localization of the robot taking into account the odometry information and the observable environment. With localization and mapping problem taken care of we now must feed the Navigation Module with obstacle detectors. For that we use the 2D-LiDAR and the radar data as sensor sources.
- However the radar data is not compatible with the \ac{ROS} navigation module. It sends \ac{TLV} data that must be decoded and converted to a \ac{ROS} message format. To do this conversion we have a block called \ac{ROS} Interface. After this is done we encountered false positive obstacles detected by the radar so we added a new module that processes the radar message to combat this issue. Finnaly, with this processing done, we feed the Navigation Module with the processed radar data in \ac{ROS} format or/and the 2D-\ac{LiDAR} as obstacle detectors. 
+ However the radar data is not compatible with the \ac{ROS} navigation module. It sends \ac{TLV} data that must be decoded and converted to a \ac{ROS} message format. To do this conversion we have a block called \ac{ROS} Interface. After this is done we encountered false positive obstacles detected by the radar so we added a new module that processes the radar message to combat this issue, we calll it an Intensity Filter. Finnaly, with this processing done, we feed the Navigation Module with the processed radar data in \ac{ROS} format or/and the 2D-\ac{LiDAR} as obstacle detectors. 
 %In order to produce a suitable platform for navigation we need to interconnect various software modules in \ac{ROS}. First a map of the environment is created by the 2-D \ac{LiDAR} using the package \texttt{gmapping}. After that is done we launch the \texttt{amcl} node that will update the localization of the robot taking into account odometry information and the surrounding environment. After that is done we have a robot that is reasonably well localized. Now all we need is to feed some sensor sources to the navigation module that will act as obstacle detectors.
 
 %To do that, first the interface between the radar board TLV data and the ROS point cloud message format is done using the provided radar driver from Texas Instruments.  Then a filter by intensity operation is added to remove false positive detections (this will be explained later). The filtered radar data as well as the \ac{LiDAR} data are fed to the Navigation module as sensor sources.
@@ -94,7 +94,7 @@ First of, a map of the surrounding  environment must first be created.  There ar
 
 \subsection{ROS Interface}
 In order to use the radar for obstacle detection we must first convert the \ac{TLV} data of the robot to the \ac{ROS} message format.
-To do this Texas Instruments provides a \ac{ROS} package that interfaces radar data to the ROS framework \cite{tisetup}. The incoming radar \ac{TLV} data from the mmWave radar is decoded in order to create a  \textbf{PointCloud2} type ROS message.
+To do this Texas Instruments provides a \ac{ROS} package that interfaces radar data to the ROS framework \cite{tisetup}. The incoming radar \ac{TLV} data from the radar is decoded in order to create a  \textbf{PointCloud2} type ROS message.
 This point cloud follows the detected objects frame described in the mmWave demo data structure \cite{mmdata} represented in Fig. \ref{fig:demodata}.
 \begin{figure}[!htb]
     \centering
@@ -168,8 +168,9 @@ Figure \ref{fig:filters} shows an example where we delete false detections close
     \label{fig:filters}
 \end{figure}
 \subsubsection{Navigation Module}
-The navigation module first needs a map in order to have a global frame as reference. After that we need to localize the robot in said map, for that we use the \ac{AMCL} node. Finnaly we need range sensors that detect obstacles.
+The navigation module first needs a map in order to have a global frame as reference. After that we need to localize the robot in said map, for that we use the \ac{AMCL} node. Finally we need range sensors that detect obstacles.
 With the processed the \ac{radar} data we can now feed it to our navigation system. We can either feed the \ac{LiDAR} or/and \ac{FMCW} \ac{radar} as obstacle detectors. 
+The navigation module will then use all this information to compute the velocity command  that will make the turtlebot2 move.
 
 
 \section{Summary}

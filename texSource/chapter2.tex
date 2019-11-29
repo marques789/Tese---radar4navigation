@@ -113,10 +113,10 @@ Nowadays there are various configuration types of radar systems  \cite{typesrada
   
 \subsubsection{Monitoring of human vital signs}  
 Monitoring vital signs of a patient such as the breathing rate or hearth rate may be critical in some situations.
-In \cite{alizadeh2019remote} a system for detecting this type of signals using \ac{mmWave} \ac{FMCW} \ac{radar} is proposed. By doing a phase analysis of the \ac{radar} signal it was concluded that the proposed system measurement was in tune with a reference ground truth signal. It was also concluded that by increasing the \ac{SNR} of \ac{radar} it could estimate the heartbeat (\ac{ECG}) waveform of multiple targets.
+In \cite{alizadeh2019remote} a system for detecting this type of signals using  \ac{FMCW} \ac{radar} is proposed. By doing a phase analysis of the \ac{radar} signal it was concluded that the proposed system measurement was in tune with a reference ground truth signal. It was also concluded that by increasing the \ac{SNR} of \ac{radar} it could estimate the heartbeat (\ac{ECG}) waveform of multiple targets.
 
 \subsection{Operating principle}
-The \ac{MIMO} \ac{FMCW} \ac{mmWave}  radar can retrieve range, velocity and angle of multiple targets. The following sections will explain how to calculate each one of these components.
+The \ac{MIMO} \ac{FMCW}  radar can retrieve range, velocity and angle of multiple targets. The following sections will explain how to calculate each one of these components.
 
 
 An \ac{FMCW} radar transmits a signal called a “chirp”. A chirp is an electromagnetic sinusoid whose frequency  increases linearly with time. A chirp is characterized by a start frequency (fc), bandwidth (B) and duration (Tc). The slope (S) of the chirp is the rate at which the frequency of the chirp increases and is given by:
@@ -129,7 +129,7 @@ Figure \ref{fig:At} shows the plot of the amplitude in function of time for the 
 \begin{figure}[ht] 
     \begin{minipage}[b]{.49\linewidth}
         \includegraphics[height=5cm,width=\linewidth]{imgs/chapter2/chirpAt.png}
-        \subcaption{Representation of the chirp, with magnitude as function of time}
+        \subcaption{Representation of the chirp, with amplitude as function of time}
         \label{fig:At}
     \end{minipage}
     \begin{minipage}[b]{.49\linewidth}
@@ -137,7 +137,7 @@ Figure \ref{fig:At} shows the plot of the amplitude in function of time for the 
         \subcaption{Representation of the chirp, with frequency as function of time}
         \label{fig:Ft}
     \end{minipage}
-    \caption{A chirp seen in time and frequency domains}
+    \caption{Representation of a chirp}
     \label{fig:chirp}
 \end{figure}
 
@@ -193,15 +193,15 @@ where $\lambda$ is the wavelength of the chirp, $\omega_i$ is the phase differen
 In the end we get a matrix that relates radial velocity and range. 
 Figure \ref{fig:matrix} illustrates this process.
 \begin{figure}[ht] 
-\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/dopplerFFT2.png}}
+\centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/dopplerFFT2.png}}
 \caption[2D FFT for retrieving velocity information]{At the same range peaks the sinusoid has different phases, by calculating the 2D FFT (or doppler FFT) the radial velocity information can be retrieved (taken form \cite{schroeder2010x})}
 \label{fig:matrix}
 \end{figure}
 
 \subsubsection{Angle Detection}
 Finally, to determine the angle for each target more than one receiver antenna are needed. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distances to the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received \ac{IF} signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
-\begin{figure}[ht] 
-\centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter2/angle2.png}}
+\begin{figure}[ht!] 
+\centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/angle2.png}}
 \caption[Angle of arrival estimation using more than one antenna]{More than one antenna is required to estimate the angle of arrival (adapted form \cite{iovescu2017fundamentals})}
 \label{fig:angle}
 \end{figure}

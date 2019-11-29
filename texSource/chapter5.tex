@@ -44,7 +44,7 @@ The list of objects used as obstacles are displayed in Fig. \ref{fig:obstacles}.
     \caption{Acrylic tube}
     \label{fig::tube}
   \end{subfigure}
-  \caption{Different obstacles used for the controlled test}
+  \caption{Different obstacles used for the experiment}
   \label{fig:obstacles}
 \end{figure}
 
@@ -253,7 +253,7 @@ Figure \ref{fig:traj2} shows the trajectory of the robot for the \ac{LiDAR} and 
 \subsubsection{Garbage Bin}
 
 
-In this case the robot went in a straight line as in the wheeled chair's case pushing the garbage bin until it reached its first goal. This happened because the \ac{LiDAR} was unable to properly detect the garbage bin at a certain angle.  Figure \ref{fig:garbageLF} shows two instances of the turtlebot hitting the garbage bin.
+In the  \ac{LiDAR}'s case the robot went in a straight line as in the wheeled chair's case pushing the garbage bin until it reached its first goal. This happened because the \ac{LiDAR} was unable to properly detect the garbage bin at a certain angle.  Figure \ref{fig:garbageLF} shows two instances of the turtlebot hitting the garbage bin.
 \begin{figure}[ht!]
   \centering
   \begin{subfigure}[b]{0.49\linewidth}
@@ -332,7 +332,7 @@ In the LiDAR's case the robot did not detect the low height box throughout all t
 \end{figure}
 
 
-For the \ac{FMCW} \ac{radar} case, initially the robot also did not detect the box. However by decreasing the threshold of the passthrough filter of intensity to 14 we made it so it can detect it. With this modification the robot was able to complete the test without colliding with the box. Figure \ref{fig:boxRS} shows two instances of the robot performing the course avoiding the box with the previous modification. However this change may result in the \ac{FMCW} \ac{radar} having false detections due to now having a lower level of \ac{SNR}.
+For the \ac{FMCW} \ac{radar} case, initially the robot also did not detect the box. However by decreasing the threshold of the passthrough filter of intensity to 14 we made it so it can detect it. With this modification the robot was able to complete the test without colliding with the box. Figure \ref{fig:boxRS} shows two instances of the robot performing the course while avoiding the box with the previous modification. However this change may result in the \ac{FMCW} \ac{radar} having false detections due to now having a lower level of \ac{SNR}.
 
 \begin{figure}[ht!]
   \centering
@@ -352,10 +352,10 @@ For the \ac{FMCW} \ac{radar} case, initially the robot also did not detect the b
 Figure \ref{fig:rvizboxradar} shows an instance of the experiment in rviz where the robot uses the \ac{FMCW} \ac{radar} has an obstacle detector.
 \begin{figure}[ht!]
 \centerline{\includegraphics [width=0.5 \textwidth]{imgs/chapter5/rvizboxradar.png}}
-\caption[Navigation data with box as an obstacle and with the \ac{FMCW} \ac{radar}]{Rviz display of the navigation data with box as an obstacle and the \ac{FMCW} \ac{radar} as an obstacle detector}
+\caption[Navigation data with box as an obstacle and with the \ac{FMCW} \ac{radar}]{Rviz display of the navigation data with the low height box as an obstacle and the \ac{FMCW} \ac{radar} as an obstacle detector}
 \label{fig:rvizboxradar}
 \end{figure}
-As we can see  with the change the robot perceives the bx with the threshold change. This made it so the robot sucessfully finishefd the course without hitting it.
+As we can see  with the change the robot perceives the box with the threshold change. This made it so the robot successfully finished the course without hitting it.
 \subsubsection{Acrylic tube}
 
 
@@ -515,7 +515,7 @@ Figure \ref{fig:exp3robot} shows two instances of the robot avoiding the dynamic
   \label{fig:exp3robot}
 \end{figure}
 
-Figure \ref{fig:person} shows three instances of the experiment in rviz.
+Figure \ref{fig:robot} shows three instances of the experiment in rviz.
 \begin{figure}[ht!]
   \centering
   \begin{subfigure}[t]{0.3\linewidth}
@@ -526,15 +526,15 @@ Figure \ref{fig:person} shows three instances of the experiment in rviz.
   \begin{subfigure}[t]{0.3\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/robot2.png}
     \caption{Robot avoiding the robot 2}
-    \label{fig::person2}
+    \label{fig::robot2}
   \end{subfigure}
    \begin{subfigure}[t]{0.3\linewidth}
     \includegraphics[width=\linewidth]{imgs/chapter5/robot3.png}
     \caption{Robot avoiding the robot 3}
-    \label{fig::person3}
+    \label{fig::robot3}
   \end{subfigure}
   \caption[Navigation data with the robot as a dynamic obstacle ]{Rviz display of the navigation data with the robot as a dynamic obstacle and with the \ac{FMCW} \ac{radar} as an obstacle detector}
-  \label{fig:person}
+  \label{fig:robot}
 \end{figure}
 As we can see by the figures our robot is able to avoid the mobile robot at all times in the experiment.
 %However if the robot comes from behind there is the chance of it crashing because the radar as only a small field of view of 120º.
