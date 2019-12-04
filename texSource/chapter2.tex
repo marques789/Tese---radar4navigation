@@ -4,7 +4,7 @@
 In order to do complex tasks and compute different complex algorithms robots require some type of information that relates to its state and environment. This information comes from its sensor sources.
 The most typical type of sensors used for perception are proximity sensors such as laser range finders (\ac{LiDAR}), ultrasonic sensors or the use of a camera. However robots may have to deal with a wide variety of changing environments like variation in luminosity, weather conditions, presence of dust and smoke, object proprieties, etc. The previous highlighted sensors may show difficulty or be completely ineffective under these conditions.
 
-The new emerging \ac{mmWave} \ac{FMCW} radar technology with high frequency and bandwidth of 77-81 GHz is now beginning to be suitable for use in robotic applications, and it may provide a solution for the previous conditions. In this chapter we will give a brief overview of current work being done using \ac{LiDAR} and \ac{FMCW} \ac{radar}, how they work, and what limitations each sensor has. We will also explore the use of cameras and ultrasonic sensors.
+The new emerging \ac{mmWave} \ac{FMCW} radar technology with high frequency and bandwidth of 77-81 GHz is now beginning to be suitable for use in robotic applications, and it may provide a solution for the previous conditions. In this chapter we will give a brief overview of current work being done using \ac{LiDAR} and \ac{FMCW} \ac{radar}, how they work, and what limitations each sensor has. We will also evaluate the use of cameras and ultrasonic sensors.
 
 \section{LiDAR}
 %LIDAR history
@@ -68,7 +68,7 @@ A more affordable approach  is based on modulating the intensity of the laser at
 \label{fig:cwlidar1}
 \end{figure}
 
-Being $\Phi$ the phase difference between the two and $\lambda_m$ the wavelength of the sinusoid then the distance of the object is given by:
+Being $\Phi$ the phase difference between the transmitted signal and the reflective signal, and $\lambda_m$ the wavelength of the sinusoid then the distance of the object is given by:
 \begin{equation}
     d=\frac{\Phi \lambda_m}{4 \pi}
 \end{equation}
@@ -184,7 +184,7 @@ The range resolution is also finite since the \ac{FFT} has a limited amount of s
 
 
 \subsubsection{Velocity Detection}
-This type of radar also provides an estimate on the radial velocity for each detected range. To do this more than one chirp is needed. A set of N chirps it is called a frame. The radar constantly sends this frames, each one corresponding to an observation. Since the time between frames is low the corresponding range (or first) \ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of relative radial velocities  for each range detection. Radial velocity information is given by:
+This type of radar also provides an estimate on the radial velocity for each detected range. To do this more than one chirp is needed. A set of N chirps is called a frame. The radar constantly sends these frames, each one corresponding to an observation. Since the time between frames is low the corresponding range (or first) \ac{FFT}s will have  identically located peaks (the same obstacle is in the same range for all chirps in a frame) . However this set of peaks have different phases between each other. By calculating a second \ac{FFT} (Doppler-FFT) of this vector of phases we can extrapolate a set of relative radial velocities  for each range detection. Radial velocity information is given by:
 \begin{equation}
     v_i=\frac{\lambda \omega_i}{4 \pi T_c}
     \label{eq:2}
@@ -199,7 +199,7 @@ Figure \ref{fig:matrix} illustrates this process.
 \end{figure}
 
 \subsubsection{Angle Detection}
-Finally, to determine the angle for each target more than one receiver antenna are needed. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distances to the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received \ac{IF} signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
+Finally, to determine the angle for each target more than one receiver antenna is needed. This is where the \ac{MIMO} configuration comes in. Figure \ref{fig:angle} shows that for the same target the distances to the two antennas is different.  This difference makes it so for the same peak in the range \ac{FFT} and doppler \ac{FFT} the phase of the received \ac{IF} signal is different in the two antennas. If we know this phase difference we can retrieve angle of arrival of the target. 
 \begin{figure}[ht!] 
 \centerline{\includegraphics [width=0.7 \textwidth]{imgs/chapter2/angle2.png}}
 \caption[Angle of arrival estimation using more than one antenna]{More than one antenna is required to estimate the angle of arrival (adapted form \cite{iovescu2017fundamentals})}
@@ -209,12 +209,12 @@ The phase difference $\Delta \phi$ is given by:
 \begin{equation}
     \Delta \phi=\frac{2 \pi \Delta d}{\lambda}
 \end{equation}
-By basic geometry we know that $\Delta d =L sin(\theta)$ where $L$ is the distance between the antennas and $\theta$ is the angle of arrival. 
+By basic geometry we know that $\Delta d =L sin(\theta)$, where $L$ is the distance between the antennas and $\theta$ is the angle of arrival. 
 
 \begin{equation}
     \Delta \phi=\frac{2 \pi L sin(\theta)}{\lambda}
 \end{equation}
-Then the angle of arrival is finnaly given by:
+Then the angle of arrival is finallygiven by:
 \begin{equation}
     \theta = sin^{-1}(\frac{\lambda \Delta \phi}{2 \pi L})
 \end{equation}
@@ -230,10 +230,48 @@ The above equation makes it possible to estimate the angle of arrival. But since
 \item{Can have intermodulation products that result in ghost objects} 
 \end{itemize}
 
+
+
+
+
+\section{Ultrasonic Sensors}
+One of the various ways  of  sensing the range of an obstacle, is by using ultrasonic sensors. Using sound waves, an ultrasonic sensor is able to measure range. 
+These type of sensors have high reliability and outstanding versatility and can be used for wide variety of applications. 
+
+\subsection{Applications}
+\subsubsection{Robotics}
+One examples of robotic applications is the work done by Byoung-hoon Kim \cite{kim2006improved} where by using a multi modulation processing of the ultrasonic sensors the proposed system was able to estimate the 3D coordinates of a moving object while being robust for noisy environments.
+\subsubsection{Ground Vehicles}
+Ultrasonic sensors is also widely used for ground vehicles. On the work  proposed by Enas Odat \cite{pir}, a traffic sensing system is constructed using \ac{PIR} sensors and ultrasonic range finders. It was able to calculate  vehicle detection, speed estimation, and vehicle type classification. However the variability of the sensors readings, thermal noise and environmental conditions may produce unwanted reading errors.
+\subsubsection{Medicine}
+Ultrasonic sensors are also used in medicine. For example in the work done by Ibrahim AlMohimeed et al \cite{med}, a wearable and flexible ultrasonic sensor was developed for monitoring of skeletal muscle contraction. The tissue thickness variations were successfully measured in accordance with the muscle contraction performed. 
+\subsection{Operating Principle}
+To retrieve range information about the environment the ultrasonic sensors work similarly as the  Time of flight \ac{LiDAR}. But instead of light waves the sensor uses sound waves. A transducer sends and receives ultrasonic pulses that relay back information about an object’s proximity.  
+
+\begin{figure}[ht] 
+\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/us.png}}
+\caption[Ultrasonic wave operating principle]{Ultrasonic wave operating principle (taken form \cite{burnett2019})}
+\label{fig:us}
+\end{figure}
+
+\section{Cameras}
+Besides the previous highlighted sensors, cameras can be used to determine the distance of obstacles. There are three image based object distance measurement techniques, (1) using two cameras i.e stereovision, (2) using a single camera and (3) time-of-flight camera \cite{cam}.
+The first method is highly accurate but is costly when compared to the monovision and it is not accurate for high distances. In the time of flight technique the distance is obtained using the time it took for the light to be reflected back. This method is a simple way to retrieve range from obstacles and it is also very fast that can reach up to 160 frames per second. It is also efficient having lower computation needs when compared to stereovision. However this technique comes with the problems of background lighting, interference from other time of flight cameras and multiple reflections. 
+%\subsection{Applications}
+%\subsubsection{Ground Vehicles}
+%The use of range cameras is widely used for ground vehicle applications. One example of this is by Canesta \cite{hsu2006performance}, where  occupant sensing and backup obstacle warning was achieved using a ranging camera.
+
+%Another example is the work of Elkhalili et al \cite{eka}, where, by the use of these type of sensors enabled the detection of objects with a resolution of 2.2cm for a single pulse in the range up to 20m.
+
+%\subsubsection{Robotics}
+%Using this technology mobile robots can build up a map of their surroundings very quickly, enabling them to avoid obstacles or follow a leading person. As the distance calculation is simple, only little computational power is used.
+
+%\subsection{Operating principle}
+%As said before there are multiple ways in which a camera can retrieve range information. The first one is by stereovision (using two cameras). This takes into account camera calibration and the disparity map is computed that retrieves the distance of obstacles. The second way is by time of flight range cameras that work by the principle that the received signal proprieties to determine the range of obstacles.
 \section{FMCW radar Simulation}
 Now that we know the operating principle of the \ac{FMCW} \ac{radar} we can use the concepts for simulation purposes. In this section we explore how we can simulate in MATLAB range and velocity detection using the pre established concepts. 
-\subsection{Range detection simulation}
-In this section we try to simulate in MATLAB the process of retrieving the range from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix A. Table \ref{tab:table1} shows the respective paramaters used for the radar and the vector of distances of the supposed objects to be retrieved, where $T_c$ is the time of chirp and $F_s$ is the sampling frequency of the \ac{ADC}.
+\subsection{Simulating range detection}
+In this section we try to simulate in MATLAB the process of retrieving the range from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix A. Table \ref{tab:table1} shows the paramaters used for the radar and the vector of distances of the supposed objects to be retrieved, where $T_c$ is the time of chirp and $F_s$ is the sampling frequency of the \ac{ADC}.
 \begin{table}[ht!]
   \begin{center}
     \caption{Parameters used for simulation for range estimation.}
@@ -252,7 +290,7 @@ In this section we try to simulate in MATLAB the process of retrieving the range
  Figure \ref{fig:if2} shows the TX signal in blue and RX signal as the other colors in a plot of time vs frequency.
  \begin{figure}[h] 
 \centerline{\includegraphics [width=1.0 \textwidth]{imgs/chapter2/SimFrequencies.png}}
-\caption[Demonstration of the TX signal in blue and RX signal in other colours]{TX signal in blue and RX signal in other colours, each strip corresponds to a different range detectin}
+\caption[Demonstration of the TX signal in blue and RX signal in other colours]{TX signal in blue and RX signal in other colours, each strip corresponds to a different range detection}
 \label{fig:if2}
 \end{figure}
 %What is it
@@ -273,7 +311,7 @@ Mixing both signals and passing the resulting \ac{IF} signal by a low pass filte
 \end{figure}
 As we can see the power of the signal is stronger in the distances that were chosen a priori. To extract them we must choose a certain threshold of \ac{SNR}. Note that the sampling frequency limits the maximum distance of detection.
 
-\subsection{Velocity detection simulation}
+\subsection{Simulating velocity detection}
 In this section we try to simulate in MATLAB the process of retrieving the velocity from different targets using the \ac{FMCW} \ac{radar} operating principle. The code used to generate the simulated graphs is shown in the appendix B. Table \ref{tab:table2} shows the parameters used for the radar and the velocity and range of the supposed object to be retrieved, where $N_c$ is the number of chirps used. 
 \begin{table}[ht]
   \begin{center}
@@ -308,51 +346,13 @@ By computing the FFT of the $N_c$ phase differences we get the 2-D doppler \ac{F
     \caption{Velocity detection using \ac{FMCW} \ac{radar}}
     \label{fig:velocitydetermination}
 \end{figure}
-As we can see we have a peak near the $7 m/s$ velocity that means this parameters can be used to compute the radial velocity of the target with relatively good precision. 
-
-
-
-\section{Ultrasonic Sensors}
-One of the best ways when it comes to  sensing the range of an obstacle, is by using ultrasonic sensors. Using sound waves, an ultrasonic sensor is able to measure range. 
-These type of sensors have high reliability and outstanding versatility and can be used for wide variety of applications. 
-
-\subsection{Applications}
-\subsubsection{Robotics}
-Some examples of robotic applications is the work done by Byoung-hoon Kim \cite{kim2006improved} where by using a multi modulation processing of the ultrasonic sensors the proposed system was able to estimate the 3D coordinates of a moving object while being robust for noisy environments.
-\subsubsection{Ground Vehicles}
-The use of ultrasonic sensors are also widely used for ground vehicles. On the work  proposed by Enas Odat \cite{pir}, a traffic sensing system is constructed using \ac{PIR} sensors and ultrasonic range finders. It was able to determine  vehicle detection, speed estimation, and vehicle type classification. However the variability of the sensors readings, thermal noise and environmental conditions may produce unwanted reading errors.
-\subsubsection{Medicine}
-Ultrasonic sensors are also used in medicine, for example in the work done by Ibrahim AlMohimeed et al \cite{med}, a wearable and flexible ultrasonic sensor was developed for monitoring of skeletal muscle contraction, the tissue thickness variations were successfully measured in accordance with the muscle contraction performed. 
-\subsection{Operating Principle}
-To retrieve range information about the environment the ultrasonic sensors work similarly as the  Time of of flight \ac{LiDAR}. But instead of light waves the sensor uses sound waves. A transducer sends and receives ultrasonic pulses that relay back information about an object’s proximity.  
-
-\begin{figure}[ht] 
-\centerline{\includegraphics [width=0.8 \textwidth]{imgs/chapter2/us.png}}
-\caption[Ultrasonic wave operating principle]{Ultrasonic wave operating principle (taken form \cite{burnett2019})}
-\label{fig:us}
-\end{figure}
-
-\section{Cameras}
-Besides the previous highlighted sensors, cameras can be used to determine the distance of obstacles. There are three image based object distance measurement techniques, (1) using two cameras i.e stereovision, (2) using a single camera and (3) time-of-flight camera \cite{cam}.
-The first method is highly accurate but is costly when compared to the monovision and it is not accurate for high distances. In the time of flight technique the distance is obtained using the time it took for the light to be reflected back. This method is a simple way to retrieve range from obstacles and it is also very fast that can reach up to 160 frames per second. It is also efficient having lower computation needs when compared to stereovision. However this technique comes with the problems of background lighting, interference from other time of flight cameras and multiple reflections. 
-%\subsection{Applications}
-%\subsubsection{Ground Vehicles}
-%The use of range cameras is widely used for ground vehicle applications. One example of this is by Canesta \cite{hsu2006performance}, where  occupant sensing and backup obstacle warning was achieved using a ranging camera.
-
-%Another example is the work of Elkhalili et al \cite{eka}, where, by the use of these type of sensors enabled the detection of objects with a resolution of 2.2cm for a single pulse in the range up to 20m.
-
-%\subsubsection{Robotics}
-%Using this technology mobile robots can build up a map of their surroundings very quickly, enabling them to avoid obstacles or follow a leading person. As the distance calculation is simple, only little computational power is used.
-
-%\subsection{Operating principle}
-%As said before there are multiple ways in which a camera can retrieve range information. The first one is by stereovision (using two cameras). This takes into account camera calibration and the disparity map is computed that retrieves the distance of obstacles. The second way is by time of flight range cameras that work by the principle that the received signal proprieties to determine the range of obstacles.
-
+As we can see there is a peak near the $7 m/s$ velocity that means this parameters can be used to compute the radial velocity of the target with fairly good precision. 
 
 
 
 
 \section{Summary}
-In this chapter we overviewed two types of proximity sensor technologies, \ac{LiDAR} and \ac{FMCW} radar. First we discussed on what contexts this sensors are used for and what current work is being done with them. Then we explain the operating principle of each one of them to retrieve information from the environment as well as simulating the range and velocity estimation provided by the radar.  Finally we show what limitations each sensor has. We also overviewed the use of ultrasonic sensors and cameras for range detection.
+In this chapter we overviewed various types of proximity sensor technologies, . First we discussed on what contexts this sensors are used for and what current work is being done with them. Then we explain the operating principle of each one of them to retrieve information from the environment as well as simulating the range and velocity estimation provided by the radar.  Finally we show what limitations each sensor has.
 %GIVE OVERVIEW OF THE CURRENT SENSORS LEADING INDOOR NAVIGATION.
 
 

@@ -1,6 +1,6 @@
 \chapter{Evaluation Platform}
 
-In this section we will describe the principal components in terms of hardware and software and how they are interconnected to create a suitable robotic platform that will later be used for evaluating the performance of \ac{LiDAR} and \ac{FMCW} \ac{radar} as obstacle avoidance sensors.
+In this  chapter we will describe the principal components in terms of hardware and software and how they are interconnected to create a suitable robotic platform that will later be used for evaluating the performance of \ac{LiDAR} and \ac{FMCW} \ac{radar} as obstacle avoidance sensors.
 
 
 \section{Hardware}
@@ -54,7 +54,7 @@ The radiation pattern of the antenna in the horizontal plane (H-plane Phi = 0 de
 \subsection{LiDAR}
 Besides the \ac{FMCW} \ac{radar} the Hokuyo URG-04LX-UG01 Scanning Laser Rangefinder (Fig. \ref{fig:lidarP}) is also attached to the platform.
 
-This sensor is an inexpensive 2D-\ac{LiDAR} that is based on phase difference measurement. It retrieves information of the surrounding environment by scanning an area of 240º with 0.36º angular resolution. The maximum range of it is about 4 meters and its range resolution is 1mm. Its scan update time is 100ms/scan and its weight is 360 g.  As for the power supply it only needs a 5V DC provided by the USB connection as shown in Figure \ref{fig::lidarS}.
+This sensor is an inexpensive 2D-\ac{LiDAR} that is based on phase difference measurement. It retrieves information of the surrounding environment by scanning an area of 240º with 0.36º angular resolution. Its maximum range is about 4 meters and its range resolution is 1mm. Its scan update time is 100ms/scan and its weight is 360 g.  As for the power supply it only needs a 5V DC provided by the USB connection as shown in Figure \ref{fig::lidarS}.
 
 
 
@@ -84,7 +84,7 @@ Figure \ref{fig::softsetup} shows the block diagram describing  the different mo
 \end{figure}
 
 First of, a map of the surrounding  environment must first be created.  There are multiple packages for doing this in \ac{ROS}, but in our case we used the package \texttt{gmapping} with 2D-\ac{LiDAR} as input. The robot also needs to be able to localize itself, for that we will use again the 2D-\ac{LiDAR} for input in the package \texttt{amcl}. This will update the localization of the robot taking into account the odometry information and the observable environment. With localization and mapping problem taken care of we now must feed the Navigation Module with obstacle detectors. For that we use the 2D-LiDAR and the radar data as sensor sources.
- However the radar data is not compatible with the \ac{ROS} navigation module. It sends \ac{TLV} data that must be decoded and converted to a \ac{ROS} message format. To do this conversion we have a block called \ac{ROS} Interface. After this is done we encountered false positive obstacles detected by the radar so we added a new module that processes the radar message to combat this issue, we calll it an Intensity Filter. Finnaly, with this processing done, we feed the Navigation Module with the processed radar data in \ac{ROS} format or/and the 2D-\ac{LiDAR} as obstacle detectors. 
+ However the radar data is not compatible with the \ac{ROS} navigation module. It sends \ac{TLV} data that must be decoded and converted to a \ac{ROS} message format. To do this conversion we have a block called \ac{ROS} Interface. After this is done we encountered false positive obstacles detected by the radar so we added a new module that processes the radar message to combat this issue, we calll it an Intensity Filter. Finally, with this processing done, we feed the Navigation Module with the processed radar data in \ac{ROS} format or/and the 2D-\ac{LiDAR} as obstacle detectors. 
 %In order to produce a suitable platform for navigation we need to interconnect various software modules in \ac{ROS}. First a map of the environment is created by the 2-D \ac{LiDAR} using the package \texttt{gmapping}. After that is done we launch the \texttt{amcl} node that will update the localization of the robot taking into account odometry information and the surrounding environment. After that is done we have a robot that is reasonably well localized. Now all we need is to feed some sensor sources to the navigation module that will act as obstacle detectors.
 
 %To do that, first the interface between the radar board TLV data and the ROS point cloud message format is done using the provided radar driver from Texas Instruments.  Then a filter by intensity operation is added to remove false positive detections (this will be explained later). The filtered radar data as well as the \ac{LiDAR} data are fed to the Navigation module as sensor sources.
@@ -143,14 +143,14 @@ Figure \ref{fig:dopplermarker} displays the radial velocity of each point with a
 \end{figure}
 
 
-\subsection{Radar Data Processing}
+\subsection{Intensity Filter}
 Since we are dealing with point clouds coming from the \ac{FMCW} \ac{radar} and the 2-D\ac{LiDAR} than we need some type of ways to handle and manipulate them. For that the open source libraries called \ac{PCL} is the more indicated place to process and manipulate this type of information. A pointcloud is a collection of multi-dimensional points and is commonly used to represent three-dimensional data \cite{pcl}. These points are often just designed to locate points in x,y,z but more dimensions can be added as is for the FMCW radar which has 6 dimensions. \ac{PCL} provides open source, state of the art library modules that enables  filtering, feature estimation, surface reconstruction, registration, model fitting and segmentation. 
 
 %and \textbf{euclidean clustering} to identify groups of points that belong to the same object.
 In the point cloud there may be some points that have undesirable characteristics, such as points with low intensity  that lead to false detections or outside of the radar operating range. To remove these points we use \textbf{passthrough filters} that specify the range of values a given field can have in order for a point to be kept in the point cloud. 
 
 For example, if we are only interested in obstacles that are moving between 0.5 m/s and 1.0 m/s (radial velocity), this can be done by using a passthrough filter on the doppler channel.
-Figure \ref{fig:filters} shows an example where we delete false detections close to the radar by filtering the point cloud by intensity. In this work we will use an intensity filter of 16, which means all target points that have an intensity bellow that will be filtered out due to having a low \ac{SNR}
+Figure \ref{fig:filters} shows an example where we delete detections close to the radar by filtering the point cloud by intensity. In this work we will use an intensity filter of 16, which means all target points that have an intensity bellow that will be filtered out due to having a low \ac{SNR}
 
 
 \begin{figure}[ht!] 
@@ -167,9 +167,9 @@ Figure \ref{fig:filters} shows an example where we delete false detections close
     \caption{Example of filtering the pointcloud}
     \label{fig:filters}
 \end{figure}
-\subsubsection{Navigation Module}
+\subsection{Navigation Module}
 The navigation module first needs a map in order to have a global frame as reference. After that we need to localize the robot in said map, for that we use the \ac{AMCL} node. Finally we need range sensors that detect obstacles.
-With the processed the \ac{radar} data we can now feed it to our navigation system. We can either feed the \ac{LiDAR} or/and \ac{FMCW} \ac{radar} as obstacle detectors. 
+With the processed \ac{radar} data we can now feed it to our navigation system. We can either feed the \ac{LiDAR} or/and \ac{FMCW} \ac{radar} as obstacle detectors. 
 The navigation module will then use all this information to compute the velocity command  that will make the turtlebot2 move.
 
 
